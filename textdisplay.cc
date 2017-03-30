@@ -19,8 +19,12 @@ TextDisplay::TextDisplay {int n, ifstream& f} {
 
 void notify(GameSubject& who) { 
 	int curr_x = who.get_x(); 
-	int curr_y = who.get_y(); 
-	if (who.what_is() == "item") { // item has been steped on 
+	int curr_y = who.get_y();
+	if (who.is_init()) {
+		display[curr_x, curr_y] = who.get_char;
+		who.set_false(); 
+	} 
+	else if (who.what_is() == "item") { // item has been steped on 
 		display[curr_x, curr_y] = '.'; 
 	} 
 	else {

@@ -1,7 +1,7 @@
 #ifndef _DOOR_H
 #define _DOOR_H
 
-class Door {
+class Door : public Tile {
 	const std::string type; 	
 	public: 
 		Door(int x, int y); 

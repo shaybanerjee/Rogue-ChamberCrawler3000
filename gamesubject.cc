@@ -15,6 +15,11 @@ GameSubject::get_y() const {
 	return y; 
 }
 
+GameSubject::set_false() const {
+	is_init = false; 
+}
+
+
 GameSubject::attach(Observer* o) {
 	observers.emplace_back(o); 
 }
