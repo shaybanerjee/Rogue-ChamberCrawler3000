@@ -17,7 +17,7 @@ class Merchant;
 class Dragon; 
 class Halfling;
 
-class TextDisplay : Observer {
+class TextDisplay : public Observer {
 	std::vector <std::vector <char>> display; 
 	const int gridSize; 
 
