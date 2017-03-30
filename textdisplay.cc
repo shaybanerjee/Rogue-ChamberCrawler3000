@@ -24,9 +24,6 @@ void notify(GameSubject& who) {
 		display[curr_x, curr_y] = who.get_char;
 		who.set_false(); 
 	} 
-	else if (who.what_is() == "item") { // item has been steped on 
-		display[curr_x, curr_y] = '.'; 
-	} 
 	else {
 		if (who.dir() == direction::NO) {
 			display[curr_x + 1, curr_y] = '.';
