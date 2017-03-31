@@ -4,10 +4,23 @@
 
 class Npc: public Character{
     bool hostile;
-    bool hasMoved; //This lets you know if a character has been moved each turn so a npc doesn't get moved twice
+    bool hasMoved;
     
 public:
-
+    //Constructor
+    Npc(int hp, int atk, int def, bool hostile = false, bool hasMoved = false);
+    
+    //Accessors and mutators
+    bool getHostile();
+    bool getHasMoved();
+    void setHasMoved(bool newHasmoved);
+    
+    //turnHostile turns the current non player character hostile
+    void turnHostile();
+    
+    //Overriding the attack method to make sure non player characters has a
+    //50% chance of missing when attaching humans
+    bool attack(Character &c) override;
 };
 
 #endif
