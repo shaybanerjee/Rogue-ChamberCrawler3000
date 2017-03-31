@@ -14,3 +14,8 @@ string Potion::getType(){
 
 Potion::~Potion(){
 }
+
+char Potion::getSymb() {
+	return 'P';
+
+}

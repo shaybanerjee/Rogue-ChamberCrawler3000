@@ -7,6 +7,7 @@ class Treasure {
 	public:
 		int getValue():
 		virtual ~Treasure() =0;
+		char getSymb() override; 
 };
 
 #endif

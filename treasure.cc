@@ -7,3 +7,7 @@ int Treasure::getValue(){
 
 Treasure::~Treasure(){
 }
+
+char Tressure::getSymb() {
+	return 'G'; 
+}
