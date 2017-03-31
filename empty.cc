@@ -4,10 +4,10 @@
 using namespace std; 
 
 Empty::Empty(int x, int y) 
-	x{x}, y{y}, type{"empty"} {
+	x{x}, y{y} {
 
 }
 
-string Empty::get_type() {
-	return type; 
+char Empty::getSymb() {
+	return ' '; 
 }

@@ -4,11 +4,11 @@
 using namespace std; 
 
 Stair::Stair(int x, int y) 
-	x{x}, y{y}, type{"stair"} {
+	x{x}, y{y} {
 
 }
 
-string Floor::get_type() {
-	return type; 
+char Floor::getSymb() {
+	return '\'; 
 }
 

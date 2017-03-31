@@ -4,10 +4,10 @@
 using namespace std; 
 
 Door::Door(int x, int y) 
-	x{x}, y{y}, type{"door"} {
+	x{x}, y{y} {
 
 }
 
-string Door::get_type() {
-	return type; 
+char Door::getSymb() {
+	return '+'; 
 }

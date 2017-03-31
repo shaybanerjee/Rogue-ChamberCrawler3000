@@ -1,11 +1,10 @@
 #ifndef _DOOR_H
 #define _DOOR_H
 
-class Door : public Tile {
-	const std::string type; 	
+class Door : public Tile {	
 	public: 
 		Door(int x, int y); 
-		std::string get_type(); 
+		char getSymb() override; 
 };
 
 #endif 

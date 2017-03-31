@@ -2,8 +2,7 @@
 #define _TILE_H_
 
 class Tile {
-public: 
-	std::string what_is(); 
+public:  
 	virtual ~Tile() = 0; 
 };
 

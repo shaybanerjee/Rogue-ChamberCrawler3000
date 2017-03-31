@@ -11,7 +11,7 @@ class PlayerCharacter: public Character{
     std::string name;
     std::vector<std::string> usedPotions;
     //Vector to store all the potions used
-    //Used to check whether a potion has been used to output shit :)
+    //Used to check whether a potion has been used to output
     
 protected:
     int numGold;

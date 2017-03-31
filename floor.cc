@@ -4,11 +4,11 @@
 using namespace std; 
 
 Floor::Floor(int x, int y) 
-	x{x}, y{y}, type{"floor"} {
+	x{x}, y{y} {
 
 }
 
-string Floor::get_type() {
-	return type; 
+char Floor::getSymb() {
+	return '.'; 
 }
 

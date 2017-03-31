@@ -1,11 +1,10 @@
 #ifndef _FLOOR_H_
 #define _FLOOR_H_
 
-class Floor : public Tile {
-	const std::string type; 	
+class Floor : public Tile { 	
 public: 
 	Floor(int x, int y); 
-	std::string get_type(); 
+	char getSymb() override; 
 }; 
 
 #endif 

@@ -1,11 +1,10 @@
 #ifndef _STAIR_H
 #define _STAIR_H
 
-class Stair : public Tile {
-	const std::string type; 	
+class Stair : public Tile { 	
 	public: 
 		Stair(int x, int y); 
-		std::string get_type(); 
+		char getSymb() override; 
 };
 
 #endif 

@@ -1,13 +1,11 @@
 #include "passageway.h"
-#include <string>
+
 
 using namespace std; 
 
 PassageWay::PassageWay(int x, int y) 
-	x{x}, y{y}, type{"passageway"} {
+	x{x}, y{y} {}
 
-}
-
-string PassageWay::get_type() {
-	return type; 
+char PassageWay::getSymb() {
+	return '#'; 
 }
