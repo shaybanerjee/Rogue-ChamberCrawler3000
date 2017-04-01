@@ -8,6 +8,7 @@ Character{hp, atk, def}, name{name}{
     maxHp = hp;
     baseAtk = atk;
     baseDef = def;
+    numGold = 0;
 }
 
 //Creating accessor for name
@@ -26,6 +27,7 @@ void PlayerCharacter::usePotion(Potion &p){
     //wound attack
     if(potionType == "WA"){
         setAtk(getAtk() - p.getValue());
+        if(getAtk() < 0) setAtk(0);
     }
     //boost defence
     if(potionType == "BD"){
@@ -34,10 +36,14 @@ void PlayerCharacter::usePotion(Potion &p){
     //wound defence
     if(potionType == "WD"){
         setDef(getDef() - p.getValue());
+        if(getDef() < 0) setDef(0);
     }
     //Restore health
     if(potionType == "RH"){
         setHp(getHp() + p.getValue());
+        //Setting hp to maxHp if it's over the maxHp limit and also checking
+        //if it's not a vampire
+        if(maxHp != -1 && getHp() > maxHp) setHp(maxHp);
     }
     //Potion health
     if(potionType == "PH"){
@@ -53,27 +59,27 @@ bool isUsed(Potion &p){
 //getStats returns a string which represents the stats of the PlayerCharacter
 std::string getStats();
 
-//Overriding the attack method to account for the fact that theres a 50% chance
+//Creating the attack method to account for the fact that theres a 50% chance
 //of missing when attacking a halfing and if a human was killed during the
 //attack, 2 gold will be added to the current player character
-bool PlayerCharacter::attack(Character &c){
+bool PlayerCharacter::attack(Npc &enemy){
     //if a player character attacks a halfing
-    if(c.getSymb() == 'L'){
+    if(enemy.getSymb() == 'L'){
         //if random generated number with 50/50 chance of 0 or 1 generates 0,
         //then this indicates the player missed.
         if((rand() % 2) == 0) return false;
     }
     //If hitting a merchant, the merchants now become hostile
-    if(c.getSymb() == 'M'){
-        c.turnHostile();
+    if(enemy.getSymb() == 'M'){
+        enemy.turnHostile();
     }
     
     //reduce character c's hp after attacking c
-    c.setHp(c.getHp() - damageAgainst(c));
+    enemy.setHp(enemy.getHp() - damageAgainst(enemy));
     
     //if the character being attacked is human and it's also killed, we'll increase
     //the current gold by 2
-    if(c.getSymb() == 'H' && c.alive() == false){
+    if(enemy.getSymb() == 'H' && c.alive() == false){
         numGold += 2;
     }
     return true;

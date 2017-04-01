@@ -17,6 +17,7 @@ void Drow::usePotion(Potion &p){
     //wound attack
     if(potionType == "WA"){
         setAtk(getAtk() - (int)(p.getValue() * magnifyEffects));
+        if(getAtk() < 0) setAtk(0);
     }
     //boost defence
     if(potionType == "BD"){
@@ -25,6 +26,7 @@ void Drow::usePotion(Potion &p){
     //wound defence
     if(potionType == "WD"){
         setDef(getDef() - (int)(p.getValue() * magnifyEffects));
+        if(getDef() < 0) setDef(0);
     }
     //Restore health
     if(potionType == "RH"){
@@ -33,6 +35,9 @@ void Drow::usePotion(Potion &p){
     //Potion health
     if(potionType == "PH"){
         setHp(getHp() - (int)(p.getValue() * magnifyEffects));
+        //Setting hp to maxHp if it's over the maxHp limit and also checking
+        //if it's not a vampire
+        if(maxHp != -1 && getHp() > maxHp) setHp(maxHp);
     }
 }
 

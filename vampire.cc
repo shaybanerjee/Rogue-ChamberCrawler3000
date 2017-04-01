@@ -3,12 +3,14 @@
 
 //Constructor
 Vampire::Vampire(int hp, int atk, int def, std::string name):
-PlayerCharacter{hp, atk, def, name}{}
+PlayerCharacter{hp, atk, def, name}{
+    maxHp = -1;
+}
 
 //overriding the attack method so that vampire also gains 5hp every successful
 //attack except if it attacks a dwarf, then it will lose 5hp every successful
 //attack
-bool Vampire::attack(Character &c){
+bool Vampire::attack(Npc &enemy){
     if(c.getSymb() == 'L'){
         //if random generated number with 50/50 chance of 0 or 1 generates 0,
         //then this indicates the player missed.
@@ -16,22 +18,22 @@ bool Vampire::attack(Character &c){
     }
     
     //reduce character c's hp after attacking c
-    c.setHp(c.getHp() - damageAgainst(c));
+    enemy.setHp(enemy.getHp() - damageAgainst(enemy));
     
-    //if the character being attacked is human and it's also killed, we'll increase
+    //if the enemy being attacked is human and it's also killed, we'll increase
     //the current gold by 2
-    if(c.getSymb() == 'H' && c.alive() == false){
+    if(enemy.getSymb() == 'H' && enemy.alive() == false){
         numGold += 2;
     }
     
     //If hitting a merchant, the merchants now become hostile
-    if(c.getSymb() == 'M'){
-        c.turnHostile();
+    if(enemy.getSymb() == 'M'){
+        enemy.turnHostile();
     }
     
     //if a dwarf, this causes vampires to subtract it's hp by 5, otherwise,
     //vampire gains 5hp
-    if(c.getSymb() == 'W'){
+    if(enemy.getSymb() == 'W'){
         setHp(getHp() - 5);
     }else{
         setHp(getHp() + 5);

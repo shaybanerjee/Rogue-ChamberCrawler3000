@@ -9,8 +9,8 @@ public:
     Goblin(int hp = 110, int atk = 15, int def = 20, std::string name = "Goblin");
     
     //overriding the attack method so that Goblin will gain 5 golds if the
-    //character c being attack dies after the attack
-    bool attack(Character &c) override;
+    //character enemy being attack dies after the attack
+    bool attack(Npc &enemy) override;
     
     //Overriding getSymb method to return the character that represents
     //the object

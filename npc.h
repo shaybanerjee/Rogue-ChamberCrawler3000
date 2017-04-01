@@ -1,6 +1,9 @@
 #ifndef _npc_h_
 #define _npc_h_
 #include "character.h"
+#include "playerCharacter.h"
+
+class PlayerCharacter;
 
 class Npc: public Character{
     bool hostile;
@@ -18,9 +21,9 @@ public:
     //turnHostile turns the current non player character hostile
     void turnHostile();
     
-    //Overriding the attack method to make sure non player characters has a
+    //Creating the attack method to make sure non player characters has a
     //50% chance of missing when attaching humans
-    bool attack(Character &c) override;
+    bool attack(PlayerCharacter &pc);
 };
 
 #endif

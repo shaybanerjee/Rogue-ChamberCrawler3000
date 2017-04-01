@@ -23,14 +23,14 @@ void Npc::turnHostile(){
     hostile = true;
 }
 
-//Overriding the attack method to make sure non player characters has a
+//Creating the attack method to make sure non player characters has a
 //50% chance of missing when attaching humans
-bool Npc::attack(Character &c){
+bool Npc::attack(PlayerCharacter &pc){
     //if random generated number with 50/50 chance of 0 or 1 generates 1,
-    //then this indicates the player hit the character c
+    //then this indicates the player hit the character pc
     if((rand() % 2) == 1){
-        //reduce character c's hp after attacking c
-        c.setHp(c.getHp() - damageAgainst(c));
+        //reduce character c's hp after attacking pc
+        pc.setHp(pc.getHp() - damageAgainst(pc));
         return true;
     }
     return false;
