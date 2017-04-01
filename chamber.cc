@@ -1,4 +1,5 @@
 #include "chamber.h"
+#include "" 
 
 Chamber::Chamber(const int i){
 	switch(i){
@@ -54,5 +55,26 @@ Chamber::Chamber(const int i){
 					cham_pos.emplace_back(Position{i,j});
 				}
 			}
+	}
+}
+
+Position Chamber::getRand() {
+	int sizeOfVec = cham_pos.size(); 
+	while(1) {
+		int randVal = rand() % sizeOfVec;
+		if (cham_pos[rand_val].is_false()) {
+			cham_pos[rand_val].set_false(); 
+			return cham_pos[rand_val]; 
+		}
+	}
+} 
+
+void Chamber::update(Position &p) {
+	p.set_true(); 
+}
+
+void Chamber::clear() {
+	for (auto pos : cham_pos) {
+		pos.set_true(); 
 	}
 }
