@@ -10,6 +10,7 @@ class Npc;
 class PlayerCharacter: public Character{
     int baseAtk;
     int baseDef;
+    char curTile;
     std::string name;
     std::vector<std::string> usedPotions;
     
@@ -23,6 +24,13 @@ public:
     
     //accessor for name;
     std::string getName();
+    
+    //accessor and mutator for currPlace;
+    char getCurTile();
+    void setCurTile(char newCurTile);
+    
+    //addGold takes in an integer gold and adds it to the current amount of gold
+    void addGold(int gold);
     
     //usePotion applies the potion p's effects to the current PlayerCharacter
     virtual void usePotion(Potion &p);

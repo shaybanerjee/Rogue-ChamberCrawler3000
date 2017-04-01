@@ -9,11 +9,26 @@ Character{hp, atk, def}, name{name}{
     baseAtk = atk;
     baseDef = def;
     numGold = 0;
+    curTile = '.';
 }
 
 //Creating accessor for name
 std::string PlayerCharacter::getName(){
     return name;
+}
+
+//accessor and mutator for currPlace;
+char PlayerCharacter::getCurTile(){
+    return curTile;
+}
+
+void PlayerCharacter::setCurTile(char newCurTile){
+    curTile = newCurTile;
+}
+
+//addGold takes in an integer gold and adds it to the current amount of gold
+void PlayerCharacter::addGold(int gold){
+    numGold += gold;
 }
 
 //usePotion applies the potion p's effects to the current PlayerCharacter

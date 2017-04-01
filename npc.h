@@ -11,7 +11,7 @@ class Npc: public Character{
     
 public:
     //Constructor
-    Npc(int hp, int atk, int def, bool hostile = false, bool hasMoved = false);
+    Npc(int hp, int atk, int def, bool hostile = true, bool hasMoved = false);
     
     //Accessors and mutators
     bool getHostile();
