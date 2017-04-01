@@ -33,10 +33,10 @@ public:
     void addGold(int gold);
     
     //usePotion applies the potion p's effects to the current PlayerCharacter
-    virtual void usePotion(Potion &p);
+    virtual void usePotion(Potion *p);
     
     //isUsed returns true if the potion has been used and false otherwise
-    bool isUsed(Potion &p);
+    bool isUsed(Potion *p);
     
     //getStats returns a string which represents the stats of the PlayerCharacter
     std::string getStats();
@@ -44,7 +44,7 @@ public:
     //Creating the attack method to account for the fact that theres a 50% chance
     //of missing when attacking a halfing and if a human was killed during the
     //attack, 2 gold will be added to the current player character
-    virtual bool attack(Npc &enemy);
+    virtual bool attack(Npc *enemy);
 };
 
 #endif

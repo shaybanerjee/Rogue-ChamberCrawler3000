@@ -10,7 +10,7 @@ public:
     
     //override the attack method because elfs gets two attacks against
     //every race except drow
-    bool attack(PlayerCharacter &pc) override;
+    bool attack(PlayerCharacter *pc) override;
     //Overriding getSymb method to return the character that represents
     //the object
     char getSymb() override;

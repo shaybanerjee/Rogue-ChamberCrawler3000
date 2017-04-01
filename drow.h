@@ -10,7 +10,7 @@ public:
     
     //Overriding the usePotion method to have drows magnify potions
     //effects by 1.5
-    void usePotion(Potion &p) override;
+    void usePotion(Potion *p) override;
     //Overriding getSymb method to return the character that represents
     //the object
     char getSymb() override;

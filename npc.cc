@@ -25,12 +25,12 @@ void Npc::turnHostile(){
 
 //Creating the attack method to make sure non player characters has a
 //50% chance of missing when attaching humans
-bool Npc::attack(PlayerCharacter &pc){
+bool Npc::attack(PlayerCharacter *pc){
     //if random generated number with 50/50 chance of 0 or 1 generates 1,
     //then this indicates the player hit the character pc
     if((rand() % 2) == 1){
         //reduce character c's hp after attacking pc
-        pc.setHp(pc.getHp() - damageAgainst(pc));
+        pc->setHp(pc->getHp() - damageAgainst(pc));
         return true;
     }
     return false;
