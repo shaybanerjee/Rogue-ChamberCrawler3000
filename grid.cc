@@ -92,7 +92,7 @@ void Grid::restartGrid(PlayerCharacter *p) { // restarts game
     level = 1; 
 }
 
-ostream &operator<<(ostream &out, const theGrid) {
+ostream &operator<<(ostream &out, const Grid &theGrid) {
     for (int i = 0; i < height; ++i) {
         for (int j = 0; j < width; ++j) {
             GameSubject* curr_sub = theGrid[i][j];

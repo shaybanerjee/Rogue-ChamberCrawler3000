@@ -43,7 +43,7 @@ public:
     void atkByEnemy(); // checks radius if enemy should attack
     void move(Direction d); // player Player
     void clearGrid(); // clear the entire grid for a new level
-    std::ostream &operator<<(std::ostream& out, const theGrid); // output the grid
+    std::ostream &operator<<(std::ostream& out, const Grid &theGrid); // output the grid
 };
 
 #endif
