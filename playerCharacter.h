@@ -3,17 +3,18 @@
 #include "character.h"
 #include <string>
 #include <vector>
+#include "npc.h"
+
+class Npc;
 
 class PlayerCharacter: public Character{
-    int maxHp;
     int baseAtk;
     int baseDef;
     std::string name;
     std::vector<std::string> usedPotions;
-    //Vector to store all the potions used
-    //Used to check whether a potion has been used to output
     
 protected:
+    int maxHp;
     int numGold;
 
 public:
@@ -32,10 +33,10 @@ public:
     //getStats returns a string which represents the stats of the PlayerCharacter
     std::string getStats();
     
-    //Overriding the attack method to account for the fact that theres a 50% chance
+    //Creating the attack method to account for the fact that theres a 50% chance
     //of missing when attacking a halfing and if a human was killed during the
     //attack, 2 gold will be added to the current player character
-    bool attack(Character &c) override;
+    virtual bool attack(Npc &enemy);
 };
 
 #endif

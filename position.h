@@ -6,7 +6,7 @@ class Position {
 	int pos_y;
 	bool is_empty;
 public:
-	Position(int pos_x, int pos_y, bool is_empty);
+	Position(int pos_x, int pos_y);
 	void set_false(); 
 };
 

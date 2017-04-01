@@ -23,11 +23,6 @@ public:
     //isAlive returns true if the character is alive and false otherwise
     bool isAlive();
     
-    //attack is a virtual method that performs the action of the current character
-    //attacking character c and returns true if the attack is successful and false
-    //otherwise
-    virtual bool attack(Character &c);
-    
     //damageAgainst returns the amount of damage the current character does against
     //character c
     int damageAgainst(Character &c);

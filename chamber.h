@@ -1,11 +1,11 @@
 #ifndef _CHAMBER_H_
 #define _CHAMBER_H_
-
+#include "position.h"
 class Chamber {
 	vector <Position> cham_pos; 
 	
 	public: 
-		Position get_rand();
+		Chamber(int i);
 		
 };
 
