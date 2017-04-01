@@ -22,8 +22,8 @@ public:
     //Constructor
     PlayerCharacter(int hp = 125, int atk = 25, int def = 25, std::string name = "Shade");
     
-    //accessor for name;
-    std::string getName();
+    //accessor for gold;
+    int getGold();
     
     //accessor and mutator for currPlace;
     char getCurTile();

@@ -48,6 +48,7 @@ Grid::Grid(ifstream &f, GameSubject& PC) // constructor for Grid
     }
 }
 
+<<<<<<< HEAD
 void Grid::clearGrid() { // method for clear grid after level
     for (int row = 0; row < height; ++row) {
         for (int col = 0; col < width; ++col) {
@@ -71,6 +72,19 @@ void Grid::clearGrid() { // method for clear grid after level
     }
     
 }
+=======
+int numDigits(int number)
+{
+    int digits = 0;
+    if (number < 0) digits = 1; // remove this line if '-' counts as a digit
+    while (number) {
+        number /= 10;
+        digits++;
+    }
+    return digits;
+}
+
+>>>>>>> 3fef7cea553a42f6db5dc7de0702329a2f3cf4f9
 
 void Grid::restartGrid(PlayerCharacter *p) { // restarts game
     for (int row = 0; row < height; ++row) {
@@ -93,6 +107,7 @@ void Grid::restartGrid(PlayerCharacter *p) { // restarts game
 }
 
 ostream &operator<<(ostream &out, const theGrid) {
+<<<<<<< HEAD
     for (int i = 0; i < height; ++i) {
         for (int j = 0; j < width; ++j) {
             GameSubject* curr_sub = theGrid[i][j];
@@ -397,6 +412,24 @@ void moveNpcs(){
             }
         }
     }
+=======
+	for (int i = 0; i < n; ++i) {
+		for (int j = 0; j < n; ++j) {
+			GameSubject* curr_sub = theGrid[i][j]; 
+			out << curr_sub->get_symb() << endl; 
+		}
+	}
+	cout << "Race: " << PC->getName();
+    cout << " Gold: " << PC->getGold();
+    cout.width(63 - PC->getRace().length() - numDigits(PC->getGold()) - 1);
+    cout << right << "Floor: " << right << floor << endl;
+
+    cout << left;
+    cout << "HP: " << PC->getHp() << endl;
+    cout << "Atk: " << PC->getAtk() << endl;
+    cout << "Def: " << PC->getDef() << endl;
+    //cout << "Action: " << PC->getAction() << endl;
+>>>>>>> 3fef7cea553a42f6db5dc7de0702329a2f3cf4f9
 }
 
 // use potion in that direction
