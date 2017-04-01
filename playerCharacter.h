@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include "npc.h"
+#include "potion.h"
 
 class Npc;
 
