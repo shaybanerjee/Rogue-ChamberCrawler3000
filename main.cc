@@ -132,6 +132,38 @@ int main(int argc, const char * argv[]) {
 					break;
 			}
 		}
+		else{
+			switch (command){
+				case "no":
+					grid.move(Direction::NO);
+					break;
+				case "so":
+					grid.move(Direction::SO);
+					break;
+				case "ea":
+					grid.move(Direction::EA);
+					break;
+				case "we":
+					grid.move(Direction::WE);
+					break;
+				case "ne":
+					grid.move(Direction::NE);
+					break;
+				case "nw":
+					grid.move(Direction::NW);
+					break;
+				case "se":
+					grid.move(Direction::SE);
+					break;
+				case "sw":
+					grid.move(Direction::SW);
+					break;
+				default:
+					cout << "Enter a valid command: ";
+					break;
+			}
+		}
+		cin >> command; //reads next command
 
 	}
 
