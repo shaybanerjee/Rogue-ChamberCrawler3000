@@ -1,5 +1,5 @@
 #include "chamber.h"
-#include ""
+#include <cstdlib>
 
 Chamber::Chamber(const int i){
     switch(i){
@@ -62,9 +62,9 @@ Position Chamber::getRand() {
     int sizeOfVec = cham_pos.size(); 
     while(1) {
         int randVal = rand() % sizeOfVec;
-        if (cham_pos[rand_val].is_false()) {
-            cham_pos[rand_val].set_false(); 
-            return cham_pos[rand_val]; 
+        if (cham_pos[randVal].isEmpty()) {
+            cham_pos[randVal].set_false();
+            return cham_pos[randVal];
         }
     }
 } 

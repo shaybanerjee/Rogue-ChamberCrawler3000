@@ -38,20 +38,24 @@ void PlayerCharacter::usePotion(Potion *p){
     //boost attack
     if(potionType == "BA"){
         setAtk(getAtk() + p->getValue());
+        if(isUsed(p) == false) usedPotions.emplace_back("BA");
     }
     //wound attack
     if(potionType == "WA"){
         setAtk(getAtk() - p->getValue());
         if(getAtk() < 0) setAtk(0);
+        if(isUsed(p) == false) usedPotions.emplace_back("WA");
     }
     //boost defence
     if(potionType == "BD"){
         setDef(getDef() + p->getValue());
+        if(isUsed(p) == false) usedPotions.emplace_back("BD");
     }
     //wound defence
     if(potionType == "WD"){
         setDef(getDef() - p->getValue());
         if(getDef() < 0) setDef(0);
+        if(isUsed(p) == false) usedPotions.emplace_back("WD");
     }
     //Restore health
     if(potionType == "RH"){
@@ -59,16 +63,18 @@ void PlayerCharacter::usePotion(Potion *p){
         //Setting hp to maxHp if it's over the maxHp limit and also checking
         //if it's not a vampire
         if(maxHp != -1 && getHp() > maxHp) setHp(maxHp);
+        if(isUsed(p) == false) usedPotions.emplace_back("RH");
     }
     //Potion health
     if(potionType == "PH"){
         setHp(getHp() - p->getValue());
+        if(isUsed(p) == false) usedPotions.emplace_back("PH");
     }
 }
 
 //isUsed returns true if the potion has been used and false otherwise
-bool isUsed(Potion *p){
-    return (std::find(usedPotions->begin(), usedPotions->end(), p->getType()) != usedPotions->end());
+bool PlayerCharacter::isUsed(Potion *p){
+    return (std::find(usedPotions.begin(), usedPotions.end(), p->getType()) != usedPotions.end());
 }
 
 //getStats returns a string which represents the stats of the PlayerCharacter
@@ -77,7 +83,7 @@ std::string getStats();
 //Creating the attack method to account for the fact that theres a 50% chance
 //of missing when attacking a halfing and if a human was killed during the
 //attack, 2 gold will be added to the current player character
-bool PlayerCharacter::attack(Npc &enemy){
+bool PlayerCharacter::attack(Npc *enemy){
     //if a player character attacks a halfing
     if(enemy->getSymb() == 'L'){
         //if random generated number with 50/50 chance of 0 or 1 generates 0,
@@ -86,7 +92,7 @@ bool PlayerCharacter::attack(Npc &enemy){
     }
     //If hitting a merchant, the merchants now become hostile
     if(enemy->getSymb() == 'M'){
-        enemy.turnHostile();
+        enemy->turnHostile();
     }
     
     //reduce character c's hp after attacking c
@@ -94,7 +100,7 @@ bool PlayerCharacter::attack(Npc &enemy){
     
     //if the character being attacked is human and it's also killed, we'll increase
     //the current gold by 2
-    if(enemy->getSymb() == 'H' && c.alive() == false){
+    if(enemy->getSymb() == 'H' && enemy->isAlive() == false){
         numGold += 2;
     }
     return true;

@@ -1,6 +1,8 @@
-#include "restoreHealth.cc"
-#include <string.h>
+#include "restoreHealth.h"
+#include <string>
+
 using namespace std;
+
 const string type = "RH";
 const int value = 10;
 

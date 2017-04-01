@@ -37,6 +37,6 @@ bool Character::isAlive(){
 
 //damageAgainst returns the amount of damage the current character does against
 //character c
-int Character::damageAgainst(Character &c){
-    return ceil((100 / 100.0 + c.def) * atk);
+int Character::damageAgainst(Character *c){
+    return ceil((100 / 100.0 + c->def) * atk);
 }

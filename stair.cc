@@ -1,10 +1,9 @@
 #include "stair.h"
 #include <string>
 
-using namespace std; 
+using namespace std;
 
-
-char Floor::getSymb() {
-	return '\'; 
+char Stair::getSymb() {
+	return '\\';
 }
 

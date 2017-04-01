@@ -1,8 +1,9 @@
 #ifndef POISON_HEALTH_H
 #define POISON_HEALTH_H
-
-class PoisonHealth():public Potion{
+#include "potion.h"
+class PoisonHealth:public Potion{
+    public:
 	PoisonHealth();
-}
+};
 
 #endif

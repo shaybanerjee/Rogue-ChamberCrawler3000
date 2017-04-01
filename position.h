@@ -7,9 +7,11 @@ class Position {
 	bool is_empty;
 public:
 	Position(int pos_x, int pos_y);
-	bool is_false(); 
+	bool isEmpty();
 	void set_false(); 
-	void set_true(); 
+	void set_true();
+    int getX();
+    int getY();
 };
 
 #endif

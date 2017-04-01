@@ -12,3 +12,16 @@ void Position::set_true() {
 	is_empty = true; 
 }
 
+int Position::getX() {
+    return pos_x;
+}
+
+int Position::getY() {
+    return pos_y;
+    
+}
+
+bool Position::isEmpty() {
+    return is_empty;
+    
+}

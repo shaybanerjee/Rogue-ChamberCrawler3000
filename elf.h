@@ -2,7 +2,7 @@
 #define _elf_h_
 #include "npc.h"
 
-class elf : public Npc{
+class Elf : public Npc{
     
 public:
     //Constructor

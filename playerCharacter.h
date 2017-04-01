@@ -12,11 +12,11 @@ class PlayerCharacter: public Character{
     int baseDef;
     char curTile;
     std::string name;
-    std::vector<std::string> usedPotions;
     
 protected:
     int maxHp;
     int numGold;
+    std::vector<std::string> usedPotions;
 
 public:
     //Constructor

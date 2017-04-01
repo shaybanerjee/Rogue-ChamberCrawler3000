@@ -5,9 +5,9 @@ int Treasure::getValue(){
 	return value;
 }
 
-Treasure::~Treasure(){
+Treasure::Treasure(const int value): value{value}{
 }
 
-char Tressure::getSymb() {
+char Treasure::getSymb() {
 	return 'G'; 
 }

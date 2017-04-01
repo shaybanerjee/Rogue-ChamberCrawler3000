@@ -1,12 +1,19 @@
 #include "gamesubject.h"
-#include "observer.h" 
 
 using namespace std; 
 
-GameSubject::get_x() const {
+int GameSubject::getX() const {
 	return x; 
 }
 
-GameSubject::get_y() const {
+int GameSubject::getY() const {
 	return y; 
+}
+
+void GameSubject::setX(int newX){
+    x = newX;
+}
+
+void GameSubject::setY(int newY){
+    y = newY;
 }

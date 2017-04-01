@@ -12,9 +12,6 @@ string Potion::getType(){
 	return type;
 }
 
-Potion::~Potion(){
-}
-
 char Potion::getSymb() {
 	return 'P';
 

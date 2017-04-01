@@ -11,7 +11,6 @@ class Potion : public GameSubject{
         Potion(std::string type,int value);
 		int getValue();
 		std::string getType();
-		virtual ~Potion()=0;
 		char getSymb() override; 
 };
 

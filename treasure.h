@@ -1,13 +1,13 @@
 #ifndef _TREASURE_H_
 #define _TREASURE_H_
-
-class Treasure {
+#include "gamesubject.h"
+class Treasure: public GameSubject {
 	protected:
 		int value;
 	public:
-		int getValue():
-		virtual ~Treasure() =0;
-		char getSymb() override; 
+        int getValue();
+        Treasure(int value);
+		char getSymb() override;
 };
 
 #endif

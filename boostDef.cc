@@ -1,10 +1,9 @@
 #include "boostDef.h"
-#include <string.h>
-using namespace std;
+#include <string>
 
-const string type = "BD";
+const std::string type = "BD";
 const int value = 5;
 
-BoostAtk::BoostAtk():Potion{type,value}{
+BoostDef::BoostDef():Potion{type,value}{
 
 }
