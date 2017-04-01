@@ -2,7 +2,7 @@
 #define _CHAMBER_H_
 #include "position.h"
 class Chamber {
-    vector <Position> cham_pos;
+    std::vector <Position> cham_pos;
     int numTiles;
 public:
     Chamber(int i);

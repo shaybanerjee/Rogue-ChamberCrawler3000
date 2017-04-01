@@ -24,7 +24,7 @@ class Halfling;
 class Grid {
     std::vector <std::vector <GameSubject*> > theGrid; // vector of vector of GameSubjects
     Chamber cham_arr[5];
-    ifstream &f;
+    std::ifstream &f;
     const int width; // size of width
     const int height; // size of heigth
     GameSubject &PC;

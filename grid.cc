@@ -99,6 +99,16 @@ ostream &operator<<(ostream &out, const theGrid) {
             out << curr_sub->get_symb() << endl; 
         }
     }
+    cout << "Race: " << PC->getName();
+    cout << " Gold: " << PC->getGold();
+    cout.width(63 - PC->getRace().length() - numDigits(PC->getGold()) - 1);
+    cout << right << "Floor: " << right << floor << endl;
+
+    cout << left;
+    cout << "HP: " << PC->getHp() << endl;
+    cout << "Atk: " << PC->getAtk() << endl;
+    cout << "Def: " << PC->getDef() << endl;
+    //cout << "Action: " << PC->getAction() << endl;
 }
 
 void rand_enemy() { // generate random enemy
@@ -390,8 +400,8 @@ void moveNpcs(){
     }
     
     //Reseting all Npcs to indicate that they haven't moved yet
-    for(int i = 0; i < height; i++){
-        for(int k = 0; k < width; k++){
+    for(int i = 0; i < height; ++i){
+        for(int k = 0; k < width; ++k){
             if(isNpc(theGrid[i][k]){
                 theGrid[i][k]->setHasMoved(false);
             }
