@@ -58,23 +58,42 @@ int main(int argc, const char * argv[]) {
 			break;
 	}
 
-	Grid g{file} // The map/floorplan of the game
+	Grid g{file,pc} // The map/floorplan of the game
 
 	cout << g; // print the grid;
 
 	cin >> command;
 	while(!cin.eof()){
 		if (command =="q"){
-			//quit game
+			cout << "You have lost the game, try again!"<<endl;
 			break;
 		}
 		else if (command == "r"){
-			//restarts the game
+			delete pc;
+			race = playerSelect(); // select new race
+			switch(race){
+				case 'd':
+					pc = new Drow();
+					break;
+				case 'g':
+					pc = new Goblin();
+					break;
+				case 's':
+					pc = new Shade();
+					break;
+				case 't':
+					pc = new Troll();
+					break;
+				case 'v':
+					pc = new Vampire();
+					break;
+			}
+			grid.restartGrid(pc);
 		}
 		else if (command == "f"){
 			//enemies stop moving
 		}
-		else if (command[0] == "a"){
+		else if (command[0] == "a"){ // player attacks enemy
 			command.erase(0,1);
 			switch (command){
 				case "no":
@@ -106,7 +125,7 @@ int main(int argc, const char * argv[]) {
 					break;
 			}
 		}
-		else if (command[0] == "u"){
+		else if (command[0] == "u"){ // use potion
 			command.erase(0,1);
 			switch (command){
 				case "no":
@@ -139,7 +158,7 @@ int main(int argc, const char * argv[]) {
 			}
 		}
 		else{
-			switch (command){
+			switch (command){// move player
 				case "no":
 					grid.move(Direction::NO);
 					break;
@@ -170,7 +189,7 @@ int main(int argc, const char * argv[]) {
 			}
 		}
 		if (grid.isWon()){
-			//win display message
+			cout << "Huzzah you have won the game!"<<endl;
 			break;
 		}
 
@@ -178,9 +197,7 @@ int main(int argc, const char * argv[]) {
 		cin >> command; //reads next command
 
 	}
-
-
-
-
+	delete pc;
+	return 0;
 
 }
