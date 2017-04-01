@@ -169,6 +169,12 @@ int main(int argc, const char * argv[]) {
 					break;
 			}
 		}
+		if (grid.isWon()){
+			//win display message
+			break;
+		}
+
+		cout << g; // print board
 		cin >> command; //reads next command
 
 	}
