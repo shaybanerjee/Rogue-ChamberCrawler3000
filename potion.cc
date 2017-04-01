@@ -1,5 +1,5 @@
 #include "potion.h"
-#include <string.h>
+#include <string>
 using namespace std;
 Potion::Potion(string type, int value): type{type}, value{value}{
 }

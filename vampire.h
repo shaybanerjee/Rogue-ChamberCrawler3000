@@ -11,7 +11,7 @@ public:
     //overriding the attack method so that vampire also gains 5hp every successful
     //attack except if it attacks a dwarf, then it will lose 5hp every successful
     //attack
-    bool attack(Npc &enemy) override;
+    bool attack(Npc *enemy) override;
     
     //Overriding getSymb method to return the character that represents
     //the object

@@ -1,5 +1,5 @@
 #include "poisonHealth.h"
-#include <string.h>
+#include <string>
 using namespace std;
 
 const string type = "PH";

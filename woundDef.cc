@@ -1,5 +1,5 @@
 #include "woundDef.h"
-#include <string.h>
+#include <string>
 using namespace std;
 
 const string type = "WD";
