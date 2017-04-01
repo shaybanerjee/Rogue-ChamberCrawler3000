@@ -56,6 +56,17 @@ void Grid::clearGrid() {
 	}
 }
 
+int numDigits(int number)
+{
+    int digits = 0;
+    if (number < 0) digits = 1; // remove this line if '-' counts as a digit
+    while (number) {
+        number /= 10;
+        digits++;
+    }
+    return digits;
+}
+
 
 
 ostream &operator<<(ostream &out, const theGrid) {
@@ -65,6 +76,16 @@ ostream &operator<<(ostream &out, const theGrid) {
 			out << curr_sub->get_symb() << endl; 
 		}
 	}
+	cout << "Race: " << PC->getName();
+    cout << " Gold: " << PC->getGold();
+    cout.width(63 - PC->getRace().length() - numDigits(PC->getGold()) - 1);
+    cout << right << "Floor: " << right << floor << endl;
+
+    cout << left;
+    cout << "HP: " << PC->getHp() << endl;
+    cout << "Atk: " << PC->getAtk() << endl;
+    cout << "Def: " << PC->getDef() << endl;
+    //cout << "Action: " << PC->getAction() << endl;
 }
 
 
