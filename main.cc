@@ -7,6 +7,7 @@
 #include "vampire.h"
 #include "troll.h"
 #include "direction.h"
+using namespace std;
 char playerSelect(){ // Player selects race to play as 
 	char character;
 	cout << "Please select a race for you player: "<<endl;
