@@ -68,6 +68,12 @@ int main(int argc, const char * argv[]) {
 			//quit game
 			break;
 		}
+		else if (command == "r"){
+			//restarts the game
+		}
+		else if (command == "f"){
+			//enemies stop moving
+		}
 		else if (command[0] == "a"){
 			command.erase(0,1);
 			switch (command){
