@@ -1,15 +1,15 @@
 #ifndef _POTION_H_
 #define _POTION_H_
 #include <string>
-
-class Potion:{
+using namespace std;
+class Potion{
 	protected:
-    	std::string type;
+    	string type;
 		int value;
 	public:
 		Potion(string type,int value);
 		int getValue();
-		std::string getType();
+		string getType();
 		virtual ~Potion()=0;
 		char getSymb() override; 
 };
