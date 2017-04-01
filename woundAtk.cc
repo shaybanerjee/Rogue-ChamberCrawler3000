@@ -1,5 +1,5 @@
 #include "woundAtk.h"
-#include <string.h>
+#include <string>
 using namespace std;
 
 const string type = "WA"l
