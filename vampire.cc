@@ -22,7 +22,7 @@ bool Vampire::attack(Npc *enemy){
     
     //if the enemy being attacked is human and it's also killed, we'll increase
     //the current gold by 2
-    if(enemy->getSymb() == 'H' && enemy->alive() == false){
+    if(enemy->getSymb() == 'H' && enemy->isAlive() == false){
         numGold += 2;
     }
     

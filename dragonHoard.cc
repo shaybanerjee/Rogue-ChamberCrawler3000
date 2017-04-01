@@ -5,9 +5,9 @@ DragonHoard::DragonHoard():Treasure{value}{
 }
 
 void DragonHoard::setDragon(Dragon* d) {
-	Drago = d; 
+    Drago = d;
 }
 
 Dragon* DragonHoard::getDragon() {
-	return Drago; 
+    return Drago;
 }

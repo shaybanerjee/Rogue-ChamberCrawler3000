@@ -2,13 +2,13 @@
 #define _CHAMBER_H_
 #include "position.h"
 class Chamber {
-	vector <Position> cham_pos; 
-	int numTiles; 
-	public: 
-		Chamber(int i);
-		Position getRand();
-		void update(Position &p);
-		void clear(); 
+    vector <Position> cham_pos;
+    int numTiles;
+public:
+    Chamber(int i);
+    Position getRand();
+    void update(Position &p);
+    void clear();
 };
 
 #endif

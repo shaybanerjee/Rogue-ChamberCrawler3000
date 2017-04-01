@@ -15,7 +15,9 @@ bool Orc::attack(PlayerCharacter *pc){
         }else{
             pc->setHp(pc->getHp() - damageAgainst(pc));
         }
+        return true;
     }
+    return false;
 }
 
 //Overriding getSymb method to return the character that represents

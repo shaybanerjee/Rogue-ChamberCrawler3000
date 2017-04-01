@@ -23,7 +23,7 @@ public:
     
     //Creating the attack method to make sure non player characters has a
     //50% chance of missing when attaching humans
-    bool attack(PlayerCharacter *pc);
+    virtual bool attack(PlayerCharacter *pc);
 };
 
 #endif

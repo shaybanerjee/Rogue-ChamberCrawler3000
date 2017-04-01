@@ -31,10 +31,6 @@ void PlayerCharacter::addGold(int gold){
     numGold += gold;
 }
 
-int PlayerCharacter::getGold(){
-    return gold;
-}
-
 //usePotion applies the potion p's effects to the current PlayerCharacter
 void PlayerCharacter::usePotion(Potion *p){
     std::string potionType = p->getType();

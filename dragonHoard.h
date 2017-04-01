@@ -3,12 +3,12 @@
 #include "dragon.h"
 
 class DragonHoard:public Treasure{
-	DragonHoard();
-	Dragon* Drago; 
-public: 
-	void setDragon(Dragon* d);
-	Dragon* getDragon();  
-
+    DragonHoard();
+    Dragon* Drago;
+public:
+    void setDragon(Dragon* d);
+    Dragon* getDragon();
+    
 };
 
 

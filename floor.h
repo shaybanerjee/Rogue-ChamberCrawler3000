@@ -3,7 +3,6 @@
 
 class Floor : public Tile { 	
 public: 
-	Floor(int x, int y); 
 	char getSymb() override; 
 }; 
 

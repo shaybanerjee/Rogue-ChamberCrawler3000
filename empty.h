@@ -3,7 +3,6 @@
 
 class Empty : public Tile {
 	public: 
-		Empty(int x, int y); 
 		char getSymb() override; 
 };
 

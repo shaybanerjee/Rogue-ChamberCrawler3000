@@ -1,8 +1,9 @@
 #ifndef _character_h_
 #define _character_h_
 #include "direction.h"
+#include "gamesubject.h"
 
-class Character{
+class Character : public GameSubject{
     
 int hp;
 int atk;
@@ -25,7 +26,7 @@ public:
     
     //damageAgainst returns the amount of damage the current character does against
     //character c
-    int damageAgainst(Character &c);
+    int damageAgainst(Character *c);
 };
 
 #endif
