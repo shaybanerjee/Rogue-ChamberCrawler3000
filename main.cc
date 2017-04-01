@@ -188,10 +188,70 @@ int main(int argc, const char * argv[]) {
 					break;
 			}
 		}
-		if (grid.isWon()){
+		if (grid.isWon()){ // player reaches stairs on 5th floor
 			cout << "Huzzah you have won the game!"<<endl;
-			break;
+			cout << "Press 'r' to restart or 'q' to quit" <<endl;
+			cin >> command;
+			switch (command){
+				case "r":
+				delete pc;
+					race = playerSelect(); // select new race
+					switch(race){
+						case 'd':
+							pc = new Drow();
+							break;
+						case 'g':
+							pc = new Goblin();
+							break;
+						case 's':
+							pc = new Shade();
+							break;
+						case 't':
+							pc = new Troll();
+							break;
+						case 'v':
+							pc = new Vampire();
+							break;
+					}
+					grid.restartGrid(pc);
+
+				default: // quits the game
+					break;
+
+			}
 		}
+		else if (grid.isLost()){ // player's health lower than 0
+			cout << "You have died"<<endl;
+			cout << "press 'r' to restart or 'q' to quit"<<endl;
+			cin >> command;
+			switch (command){
+				case "r":
+				delete pc;
+					race = playerSelect(); // select new race
+					switch(race){
+						case 'd':
+							pc = new Drow();
+							break;
+						case 'g':
+							pc = new Goblin();
+							break;
+						case 's':
+							pc = new Shade();
+							break;
+						case 't':
+							pc = new Troll();
+							break;
+						case 'v':
+							pc = new Vampire();
+							break;
+					}
+					grid.restartGrid(pc);
+
+				default: // Quits the game
+					break;
+
+		}
+	}
 
 		cout << g; // print board
 		cin >> command; //reads next command
