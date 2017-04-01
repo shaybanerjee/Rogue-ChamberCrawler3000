@@ -59,9 +59,9 @@ int main(int argc, const char * argv[]) {
 			break;
 	}
 
-	Grid g{file,pc} // The map/floorplan of the game
+	Grid grid{file,pc} // The map/floorplan of the game
 
-	cout << g; // print the grid;
+	cout << grid; // print the grid;
 
 	cin >> command;
 	while(!cin.eof()){
@@ -254,7 +254,7 @@ int main(int argc, const char * argv[]) {
 		}
 	}
 
-		cout << g; // print board
+		cout << grid; // print board
 		cin >> command; //reads next command
 
 	}
