@@ -64,6 +64,8 @@ int main(int argc, const char * argv[]) {
     Grid grid{file,pc}; // The map/floorplan of the game
     
     cout << grid; // print the grid;
+    grid.rand_potion();
+    cout << grid;
     
     cin >> command;
     while(!cin.eof()){

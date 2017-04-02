@@ -29,6 +29,7 @@
 #include "woundDef.h"
 #include "smallGold.h"
 #include "normalGold.h"
+#include "merchantHoard.h"
 #include "dragonHoard.h"
 #include "chamber.h"
 #include <fstream>
@@ -48,7 +49,7 @@ class Dragon;
 class Halfling;
 
 class Grid {
-    std::vector <std::vector <GameSubject*> > theGrid; // vector of vector of GameSubjects
+    std::vector <std::vector <GameSubject*>> theGrid; // vector of vector of GameSubjects
     std::string filename;
     const int width; // size of width
     const int height; // size of heigth

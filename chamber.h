@@ -4,13 +4,13 @@
 #include <vector>
 
 class Chamber {
-	std::vector <Position> cham_pos; 
-	int numTiles; 
-	public: 
-		Chamber(int i);
-		Position getRand();
-		void update(Position &p);
-		void clear(); 
+    std::vector <Position> cham_pos;
+    int numTiles;
+public:
+    Chamber(int i);
+    Position getRand();
+    void update(Position &p);
+    void clear();
 };
 
 #endif

@@ -3,7 +3,7 @@
 #include <cstdlib>
 #include "stair.h"
 #include "npc.h"
-#include <string>
+#include <ctime>
 
 using namespace std;
 
@@ -38,7 +38,7 @@ Grid::Grid(string filename, PlayerCharacter* PC) // constructor for Grid
             }
             else if (read_line[j] == ' ') {
                 gameSub = new Empty();
-                row.emplace_back(gameSub);  
+                row.emplace_back(gameSub);
             }
         }
         theGrid.emplace_back(row);
@@ -54,17 +54,17 @@ Grid::~Grid(){
 void Grid::clearGrid() { // method for clear grid after level
     for (int row = 0; row < height; ++row) {
         for (int col = 0; col < width; ++col) {
-            GameSubject* currSub = theGrid[row][col];
+            GameSubject* currSub = theGrid[col][row];
             char symb = currSub->getSymb();
             if (symb != '+' && symb != '.' && // if not a tile obj
                 symb != ' ' && symb != '-' &&
                 symb != '|' && symb != '#') {
                 if (symb == '@') { // if player dont delete
-                    theGrid[row][col] = new Floor(); // place floor tile
+                    theGrid[col][row] = new Floor(); // place floor tile
                 }
                 else {
                     delete theGrid[row][col]; // return heap mem
-                    theGrid[row][col] = new Floor(); // place floor tile
+                    theGrid[col][row] = new Floor(); // place floor tile
                 }
             }	
         }
@@ -83,8 +83,9 @@ void Grid::restartGrid(PlayerCharacter *p) { // restarts game
             if (symb != '+' && symb != '.' &&
                 symb != ' ' && symb != '-' &&
                 symb != '|' && symb != '#') {
-                delete theGrid[row][col];
+                GameSubject* temp = theGrid[row][col];
                 theGrid[row][col] = new Floor();
+                delete temp;
             }
         }	
     }
@@ -177,14 +178,15 @@ void Grid::rand_player() { // randomly place player
 
 
 void Grid::rand_stair() { // randomly place stair
-    int rand_cham = rand() % 5; 
+    srand(time(NULL));
+    int rand_cham = rand() % 5;
     Position p = cham_arr[rand_cham].getRand();
     int x = p.getX();
     int y = p.getY();
     GameSubject* newSub = new Stair();
-    GameSubject* temp = theGrid[x][y];
-    theGrid[x][y] = newSub;
-    delete temp; 
+    GameSubject* temp = theGrid[y][x];
+    theGrid[y][x] = newSub;
+    delete temp;
 }
 
 
@@ -198,48 +200,54 @@ void Grid::rand_potion() { // randomly place potion
             Position p = cham_arr[chamber_val].getRand();
             int x = p.getX();
             int y = p.getY();
-            GameSubject* temp = theGrid[x][y]; 
+            GameSubject* temp = theGrid[y][x];
             theGrid[y][x] = newSub;
+            delete temp;
         }
         else if (pot_val == 2) { // 1/6 prob
             GameSubject* newSub = new BoostAtk();
             Position p = cham_arr[chamber_val].getRand();
             int x = p.getX();
             int y = p.getY();
-            delete theGrid[y][x];
+            GameSubject* temp = theGrid[y][x];
             theGrid[y][x] = newSub;
+            delete temp;
         }
         else if (pot_val == 3) { // 1/6 prob
             GameSubject* newSub = new BoostDef();
             Position p = cham_arr[chamber_val].getRand();
             int x = p.getX();
             int y = p.getY();
-            delete theGrid[y][x];
+            GameSubject* temp = theGrid[y][x];
             theGrid[y][x] = newSub;
+            delete temp;
         }
         else if (pot_val == 4) { // 1/6 prob
             GameSubject* newSub = new PoisonHealth();
             Position p = cham_arr[chamber_val].getRand();
             int x = p.getX();
             int y = p.getY();
-            delete theGrid[y][x];
+            GameSubject* temp = theGrid[y][x];
             theGrid[y][x] = newSub;
+            delete temp;
         }
         else if (pot_val == 5) { // 1/6 prob
             GameSubject* newSub = new WoundAtk();
             Position p = cham_arr[chamber_val].getRand();
             int x = p.getX();
             int y = p.getY();
-            delete theGrid[y][x];
+            GameSubject* temp = theGrid[y][x];
             theGrid[y][x] = newSub;
+            delete temp;
         }
         else if (pot_val == 6) { // 1/6 prob
             GameSubject* newSub = new WoundDef();
             Position p = cham_arr[chamber_val].getRand();
             int x = p.getX();
             int y = p.getY();
-            delete theGrid[y][x];
+            GameSubject* temp = theGrid[y][x];
             theGrid[y][x] = newSub;
+            delete temp;
         }
         potCount += 1;
     }
@@ -507,7 +515,44 @@ void Grid::atkEnemy(Direction d){
         //Removing the npc and replacing it with a floor if npc is dead after attack
         if(static_cast<Npc *>(theGrid[y][x])->isAlive() == false){
             delete theGrid[y][x];
-            GameSubject* gameSub = new Floor();
+            GameSubject* gameSub;
+            
+            if(npcType == 'H'){
+                gameSub = new NormalGold();
+            }else if(npcType == 'M'){
+                gameSub = new MerchantHoard();
+            }else if(npcType == 'D'){
+                
+                //Setting the dragon hoard to be able to be picked up when the dragon dies
+                if(theGrid[y + 1][x]->getSymb() == 'G' && static_cast<Treasure *>(theGrid[y + 1][x])->getValue() == 6){
+                    static_cast<DragonHoard *>(theGrid[y + 1][x])->setDeadDrago(true);
+                }
+                if(theGrid[y - 1][x]->getSymb() == 'G' && static_cast<Treasure *>(theGrid[y - 1][x])->getValue() == 6){
+                    static_cast<DragonHoard *>(theGrid[y - 1][x])->setDeadDrago(true);
+                }
+                if(theGrid[y][x + 1]->getSymb() == 'G' && static_cast<Treasure *>(theGrid[y][x + 1])->getValue() == 6){
+                    static_cast<DragonHoard *>(theGrid[y][x + 1])->setDeadDrago(true);
+                }
+                if(theGrid[y][x - 1]->getSymb() == 'G' && static_cast<Treasure *>(theGrid[y][x - 1])->getValue() == 6){
+                    static_cast<DragonHoard *>(theGrid[y][x - 1])->setDeadDrago(true);
+                }
+                if(theGrid[y + 1][x + 1]->getSymb() == 'G' && static_cast<Treasure *>(theGrid[y + 1][x + 1])->getValue() == 6){
+                    static_cast<DragonHoard *>(theGrid[y + 1][x + 1])->setDeadDrago(true);
+                }
+                if(theGrid[y + 1][x - 1]->getSymb() == 'G' && static_cast<Treasure *>(theGrid[y + 1][x - 1])->getValue() == 6){
+                    static_cast<DragonHoard *>(theGrid[y + 1][x - 1])->setDeadDrago(true);
+                }
+                if(theGrid[y - 1][x + 1]->getSymb() == 'G' && static_cast<Treasure *>(theGrid[y - 1][x + 1])->getValue() == 6){
+                    static_cast<DragonHoard *>(theGrid[y - 1][x + 1])->setDeadDrago(true);
+                }
+                if(theGrid[y - 1][x - 1]->getSymb() == 'G' && static_cast<Treasure *>(theGrid[y - 1][x + 1])->getValue() == 6){
+                    static_cast<DragonHoard *>(theGrid[y - 1][x - 1])->setDeadDrago(true);
+                }
+                
+                gameSub = new Floor();
+            }else{
+                gameSub = new Floor();
+            }
             theGrid[y][x] = gameSub;
         }
     }else{
@@ -667,16 +712,20 @@ void Grid::move(Direction d){
         //Setting the PC's current floor tile after moving it in the direction d
         PC->setCurTile(floorType);
     }else if(floorType == 'G'){
-        //Adding gold to PC
-        PC->addGold(static_cast<Treasure *>(theGrid[y][x])->getValue());
-        //Removing Gold object and replacing it with the PC
-        delete theGrid[y][x];
-        theGrid[y][x] = PC;
-        //Replacing the current cell with a floor and updating PC's x and y coordinates
-        GameSubject* gameSub = new Floor();
-        theGrid[PC->getY()][PC->getX()] = gameSub;
-        PC->setX(x);
-        PC->setY(y);
+        if(static_cast<Treasure *>(theGrid[y][x])->getValue() == 6 && static_cast<DragonHoard *>(theGrid[y][x])->getDeadDrago() == false){
+            throw("Invalid direction to move, dragon is not dead yet");
+        }else{
+            //Adding gold to PC
+            PC->addGold(static_cast<Treasure *>(theGrid[y][x])->getValue());
+            //Removing Gold object and replacing it with the PC
+            delete theGrid[y][x];
+            theGrid[y][x] = PC;
+            //Replacing the current cell with a floor and updating PC's x and y coordinates
+            GameSubject* gameSub = new Floor();
+            theGrid[PC->getY()][PC->getX()] = gameSub;
+            PC->setX(x);
+            PC->setY(y);
+        }
     }else if(floorType == '/'){
         //Clears grid, and starts on the next floor
         clearGrid();

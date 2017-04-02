@@ -4,6 +4,6 @@
 const std::string type = "BD";
 const int value = 5;
 
-BoostDef::BoostDef():Potion{type,value}{
+BoostDef::BoostDef():Potion{"BD",5}{
 
 }

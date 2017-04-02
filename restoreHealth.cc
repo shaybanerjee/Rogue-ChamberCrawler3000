@@ -6,5 +6,5 @@ using namespace std;
 const string type = "RH";
 const int value = 10;
 
-RestoreHealth::RestoreHealth(): Potion{type,value}{
+RestoreHealth::RestoreHealth(): Potion{"RH",10}{
 }
