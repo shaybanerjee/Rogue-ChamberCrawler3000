@@ -36,9 +36,9 @@ Chamber::Chamber(const int i){
                     cham_pos.emplace_back(Position{j,i});
                 }
             }
-            cham_pos.emplace_back(Position{6,70});
-            cham_pos.emplace_back(Position{6,71});
-            cham_pos.emplace_back(Position{6,72});
+            cham_pos.emplace_back(Position{70,6});
+            cham_pos.emplace_back(Position{71,6});
+            cham_pos.emplace_back(Position{72,6});
             for (int i = 7; i < 13; ++i){
                 for (int j = 61; j < 76; ++j){
                     cham_pos.emplace_back(Position{j,i});
@@ -60,15 +60,14 @@ Chamber::Chamber(const int i){
 }
 
 Position Chamber::getRand() {
-    int sizeOfVec = cham_pos.size(); 
-    while(1) {
-        srand(time(NULL));
-        int randVal = rand() % sizeOfVec;
-        if (cham_pos[randVal].isEmpty()) {
-            cham_pos[randVal].set_false();
-            return cham_pos[randVal];
-        }
+    int sizeOfVec = cham_pos.size();
+    srand(time(NULL)); 
+    int randVal = rand() % sizeOfVec;
+    while(!cham_pos[randVal].isEmpty()) {
+        randVal = rand() % sizeOfVec;
     }
+    cham_pos[randVal].set_false();
+    return cham_pos[randVal];
 } 
 
 void Chamber::update(Position &p) {
