@@ -77,7 +77,7 @@ public:
     void move(Direction d); // player Player
     void clearGrid(); // clear the entire grid for a new level
     void restartGrid(PlayerCharacter* p);
-    friend std::ostream &operator<<(std::ostream& out, const Grid &gGrid); // output the grid
+    friend std::ostream &operator<<(std::ostream& out,const Grid &gGrid); // output the grid
 };
 
 

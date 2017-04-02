@@ -10,7 +10,7 @@ public:
     
     //overriding the attack method so that Goblin will gain 5 golds if the
     //character enemy being attack dies after the attack
-    bool attack(Npc *enemy) override;
+    void attack(Npc *enemy) override;
     
     //Overriding getSymb method to return the character that represents
     //the object

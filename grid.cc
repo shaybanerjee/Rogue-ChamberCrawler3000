@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include "stair.h"
 #include "npc.h"
+#include <sstream>
 
 using namespace std;
 
@@ -108,6 +109,24 @@ ostream &operator<<(ostream &out,const Grid &gGrid) {
         }
         out << endl;
     }
+    
+    //Counting the number of characters till gold
+    int index = 14;
+    index += gGrid.PC->getName().size();
+    //Printing out race and gold
+    out << "Race: " << gGrid.PC->getName() << " Gold: " << gGrid.PC->getNumGold();
+    //Printing out spaces before outputting stairs
+    for(int i = index; i < gGrid.width - 3; i++){
+        out << " ";
+    }
+    out << "Floor: " << gGrid.level << endl;
+    
+    //Printing out HP, Atk and Def and the action
+    out << "HP: " << gGrid.PC->getHp() << endl;
+    out << "Atk: " << gGrid.PC->getAtk() << endl;
+    out << "Def: " << gGrid.PC->getDef() << endl;
+    out << "Action: " << gGrid.PC->getAction() << endl;
+    
     return out;
 }
 
@@ -182,9 +201,8 @@ void Grid::rand_player() { // randomly place player
     PC->setX(x);
     PC->setY(y);
     theGrid[y][x] = PC;
+    PC->setAction("Player character has spawned.");
 }
-
-
 
 void Grid::rand_stair() { // randomly place stair
     int rand_cham;
@@ -201,7 +219,6 @@ void Grid::rand_stair() { // randomly place stair
     delete theGrid[y][x];
     theGrid[y][x] = newSub;
 }
-
 
 void Grid::rand_potion() { // randomly place potion
     int potCount = 0;
@@ -466,6 +483,14 @@ void Grid::usePotion(Direction d){
         //Using the potion
         PC->usePotion(static_cast<Potion *>(theGrid[y][x]));
         
+        //Update action
+        std::string newAction = "PC uses " + static_cast<Potion *>(theGrid[y][x])->getType() + ".";
+        if(PC->getAction().size() > 0){
+            PC->setAction(PC->getAction() + " " + newAction);
+        }else{
+            PC->setAction(newAction);
+        }
+        
         //Removing the potion and replacing it with a floor
         delete theGrid[y][x];
         GameSubject* gameSub = new Floor();
@@ -515,6 +540,8 @@ void Grid::atkEnemy(Direction d){
         
         //Attack the npc
         PC->attack(static_cast<Npc *>(theGrid[y][x]));
+    
+        std::string newAction;
         
         //Removing the npc and replacing it with a floor if npc is dead after attack
         if(static_cast<Npc *>(theGrid[y][x])->isAlive() == false){
@@ -523,8 +550,22 @@ void Grid::atkEnemy(Direction d){
             
             if(npcType == 'H'){
                 gameSub = new NormalGold();
+                //Update action to output drop normal gold
+                newAction = "Normal Gold was dropped.";
+                if(PC->getAction().size() > 0){
+                    PC->setAction(PC->getAction() + " " + newAction);
+                }else{
+                    PC->setAction(newAction);
+                }
             }else if(npcType == 'M'){
                 gameSub = new MerchantHoard();
+                //Update action to output drop MerchantHoard
+                newAction = "MerchantHoard was dropped.";
+                if(PC->getAction().size() > 0){
+                    PC->setAction(PC->getAction() + " " + newAction);
+                }else{
+                    PC->setAction(newAction);
+                }
             }else if(npcType == 'D'){
                 
                 //Setting the dragon hoard to be able to be picked up when the dragon dies
@@ -554,6 +595,14 @@ void Grid::atkEnemy(Direction d){
                 }
                 
                 gameSub = new Floor();
+                
+                //Update action to output dragonHoard is now available
+                newAction = "DragonHoard can now be picked up.";
+                if(PC->getAction().size() > 0){
+                    PC->setAction(PC->getAction() + " " + newAction);
+                }else{
+                    PC->setAction(newAction);
+                }
             }else{
                 gameSub = new Floor();
             }
@@ -568,6 +617,7 @@ void Grid::atkEnemy(Direction d){
 void Grid::atkByEnemy(){
     int x = PC->getX();
     int y = PC->getY();
+    
     //Check north
     if(isNpc(theGrid[y - 1][x]->getSymb()) || theGrid[y - 1][x]->getSymb() == 'G'){
         if(theGrid[y - 1][x]->getSymb() == 'G' && static_cast<Treasure *>(theGrid[y - 1][x])->getValue() == 6){
@@ -702,7 +752,17 @@ void Grid::move(Direction d){
     }
     
     char floorType = theGrid[y][x]->getSymb();
-    cout << floorType << endl;
+    if(floorType != ' ' && floorType != '-' && floorType != '|'){
+        //Updates the trolls HP by 5 everytime it moves
+        if(PC->getName() == "Troll"){
+            if(PC->getHp() + 5 > 120){
+                PC->setHp(120);
+            }else{
+                PC->setHp(PC->getHp() + 5);
+            }
+        }
+    }
+    
     if(floorType == '.' || floorType == '+' || floorType == '#'){
         //Removing floorType and replacing it with PC
         delete theGrid[y][x];
@@ -765,7 +825,6 @@ bool Grid::playerInSight(int x, int y){
         return false;
     }
 }
-
 
 bool Grid::isWon() {
     return level == 6;

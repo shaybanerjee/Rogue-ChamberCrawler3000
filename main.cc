@@ -29,7 +29,6 @@ char playerSelect(){ // Player selects race to play as
     }
     return character;
     
-    
 }
 
 int main(int argc, const char * argv[]) {

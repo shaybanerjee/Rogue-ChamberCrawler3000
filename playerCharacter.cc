@@ -1,6 +1,7 @@
 #include "playerCharacter.h"
 #include <algorithm>
 #include <cstdlib>
+#include <sstream>
 
 //Constructor
 PlayerCharacter::PlayerCharacter(int hp, int atk, int def, std::string name):
@@ -13,9 +14,13 @@ Character{hp, atk, def}, name{name}{
     action = "";
 }
 
-//Creating accessor for name
+//Creating accessor for name and gold
 std::string PlayerCharacter::getName(){
     return name;
+}
+
+int PlayerCharacter::getNumGold(){
+    return numGold;
 }
 
 //accessor and mutator for currPlace and Action;
@@ -89,16 +94,44 @@ bool PlayerCharacter::isUsed(Potion *p){
 //Creating the attack method to account for the fact that theres a 50% chance
 //of missing when attacking a halfing and if a human was killed during the
 //attack, 2 gold will be added to the current player character
-bool PlayerCharacter::attack(Npc *enemy){
+void PlayerCharacter::attack(Npc *enemy){
+    std::string newAction;
+    std::stringstream damage;
+    std::stringstream npcType;
+    std::stringstream enemyHealth;
+    npcType << enemy->getSymb();
+    damage << damageAgainst(enemy);
+    
     //if a player character attacks a halfing
-    if(enemy->getSymb() == 'L'){
-        //if random generated number with 50/50 chance of 0 or 1 generates 0,
-        //then this indicates the player missed.
-        if((rand() % 2) == 0) return false;
+    //if random generated number with 50/50 chance of 0 or 1 generates 0,
+    //then this indicates the player missed.
+    if(enemy->getSymb() == 'L' && rand() % 2 == 0){
+        newAction = "PC attacks L and misses.";
+        if(getAction().size() > 0){
+            setAction(getAction() + " " + newAction);
+        }else{
+            setAction(newAction);
+        }
+        return;
     }
     
     //reduce character c's hp after attacking c
     enemy->setHp(enemy->getHp() - damageAgainst(enemy));
+    enemyHealth << enemy->getHp();
+    
+    //Checks if the enemy is alive after attacking it
+    if(enemy->isAlive()){
+        newAction = "PC deals " + damage.str() + " damage to " + npcType.str() + " (" + enemyHealth.str() + ").";
+    }else{
+        newAction = "PC deals " + damage.str() + " damage to " + npcType.str() + "and slains " + npcType.str() + ".";
+    }
+    
+    //Updating Action
+    if(getAction().size() > 0){
+        setAction(getAction() + " " + newAction);
+    }else{
+        setAction(newAction);
+    }
     
     //If the enemy is dead after the attack and it's not a dragon, merchant or human, gold
     //is automatically added to the player character with 1/2 probability of it being 1 gold
@@ -111,5 +144,4 @@ bool PlayerCharacter::attack(Npc *enemy){
         }
     }
     
-    return true;
 }

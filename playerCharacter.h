@@ -23,8 +23,9 @@ public:
     //Constructor
     PlayerCharacter(int hp = 125, int atk = 25, int def = 25, std::string name = "Shade");
     
-    //accessor for name;
+    //accessor for name and Gold;
     std::string getName();
+    int getNumGold();
     
     //accessor and mutators for curTile and action
     char getCurTile();
@@ -44,7 +45,7 @@ public:
     //Creating the attack method to account for the fact that theres a 50% chance
     //of missing when attacking a halfing and if a human was killed during the
     //attack, 2 gold will be added to the current player character
-    virtual bool attack(Npc *enemy);
+    virtual void attack(Npc *enemy);
 };
 
 #endif
