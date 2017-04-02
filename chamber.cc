@@ -46,12 +46,12 @@ Chamber::Chamber(const int i){
             }
             break;
         case 4:
-            for (int i = 41; i < 44; ++i){
+            for (int i = 16; i < 19; ++i){
                 for (int j = 65; j < 76; ++j){
                     cham_pos.emplace_back(Position{j,i});
                 }
             }
-            for (int i = 44; i < 47; ++i){
+            for (int i = 19; i < 22; ++i){
                 for (int j = 37; j < 76; ++j){
                     cham_pos.emplace_back(Position{j,i});
                 }
