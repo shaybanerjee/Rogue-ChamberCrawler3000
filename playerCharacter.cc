@@ -98,10 +98,5 @@ bool PlayerCharacter::attack(Npc *enemy){
     //reduce character c's hp after attacking c
     enemy->setHp(enemy->getHp() - damageAgainst(enemy));
     
-    //if the character being attacked is human and it's also killed, we'll increase
-    //the current gold by 2
-    if(enemy->getSymb() == 'H' && enemy->isAlive() == false){
-        numGold += 2;
-    }
     return true;
 }

@@ -22,13 +22,9 @@ bool Goblin::attack(Npc *enemy){
         enemy->turnHostile();
     }
     
-    //if the enemy being attacked is human and it's also killed, we'll increase
-    //the current gold by 2, also since we also add 5 golds if the enemy is killed
+    //we will add 5 golds if the enemy is killed
     if(enemy->isAlive() == false){
         numGold += 5;
-        if(enemy->getSymb() == 'H'){
-            numGold += 2;
-        }
     }
     
     return true;
