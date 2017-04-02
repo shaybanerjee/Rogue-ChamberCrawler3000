@@ -3,44 +3,45 @@
 #include <cstdlib>
 #include "stair.h"
 #include "npc.h"
+#include <string>
 
 using namespace std;
 
 Grid::Grid(string filename, PlayerCharacter* PC) // constructor for Grid
 : width{79}, height{25}, filename{filename}, PC{PC}, level{1} { // MIL
-    char curr_char;
+    string read_line;
     ifstream f {filename};
-    for (int row = 0; row < height; ++row){
-        theGrid[row].resize(width);
-    }
-    for (int row = 0; row < height; ++row) {
-        for (int col = 0; col < width; ++col) {
-            f >> curr_char;
-            if (curr_char == '-') {
-                GameSubject* gameSub = new Hwall();
-                theGrid[col][row] = gameSub;
+    for (int i = 0; i < height; ++i) {
+        getline(f,read_line);
+        vector<GameSubject *> row;
+        for (int j = 0; j < width; ++j) {
+            GameSubject* gameSub;
+            if (read_line[j] == '-') {
+                gameSub = new Hwall();
+                row.emplace_back(gameSub);
             }
-            else if (curr_char == '|') {
-                GameSubject* gameSub = new Vwall();
-                theGrid[col][row] = gameSub;
+            else if (read_line[j] == '|') {
+                gameSub = new Vwall();
+                row.emplace_back(gameSub);
             }
-            else if (curr_char == '.') {
-                GameSubject* gameSub = new Floor();
-                theGrid[col][row] = gameSub;
+            else if (read_line[j] == '.') {
+                gameSub = new Floor();
+                row.emplace_back(gameSub);
             }
-            else if (curr_char == '#') {
-                GameSubject* gameSub = new PassageWay();
-                theGrid[col][row] = gameSub;
+            else if (read_line[j] == '#') {
+                gameSub = new PassageWay();
+                row.emplace_back(gameSub);
             }
-            else if (curr_char == '+') {
-                GameSubject* gameSub = new Door();
-                theGrid[col][row] = gameSub;
+            else if (read_line[j] == '+') {
+                gameSub = new Door();
+                row.emplace_back(gameSub);
             }
-            else if (curr_char == ' ') {
-                GameSubject* gameSub = new Empty();
-                theGrid[col][row] = gameSub;  
+            else if (read_line[j] == ' ') {
+                gameSub = new Empty();
+                row.emplace_back(gameSub);  
             }
         }
+        theGrid.emplace_back(row);
     }
     for (int i = 0; i < 5; ++i) {
         cham_arr.emplace_back(Chamber{i});
@@ -53,17 +54,17 @@ Grid::~Grid(){
 void Grid::clearGrid() { // method for clear grid after level
     for (int row = 0; row < height; ++row) {
         for (int col = 0; col < width; ++col) {
-            GameSubject* currSub = theGrid[col][row];
+            GameSubject* currSub = theGrid[row][col];
             char symb = currSub->getSymb();
             if (symb != '+' && symb != '.' && // if not a tile obj
                 symb != ' ' && symb != '-' &&
                 symb != '|' && symb != '#') {
                 if (symb == '@') { // if player dont delete
-                    theGrid[col][row] = new Floor(); // place floor tile
+                    theGrid[row][col] = new Floor(); // place floor tile
                 }
                 else {
                     delete theGrid[row][col]; // return heap mem
-                    theGrid[col][row] = new Floor(); // place floor tile
+                    theGrid[row][col] = new Floor(); // place floor tile
                 }
             }	
         }
@@ -77,13 +78,13 @@ void Grid::clearGrid() { // method for clear grid after level
 void Grid::restartGrid(PlayerCharacter *p) { // restarts game
     for (int row = 0; row < height; ++row) {
         for (int col = 0; col < width; ++col) {
-            GameSubject* currSub = theGrid[col][row];
+            GameSubject* currSub = theGrid[row][col];
             char symb = currSub->getSymb();
             if (symb != '+' && symb != '.' &&
                 symb != ' ' && symb != '-' &&
                 symb != '|' && symb != '#') {
-                delete theGrid[col][row];
-                theGrid[col][row] = new Floor();
+                delete theGrid[row][col];
+                theGrid[row][col] = new Floor();
             }
         }	
     }
@@ -95,11 +96,11 @@ void Grid::restartGrid(PlayerCharacter *p) { // restarts game
 }
 
 ostream &operator<<(ostream &out,const Grid &gGrid) {
-    for (int i = 0; i < 25; ++i) {
-        for (int j = 0; j < 79; ++j) {
-            GameSubject* curr_sub = gGrid.theGrid[i][j];
-            out << curr_sub->getSymb() << endl;
+    for (int i = 0; i < gGrid.height; ++i) {
+        for (int j = 0; j < gGrid.width; ++j) {
+            out << gGrid.theGrid[i][j]->getSymb();
         }
+        out << endl;
     }
     return out;
 }
