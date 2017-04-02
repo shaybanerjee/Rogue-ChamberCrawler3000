@@ -48,7 +48,7 @@ Grid::Grid(string filename, PlayerCharacter* PC, bool hostile) // constructor fo
     }
 }
 
-Grid::~Grid(){
+Grid::~Grid(){ // UPDATED
     for (int row = 0; row < height; ++row) {
         for (int col = 0; col < width; ++col) {
             delete theGrid[row][col];
@@ -57,7 +57,7 @@ Grid::~Grid(){
     delete PC;
 }
 
-void Grid::clearGrid() { // method for clear grid after level
+void Grid::clearGrid() { // method for clear grid after level UPDATED
     for (int row = 0; row < height; ++row) {
         for (int col = 0; col < width; ++col) {
             GameSubject* currSub = theGrid[row][col];
@@ -72,16 +72,21 @@ void Grid::clearGrid() { // method for clear grid after level
                     delete theGrid[row][col]; // return heap mem
                     theGrid[row][col] = new Floor(); // place floor tile
                 }
-            }	
+            }
         }
     }
     for (int i = 0; i < 5; ++i) {
         cham_arr[i].clear(); // reinit chambers
     }
+    rand_enemy();
+    rand_player();
+    rand_stair();
+    rand_potion();
+    rand_treasure();
     
 }
 
-void Grid::restartGrid(PlayerCharacter *p) { // restarts game
+void Grid::restartGrid(PlayerCharacter *p) { // restarts game UPDATED
     for (int row = 0; row < height; ++row) {
         for (int col = 0; col < width; ++col) {
             GameSubject* currSub = theGrid[row][col];
@@ -89,16 +94,19 @@ void Grid::restartGrid(PlayerCharacter *p) { // restarts game
             if (symb != '+' && symb != '.' &&
                 symb != ' ' && symb != '-' &&
                 symb != '|' && symb != '#') {
-                delete theGrid[row][col];
+                if (symb != '@') {
+                    delete theGrid[row][col];
+                }
                 theGrid[row][col] = new Floor();
             }
-        }	
+        }
     }
     for (int i = 0; i < 5; ++i) {
-        cham_arr[i].clear(); 
+        cham_arr[i].clear();
     }
-    PC = p; 
-    level = 1; 
+    delete PC;
+    PC = p;
+    level = 1;
 }
 
 ostream &operator<<(ostream &out,const Grid &gGrid) {

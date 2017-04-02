@@ -12,33 +12,40 @@
 using namespace std;
 char playerSelect(){ // Player selects race to play as
     char character;
-    cout << "Please select a race for you player: "<<endl;
+    cout << "Welcome to ChamberCrawler3000!" << endl;
+    cout << "A CS246 Project:" << endl;
+    cout << "Professor Naeem" << endl;
+    cout << "Created by Mike Chen, Shayon Banerjee, and William Zhu" << endl;
+    cout << endl;
+    cout << "Please select a race for you player: " << endl;
     cout << "Drow: 'd'"<<endl;
     cout << "Goblin: 'g'"<<endl;
     cout << "Shade: 's'"<<endl;
     cout << "Troll: 't'"<<endl;
-    cout << "Vampire: 'v'"<<endl;
+    cout << "Vampire: 'v'" <<endl;
     
     cin >> character; // reads in selected race
     
     while(character != 'd' && character != 'g' && character != 's'
           && character != 't' && character != 'v'){
         cout << "Invalid Selection. Please try again with one of";
-        cout << " the above selections (d, g, s, t, v)"<<endl;
+        cout << " the above selections (d, g, s, t, v)" << endl;
         cin >> character;
     }
     return character;
     
+    
 }
 
 int main(int argc, const char * argv[]) {
+    bool isF = false;
     srand(time(NULL));
     string command; // commands to move/attack/use items
     char race = playerSelect(); // selects players race
     string file = "cc3kfloor.txt";
-//    if (argc == 1){
-//        file = argv[1];
-//    }
+    //    if (argc == 1){
+    //        file = argv[1];
+    //    }
     
     PlayerCharacter *pc; // main character
     
@@ -73,12 +80,12 @@ int main(int argc, const char * argv[]) {
     
     cin >> command;
     while(!cin.eof()){
+        pc->setAction("");
         if (command =="q"){
             cout << "You have lost the game, try again!"<<endl;
             break;
         }
         else if (command == "r"){
-            delete pc;
             race = playerSelect(); // select new race
             switch(race){
                 case 'd':
@@ -98,41 +105,155 @@ int main(int argc, const char * argv[]) {
                     break;
             }
             grid.restartGrid(pc);
+            grid.rand_player();
+            grid.rand_potion();
+            grid.rand_stair();
+            grid.rand_enemy();
+            grid.rand_treasure();
         }
         else if (command == "f"){
-            //enemies stop moving
+            if (isF == false) {
+                isF = true;
+            }
+            else {
+                isF = false;
+            }
         }
-        else if (command[0] == 'a'){ // player attacks enemy
-            command.erase(0,1);
+        else if (command == "a"){ // player attacks enemy
+            while (true) {
+                cin >> command;
+                if (command != "no" && command != "so" && command != "ea"
+                    && command != "we" && command != "ne" && command != "nw"
+                    && command != "se" && command != "sw") {
+                    cout << "Invalid Selection. Please try again with one of";
+                    cout << " the above selections (no, so, ea, we, ne, nw, se, sw)"<<endl;
+                    cin >> command;
+                }
+                else {
+                    break;
+                }
+            }
             if (command == "no"){
-                grid.atkEnemy(Direction::NO);
+                try {
+                    grid.atkEnemy(Direction::NO);
+                }
+                catch (const char* error) {
+                    cout << error << endl;
+                }
+                try {
+                    grid.moveNpcs();
+                }
+                catch (const char* error) {
+                    cout << error << endl;
+                }
             }
             else if (command == "so"){
-                grid.atkEnemy(Direction::SO);
+                try {
+                    grid.atkEnemy(Direction::SO);
+                }
+                catch (const char* error) {
+                    cout << error << endl;
+                }
+                try {
+                    grid.moveNpcs();
+                }
+                catch (const char* error) {
+                    cout << error << endl;
+                }
             }
             else if (command == "ea"){
-                grid.atkEnemy(Direction::EA);
+                try {
+                    grid.atkEnemy(Direction::EA);
+                }
+                catch (const char* error) {
+                    cout << error << endl;
+                }
+                grid.moveNpcs();
             }
             else if (command == "we"){
-                grid.atkEnemy(Direction::WE);
+                try {
+                    grid.atkEnemy(Direction::WE);
+                }
+                catch (const char* error) {
+                    cout << error << endl;
+                }
+                try {
+                    grid.moveNpcs();
+                }
+                catch (const char* error) {
+                    cout << error << endl;
+                }
             }else if(command == "ne"){
-                grid.atkEnemy(Direction::NE);
+                try {
+                    grid.atkEnemy(Direction::NE);
+                }
+                catch (const char* error) {
+                    cout << error << endl;
+                }
+                try {
+                    grid.moveNpcs();
+                }
+                catch (const char* error) {
+                    cout << error << endl;
+                }
             }
             else if (command == "nw"){
-                grid.atkEnemy(Direction::NW);
+                try {
+                    grid.atkEnemy(Direction::NW);
+                }
+                catch (const char* error) {
+                    cout << error << endl;
+                }
+                try {
+                    grid.moveNpcs();
+                }
+                catch (const char* error) {
+                    cout << error << endl;
+                }
             }
             else if (command == "se"){
-                grid.atkEnemy(Direction::SE);
+                try {
+                    grid.atkEnemy(Direction::SE);
+                }
+                catch (const char* error) {
+                    cout << error << endl;
+                }
+                try {
+                    grid.moveNpcs();
+                }
+                catch (const char* error) {
+                    cout << error << endl;
+                }
             }
-            else if (command == "sw"){
-                grid.atkEnemy(Direction::SW);
-            }
-            else{
-                cout << "Enter a valid command: ";
+            else {
+                try {
+                    grid.atkEnemy(Direction::SW);
+                }
+                catch (const char* error) {
+                    cout << error << endl;
+                }
+                try {
+                    grid.moveNpcs();
+                }
+                catch (const char* error) {
+                    cout << error << endl;
+                }
             }
         }
-        else if (command[0] == 'u'){ // use potion
-            command.erase(0,1);
+        else if (command == "u"){ // use potion
+            while (true) {
+                cin >> command;
+                if (command != "no" && command != "so" && command != "ea"
+                    && command != "we" && command != "ne" && command != "nw"
+                    && command != "se" && command != "sw") {
+                    cout << "Invalid Selection. Please try again with one of";
+                    cout << " the above selections (no, so, ea, we, ne, nw, se, sw)"<<endl;
+                    cin >> command;
+                }
+                else {
+                    break;
+                }
+            }
             if (command == "no"){
                 grid.usePotion(Direction::NO);
             }
@@ -153,86 +274,126 @@ int main(int argc, const char * argv[]) {
             else if (command == "se"){
                 grid.usePotion(Direction::SE);
             }
-            else if (command == "sw"){
+            else {
                 grid.usePotion(Direction::SW);
-            }
-            else{
-                cout << "Enter a valid command: ";
             }
         }
         else{
-            if (command == "no"){
-                grid.move(Direction::NO);
-                grid.moveNpcs();
+            while (true) {
+                if (command != "no" && command != "so" && command != "ea"
+                    && command != "we" && command != "ne" && command != "nw"
+                    && command != "se" && command != "sw") {
+                    cout << "Invalid Selection. Please try again with one of";
+                    cout << " the above selections (no, so, ea, we, ne, nw, se, sw)"<<endl;
+                    cin >> command;
+                }
+                else {
+                    break;
+                }
+            }
+            if (command == "no") {
+                try {
+                    grid.move(Direction::NO);
+                }
+                catch(const char* error) {
+                    cout << error << endl;
+                }
+                if (!isF) {
+                    grid.moveNpcs();
+                    grid.atkByEnemy();
+                }
             }
             else if (command == "so"){
-                grid.move(Direction::SO);
-                grid.moveNpcs();
+                try {
+                    grid.move(Direction::SO);
+                }
+                catch(const char* error) {
+                    cout << error << endl;
+                }
+                if (!isF) {
+                    grid.moveNpcs();
+                    grid.atkByEnemy();
+                }
             }
             else if (command == "ea"){
-                grid.move(Direction::EA);
-                grid.moveNpcs();
+                try {
+                    grid.move(Direction::EA);
+                }
+                catch (const char* error) {
+                    cout << error << endl;
+                }
+                if (!isF) {
+                    grid.moveNpcs();
+                    grid.atkByEnemy();
+                }
             }
             else if (command == "we"){
-                grid.move(Direction::WE);
-                grid.moveNpcs();
-            }else if(command == "ne"){
-                grid.move(Direction::NE);
-                grid.moveNpcs();
+                try {
+                    grid.move(Direction::WE);
+                }
+                catch (const char* error) {
+                    cout << error << endl;
+                }
+                if (!isF) {
+                    grid.moveNpcs();
+                    grid.atkByEnemy();
+                }
+            }
+            else if(command == "ne"){
+                try {
+                    grid.move(Direction::NE);
+                }
+                catch (const char* error) {
+                    cout << error << endl;
+                }
+                if (!isF) {
+                    grid.moveNpcs();
+                    grid.atkByEnemy();
+                }
+                
             }
             else if (command == "nw"){
-                grid.move(Direction::NW);
-                grid.moveNpcs();
+                try {
+                    grid.move(Direction::NW);
+                }
+                catch (const char* error) {
+                    cout << error << endl;
+                }
+                if (!isF) {
+                    grid.moveNpcs();
+                    grid.atkByEnemy();
+                }
             }
             else if (command == "se"){
-                grid.move(Direction::SE);
-                grid.moveNpcs();
+                try {
+                    grid.move(Direction::SE);
+                }
+                catch (const char* error) {
+                    cout << error << endl;
+                }
+                if (!isF) {
+                    grid.moveNpcs();
+                    grid.atkByEnemy();
+                }
             }
-            else if (command == "sw"){
-                grid.move(Direction::SW);
-                grid.moveNpcs();
-            }
-            else{
-                cout << "Enter a valid command: ";
+            else {
+                try {
+                    grid.move(Direction::SW);
+                }
+                catch (const char* error) {
+                    cout << error << endl;
+                }
+                if (!isF) {
+                    grid.moveNpcs();
+                    grid.atkByEnemy();
+                }
             }
         }
         if (grid.isWon()){ // player reaches stairs on 5th floor
-            cout << "Huzzah you have won the game!"<<endl;
-            cout << "Press 'r' to restart or 'q' to quit" <<endl;
+            cout << "Huzzah, you have won the game!" << endl;
+            cout << "Press 'r' to restart or 'q' to quit" << endl;
             cin >> command;
             if (command == "r"){
-                    delete pc;
-                    race = playerSelect(); // select new race
-                    switch(race){
-                        case 'd':
-                            pc = new Drow();
-                            break;
-                        case 'g':
-                            pc = new Goblin();
-                            break;
-                        case 's':
-                            pc = new Shade();
-                            break;
-                        case 't':
-                            pc = new Troll();
-                            break;
-                        case 'v':
-                            pc = new Vampire();
-                            break;
-                    }
-                    grid.restartGrid(pc);
-            }
-            else{
-                    break;
-                    
-            }
-        }
-        else if (!pc->isAlive()){ // player's health lower than 0
-            cout << "You have died"<<endl;
-            cout << "press 'r' to restart or 'q' to quit"<<endl;
-            cin >> command;
-            if (command == "r"){
-                delete pc;
                 race = playerSelect(); // select new race
                 switch(race){
                     case 'd':
@@ -252,6 +413,46 @@ int main(int argc, const char * argv[]) {
                         break;
                 }
                 grid.restartGrid(pc);
+                grid.rand_player();
+                grid.rand_potion();
+                grid.rand_stair();
+                grid.rand_enemy();
+                grid.rand_treasure();
+            }
+            else{
+                break;
+                
+            }
+        }
+        else if (!pc->isAlive()){ // player's health lower than or equal to 0
+            cout << "You have died" << endl;
+            cout << "press 'r' to restart or 'q' to quit" << endl;
+            cin >> command;
+            if (command == "r"){
+                race = playerSelect(); // select new race
+                switch(race){
+                    case 'd':
+                        pc = new Drow();
+                        break;
+                    case 'g':
+                        pc = new Goblin();
+                        break;
+                    case 's':
+                        pc = new Shade();
+                        break;
+                    case 't':
+                        pc = new Troll();
+                        break;
+                    case 'v':
+                        pc = new Vampire();
+                        break;
+                }
+                grid.restartGrid(pc);
+                grid.rand_player();
+                grid.rand_potion();
+                grid.rand_stair();
+                grid.rand_enemy();
+                grid.rand_treasure();
             }
             else{
                 break;
