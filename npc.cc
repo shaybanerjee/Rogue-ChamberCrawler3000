@@ -2,13 +2,8 @@
 #include "npc.h"
 
 //Constructor
-Npc::Npc(int hp, int atk, int def, bool hostile, bool hasMoved):
-Character{hp, atk, def}, hostile{hostile}, hasMoved{hasMoved}{}
-
-//Accessors and mutators
-bool Npc::getHostile(){
-    return hostile;
-}
+Npc::Npc(int hp, int atk, int def, bool hasMoved):
+Character{hp, atk, def}, hasMoved{hasMoved}{}
 
 bool Npc::getHasMoved(){
     return hasMoved;
@@ -16,11 +11,6 @@ bool Npc::getHasMoved(){
 
 void Npc::setHasMoved(bool newHasmoved){
     hasMoved = newHasmoved;
-}
-
-//turnHostile turns the current non player character hostile
-void Npc::turnHostile(){
-    hostile = true;
 }
 
 //Creating the attack method to make sure non player characters has a

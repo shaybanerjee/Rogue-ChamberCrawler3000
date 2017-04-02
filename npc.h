@@ -6,20 +6,15 @@
 class PlayerCharacter;
 
 class Npc: public Character{
-    bool hostile;
     bool hasMoved;
     
 public:
     //Constructor
-    Npc(int hp, int atk, int def, bool hostile = true, bool hasMoved = false);
+    Npc(int hp, int atk, int def, bool hasMoved = false);
     
     //Accessors and mutators
-    bool getHostile();
     bool getHasMoved();
     void setHasMoved(bool newHasmoved);
-    
-    //turnHostile turns the current non player character hostile
-    void turnHostile();
     
     //Creating the attack method to make sure non player characters has a
     //50% chance of missing when attaching humans

@@ -17,11 +17,6 @@ bool Goblin::attack(Npc *enemy){
     //reduce enemy's hp after attacking enemy
     enemy->setHp(enemy->getHp() - damageAgainst(enemy));
     
-    //If hitting a merchant, the merchants now become hostile
-    if(enemy->getSymb() == 'M'){
-        enemy->turnHostile();
-    }
-    
     //we will add 5 golds if the enemy is killed
     if(enemy->isAlive() == false){
         numGold += 5;

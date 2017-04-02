@@ -20,11 +20,6 @@ bool Vampire::attack(Npc *enemy){
     //reduce character c's hp after attacking c
     enemy->setHp(enemy->getHp() - damageAgainst(enemy));
     
-    //If hitting a merchant, the merchants now become hostile
-    if(enemy->getSymb() == 'M'){
-        enemy->turnHostile();
-    }
-    
     //if a dwarf, this causes vampires to subtract it's hp by 5, otherwise,
     //vampire gains 5hp
     if(enemy->getSymb() == 'W'){

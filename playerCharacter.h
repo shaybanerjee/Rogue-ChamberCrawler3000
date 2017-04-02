@@ -12,6 +12,7 @@ class PlayerCharacter: public Character{
     int baseDef;
     char curTile;
     std::string name;
+    std::string action;
     
 protected:
     int maxHp;
@@ -25,9 +26,11 @@ public:
     //accessor for name;
     std::string getName();
     
-    //accessor and mutator for currPlace;
+    //accessor and mutators for curTile and action
     char getCurTile();
     void setCurTile(char newCurTile);
+    std::string getAction();
+    void setAction(std::string newAction);
     
     //addGold takes in an integer gold and adds it to the current amount of gold
     void addGold(int gold);
@@ -37,9 +40,6 @@ public:
     
     //isUsed returns true if the potion has been used and false otherwise
     bool isUsed(Potion *p);
-    
-    //getStats returns a string which represents the stats of the PlayerCharacter
-    std::string getStats();
     
     //Creating the attack method to account for the fact that theres a 50% chance
     //of missing when attacking a halfing and if a human was killed during the

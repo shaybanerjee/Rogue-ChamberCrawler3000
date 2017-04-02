@@ -10,6 +10,7 @@ Character{hp, atk, def}, name{name}{
     baseDef = def;
     numGold = 0;
     curTile = '.';
+    action = "";
 }
 
 //Creating accessor for name
@@ -17,13 +18,21 @@ std::string PlayerCharacter::getName(){
     return name;
 }
 
-//accessor and mutator for currPlace;
+//accessor and mutator for currPlace and Action;
 char PlayerCharacter::getCurTile(){
     return curTile;
 }
 
 void PlayerCharacter::setCurTile(char newCurTile){
     curTile = newCurTile;
+}
+
+std::string PlayerCharacter::getAction(){
+    return action;
+}
+
+void PlayerCharacter::setAction(std::string newAction){
+    action = newAction;
 }
 
 //addGold takes in an integer gold and adds it to the current amount of gold
@@ -77,9 +86,6 @@ bool PlayerCharacter::isUsed(Potion *p){
     return (std::find(usedPotions.begin(), usedPotions.end(), p->getType()) != usedPotions.end());
 }
 
-//getStats returns a string which represents the stats of the PlayerCharacter
-std::string getStats();
-
 //Creating the attack method to account for the fact that theres a 50% chance
 //of missing when attacking a halfing and if a human was killed during the
 //attack, 2 gold will be added to the current player character
@@ -89,10 +95,6 @@ bool PlayerCharacter::attack(Npc *enemy){
         //if random generated number with 50/50 chance of 0 or 1 generates 0,
         //then this indicates the player missed.
         if((rand() % 2) == 0) return false;
-    }
-    //If hitting a merchant, the merchants now become hostile
-    if(enemy->getSymb() == 'M'){
-        enemy->turnHostile();
     }
     
     //reduce character c's hp after attacking c

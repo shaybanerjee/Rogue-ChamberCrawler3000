@@ -2,8 +2,8 @@
 #include <cstdlib>
 
 //Constructor
-Elf::Elf(int hp, int atk, int def, bool hostile, bool hasMoved):
-Npc{hp, atk, def, hostile, hasMoved}{}
+Elf::Elf(int hp, int atk, int def, bool hasMoved):
+Npc{hp, atk, def, hasMoved}{}
 
 //override the attack method because elfs gets two attacks against
 //every race except drow

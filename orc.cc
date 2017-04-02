@@ -2,8 +2,8 @@
 #include <cstdlib>
 
 //Constructor
-Orc::Orc(int hp, int atk, int def, bool hostile, bool hasMoved):
-Npc{hp, atk, def, hostile, hasMoved}{}
+Orc::Orc(int hp, int atk, int def, bool hasMoved):
+Npc{hp, atk, def, hasMoved}{}
 
 //overriding the attack method so that an Orc does 50% more damage to goblins
 bool Orc::attack(PlayerCharacter *pc){
