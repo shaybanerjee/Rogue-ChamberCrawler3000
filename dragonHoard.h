@@ -4,10 +4,14 @@
 #include "treasure.h"
 class DragonHoard: public Treasure{
     Dragon* Drago;
+    bool deadDrago;
 public:
     DragonHoard();
+    //Accessors and mutators for the fields
     void setDragon(Dragon* d);
     Dragon* getDragon();
+    bool getDeadDrago();
+    void setDeadDrago(bool newDeadDrago);
     
 };
 
