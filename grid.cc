@@ -3,7 +3,6 @@
 #include <cstdlib>
 #include "stair.h"
 #include "npc.h"
-#include <ctime>
 
 using namespace std;
 
@@ -178,7 +177,6 @@ void Grid::rand_player() { // randomly place player
 
 
 void Grid::rand_stair() { // randomly place stair
-    srand(time(NULL));
     int rand_cham = rand() % 5;
     Position p = cham_arr[rand_cham].getRand();
     int x = p.getX();

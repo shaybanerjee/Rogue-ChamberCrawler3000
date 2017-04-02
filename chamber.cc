@@ -1,6 +1,5 @@
 #include "chamber.h"
 #include <cstdlib>
-#include <ctime>
 
 Chamber::Chamber(const int i){
     switch(i){
@@ -60,8 +59,7 @@ Chamber::Chamber(const int i){
 }
 
 Position Chamber::getRand() {
-    int sizeOfVec = cham_pos.size();
-    srand(time(NULL)); 
+    int sizeOfVec = cham_pos.size(); 
     int randVal = rand() % sizeOfVec;
     while(!cham_pos[randVal].isEmpty()) {
         randVal = rand() % sizeOfVec;

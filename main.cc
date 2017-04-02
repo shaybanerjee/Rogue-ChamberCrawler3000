@@ -7,6 +7,7 @@
 #include "vampire.h"
 #include "troll.h"
 #include "direction.h"
+#include <ctime>
 using namespace std;
 char playerSelect(){ // Player selects race to play as
     char character;
@@ -31,7 +32,7 @@ char playerSelect(){ // Player selects race to play as
 }
 
 int main(int argc, const char * argv[]) {
-    
+    srand(time(NULL));
     string command; // commands to move/attack/use items
     char race = playerSelect(); // selects players race
     string file = "cc3kfloor.txt";
@@ -63,8 +64,11 @@ int main(int argc, const char * argv[]) {
     
     Grid grid{file,pc}; // The map/floorplan of the game
     
-    cout << grid; // print the grid;
+    grid.rand_stair();
     grid.rand_potion();
+    grid.rand_enemy();
+    grid.rand_potion();
+    grid.rand_player();
     cout << grid;
     
     cin >> command;
