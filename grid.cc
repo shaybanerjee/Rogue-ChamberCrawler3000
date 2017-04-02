@@ -6,8 +6,8 @@
 
 using namespace std;
 
-Grid::Grid(string filename, PlayerCharacter* PC) // constructor for Grid
-: width{79}, height{25}, filename{filename}, PC{PC}, level{1} { // MIL
+Grid::Grid(string filename, PlayerCharacter* PC, bool hostile) // constructor for Grid
+: width{79}, height{25}, filename{filename}, PC{PC}, hostile{hostile}, level{1} { // MIL
     string read_line;
     ifstream f {filename};
     for (int i = 0; i < height; ++i) {
@@ -101,6 +101,7 @@ void Grid::restartGrid(PlayerCharacter *p) { // restarts game
 }
 
 ostream &operator<<(ostream &out,const Grid &gGrid) {
+    system("clear");
     for (int i = 0; i < gGrid.height; ++i) {
         for (int j = 0; j < gGrid.width; ++j) {
             out << gGrid.theGrid[i][j]->getSymb();
@@ -360,7 +361,7 @@ void Grid::moveNpcs(){
         for(int k = 0; k < width; k++){
             //If the current grid is an npc and has not been moved before and a player is not in sight
             if(isNpc(theGrid[i][k]->getSymb()) && theGrid[i][k]->getSymb() != 'D' && static_cast<Npc *>(theGrid[i][k])->getHasMoved() == false
-               && playerInSight(k, i) == false && stuckNpc(k, i) == false){//AddHOSTILE HERE!
+               && playerInSight(k, i) == false && stuckNpc(k, i) == false){
                 //Randomly moving the npc by one floortile
                 bool toMove = true;
                 while(toMove){
@@ -509,6 +510,9 @@ void Grid::atkEnemy(Direction d){
     
     char npcType = theGrid[y][x]->getSymb();
     if(isNpc(npcType)){
+        //Turning merchants hostile
+        if(npcType == 'M') hostile = true;
+        
         //Attack the npc
         PC->attack(static_cast<Npc *>(theGrid[y][x]));
         
@@ -565,11 +569,11 @@ void Grid::atkByEnemy(){
     int x = PC->getX();
     int y = PC->getY();
     //Check north
-    //ADD HOSTILE!!!!!!!!
     if(isNpc(theGrid[y - 1][x]->getSymb()) || theGrid[y - 1][x]->getSymb() == 'G'){
         if(theGrid[y - 1][x]->getSymb() == 'G' && static_cast<Treasure *>(theGrid[y - 1][x])->getValue() == 6){
             static_cast<DragonHoard *>(theGrid[y - 1][x])->getDragon()->attack(PC);
         }else{
+            if(theGrid[y - 1][x]->getSymb() == 'M' && hostile == false) return;
             static_cast<Npc *>(theGrid[y - 1][x])->attack(PC);
         }
     }
@@ -582,6 +586,7 @@ void Grid::atkByEnemy(){
         if(theGrid[y + 1][x]->getSymb() == 'G' && static_cast<Treasure *>(theGrid[y + 1][x])->getValue() == 6){
             static_cast<DragonHoard *>(theGrid[y + 1][x])->getDragon()->attack(PC);
         }else{
+            if(theGrid[y + 1][x]->getSymb() == 'M' && hostile == false) return;
             static_cast<Npc *>(theGrid[y + 1][x])->attack(PC);
         }
     }
@@ -594,6 +599,7 @@ void Grid::atkByEnemy(){
         if(theGrid[y][x + 1]->getSymb() == 'G' && static_cast<Treasure *>(theGrid[y][x + 1])->getValue() == 6){
             static_cast<DragonHoard *>(theGrid[y][x + 1])->getDragon()->attack(PC);
         }else{
+            if(theGrid[y][x + 1]->getSymb() == 'M' && hostile == false) return;
             static_cast<Npc *>(theGrid[y][x + 1])->attack(PC);
         }
     }
@@ -606,6 +612,7 @@ void Grid::atkByEnemy(){
         if(theGrid[y][x - 1]->getSymb() == 'G' && static_cast<Treasure *>(theGrid[y][x - 1])->getValue() == 6){
             static_cast<DragonHoard *>(theGrid[y][x - 1])->getDragon()->attack(PC);
         }else{
+            if(theGrid[y][x - 1]->getSymb() == 'M' && hostile == false) return;
             static_cast<Npc *>(theGrid[y][x - 1])->attack(PC);
         }
     }
@@ -618,6 +625,7 @@ void Grid::atkByEnemy(){
         if(theGrid[y - 1][x - 1]->getSymb() == 'G' && static_cast<Treasure *>(theGrid[y - 1][x - 1])->getValue() == 6){
             static_cast<DragonHoard *>(theGrid[y - 1][x - 1])->getDragon()->attack(PC);
         }else{
+            if(theGrid[y - 1][x - 1]->getSymb() == 'M' && hostile == false) return;
             static_cast<Npc *>(theGrid[y - 1][x - 1])->attack(PC);
         }
     }
@@ -630,6 +638,7 @@ void Grid::atkByEnemy(){
         if(theGrid[y - 1][x + 1]->getSymb() == 'G' && static_cast<Treasure *>(theGrid[y - 1][x + 1])->getValue() == 6){
             static_cast<DragonHoard *>(theGrid[y - 1][x + 1])->getDragon()->attack(PC);
         }else{
+            if(theGrid[y - 1][x + 1]->getSymb() == 'M' && hostile == false) return;
             static_cast<Npc *>(theGrid[y - 1][x + 1])->attack(PC);
         }
     }
@@ -642,6 +651,7 @@ void Grid::atkByEnemy(){
         if(theGrid[y + 1][x - 1]->getSymb() == 'G' && static_cast<Treasure *>(theGrid[y + 1][x - 1])->getValue() == 6){
             static_cast<DragonHoard *>(theGrid[y + 1][x - 1])->getDragon()->attack(PC);
         }else{
+            if(theGrid[y + 1][x - 1]->getSymb() == 'M' && hostile == false) return;
             static_cast<Npc *>(theGrid[y + 1][x - 1])->attack(PC);
         }
     }
@@ -654,6 +664,7 @@ void Grid::atkByEnemy(){
         if(theGrid[y + 1][x + 1]->getSymb() == 'G' && static_cast<Treasure *>(theGrid[y + 1][x + 1])->getValue() == 6){
             static_cast<DragonHoard *>(theGrid[y + 1][x + 1])->getDragon()->attack(PC);
         }else{
+            if(theGrid[y + 1][x + 1]->getSymb() == 'M' && hostile == false) return;
             static_cast<Npc *>(theGrid[y + 1][x + 1])->attack(PC);
         }
     }

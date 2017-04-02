@@ -54,10 +54,11 @@ class Grid {
     const int width; // size of width
     const int height; // size of heigth
     PlayerCharacter *PC;
+    bool hostile;
     std::vector <Chamber> cham_arr;
     int level;
 public:
-    Grid(std::string filename, PlayerCharacter* PC); // grid constructor
+    Grid(std::string filename, PlayerCharacter* PC, bool hostile = false); // grid constructor
     ~Grid(); // grid destructor
     void rand_enemy(); // fill up chambers with enemies randomly
     void rand_potion(); // fill up chambers with potions randomly

@@ -28,6 +28,17 @@ bool Vampire::attack(Npc *enemy){
         setHp(getHp() + 5);
     }
     
+    //If the enemy is dead after the attack and it's not a dragon, merchant or human, gold
+    //is automatically added to the player character with 1/2 probability of it being 1 gold
+    //or 2 golds
+    if(enemy->isAlive() == false && enemy->getSymb() != 'M' && enemy->getSymb() != 'H' && enemy->getSymb() != 'D'){
+        if((rand() % 2) == 0){
+            numGold += 1;
+        }else{
+            numGold += 2;
+        }
+    }
+    
     return true;
 }
 
