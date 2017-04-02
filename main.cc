@@ -8,6 +8,7 @@
 #include "troll.h"
 #include "direction.h"
 #include <ctime>
+
 using namespace std;
 char playerSelect(){ // Player selects race to play as
     char character;
@@ -258,7 +259,6 @@ int main(int argc, const char * argv[]) {
                 
             }
         }
-        
         cout << grid; // print board
         cin >> command; //reads next command
         
