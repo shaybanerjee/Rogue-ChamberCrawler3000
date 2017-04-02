@@ -1,9 +1,8 @@
 #include "dragonHoard.h"
 
-const int value = 6;
 
 //Constructor
-DragonHoard::DragonHoard():Treasure{value}{
+DragonHoard::DragonHoard():Treasure{6}, deadDrago{false}{
 }
 
 void DragonHoard::setDragon(Dragon* d) {

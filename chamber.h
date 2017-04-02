@@ -6,8 +6,11 @@
 class Chamber {
     std::vector <Position> cham_pos;
     int numTiles;
+    bool isPC;
 public:
     Chamber(int i);
+    bool isPcPres();
+    void setPc();
     Position getRand();
     void update(Position &p);
     void clear();

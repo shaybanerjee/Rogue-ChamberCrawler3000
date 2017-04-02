@@ -64,11 +64,11 @@ int main(int argc, const char * argv[]) {
     
     Grid grid{file,pc}; // The map/floorplan of the game
     
-    grid.rand_stair();
-    grid.rand_potion();
-    grid.rand_enemy();
-    grid.rand_potion();
     grid.rand_player();
+    grid.rand_potion();
+    grid.rand_stair();
+    grid.rand_enemy();
+    grid.rand_treasure();
     cout << grid;
     
     cin >> command;
@@ -113,8 +113,10 @@ int main(int argc, const char * argv[]) {
             else if (command == "ea"){
                 grid.atkEnemy(Direction::EA);
             }
-            else if (command == "ne"){
+            else if (command == "we"){
                 grid.atkEnemy(Direction::WE);
+            }else if(command == "ne"){
+                grid.atkEnemy(Direction::NE);
             }
             else if (command == "nw"){
                 grid.atkEnemy(Direction::NW);
@@ -140,8 +142,10 @@ int main(int argc, const char * argv[]) {
             else if (command == "ea"){
                 grid.usePotion(Direction::EA);
             }
-            else if (command == "ne"){
+            else if (command == "we"){
                 grid.usePotion(Direction::WE);
+            }else if(command == "ne"){
+                grid.usePotion(Direction::NE);
             }
             else if (command == "nw"){
                 grid.usePotion(Direction::NW);
@@ -159,24 +163,34 @@ int main(int argc, const char * argv[]) {
         else{
             if (command == "no"){
                 grid.move(Direction::NO);
+                grid.moveNpcs();
             }
             else if (command == "so"){
                 grid.move(Direction::SO);
+                grid.moveNpcs();
             }
             else if (command == "ea"){
                 grid.move(Direction::EA);
+                grid.moveNpcs();
             }
-            else if (command == "ne"){
+            else if (command == "we"){
                 grid.move(Direction::WE);
+                grid.moveNpcs();
+            }else if(command == "ne"){
+                grid.move(Direction::NE);
+                grid.moveNpcs();
             }
             else if (command == "nw"){
                 grid.move(Direction::NW);
+                grid.moveNpcs();
             }
             else if (command == "se"){
                 grid.move(Direction::SE);
+                grid.moveNpcs();
             }
             else if (command == "sw"){
                 grid.move(Direction::SW);
+                grid.moveNpcs();
             }
             else{
                 cout << "Enter a valid command: ";

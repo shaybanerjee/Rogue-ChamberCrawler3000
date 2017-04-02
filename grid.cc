@@ -48,22 +48,28 @@ Grid::Grid(string filename, PlayerCharacter* PC) // constructor for Grid
 }
 
 Grid::~Grid(){
+    for (int row = 0; row < height; ++row) {
+        for (int col = 0; col < width; ++col) {
+            delete theGrid[row][col];
+        }
+    }
+    delete PC;
 }
 
 void Grid::clearGrid() { // method for clear grid after level
     for (int row = 0; row < height; ++row) {
         for (int col = 0; col < width; ++col) {
-            GameSubject* currSub = theGrid[col][row];
+            GameSubject* currSub = theGrid[row][col];
             char symb = currSub->getSymb();
             if (symb != '+' && symb != '.' && // if not a tile obj
                 symb != ' ' && symb != '-' &&
                 symb != '|' && symb != '#') {
                 if (symb == '@') { // if player dont delete
-                    theGrid[col][row] = new Floor(); // place floor tile
+                    theGrid[row][col] = new Floor(); // place floor tile
                 }
                 else {
                     delete theGrid[row][col]; // return heap mem
-                    theGrid[col][row] = new Floor(); // place floor tile
+                    theGrid[row][col] = new Floor(); // place floor tile
                 }
             }	
         }
@@ -82,9 +88,8 @@ void Grid::restartGrid(PlayerCharacter *p) { // restarts game
             if (symb != '+' && symb != '.' &&
                 symb != ' ' && symb != '-' &&
                 symb != '|' && symb != '#') {
-                GameSubject* temp = theGrid[row][col];
+                delete theGrid[row][col];
                 theGrid[row][col] = new Floor();
-                delete temp;
             }
         }	
     }
@@ -107,6 +112,7 @@ ostream &operator<<(ostream &out,const Grid &gGrid) {
 
 void Grid::rand_enemy() { // generate random enemy
     int enmCount = 0;
+    
     while (enmCount < 20) {
         int enm_val = (rand() % 18) + 1; // get num 1-18
         int chamber_val = rand() % 5;
@@ -123,7 +129,7 @@ void Grid::rand_enemy() { // generate random enemy
             Position p = cham_arr[chamber_val].getRand(); // get random pos
             int x = p.getX();
             int y = p.getY();
-            delete theGrid[y][x]; // swap floor tile with new GameSub
+            delete theGrid[y][x];
             theGrid[y][x] = newSub;
         }
         else if (enm_val > 7 && enm_val <= 12) { // 5/18
@@ -131,7 +137,7 @@ void Grid::rand_enemy() { // generate random enemy
             Position p = cham_arr[chamber_val].getRand(); // get random pos
             int x = p.getX();
             int y = p.getY();
-            delete theGrid[y][x]; // swap floor tile with new GameSub
+            delete theGrid[y][x];
             theGrid[y][x] = newSub;
             
         }
@@ -140,7 +146,7 @@ void Grid::rand_enemy() { // generate random enemy
             Position p = cham_arr[chamber_val].getRand(); // get random pos
             int x = p.getX();
             int y = p.getY();
-            delete theGrid[y][x]; // swap floor tile with new GameSub
+            delete theGrid[y][x];
             theGrid[y][x] = newSub;
             
         }
@@ -149,7 +155,7 @@ void Grid::rand_enemy() { // generate random enemy
             Position p = cham_arr[chamber_val].getRand(); // get random pos
             int x = p.getX();
             int y = p.getY();
-            delete theGrid[y][x]; // swap floor tile with new GameSub
+            delete theGrid[y][x];
             theGrid[y][x] = newSub;
             
         }
@@ -158,7 +164,7 @@ void Grid::rand_enemy() { // generate random enemy
             Position p = cham_arr[chamber_val].getRand(); // get random pos
             int x = p.getX();
             int y = p.getY();
-            delete theGrid[y][x]; // swap floor tile with new GameSub
+            delete theGrid[y][x];
             theGrid[y][x] = newSub;
         }
         enmCount+=1;
@@ -168,23 +174,31 @@ void Grid::rand_enemy() { // generate random enemy
 void Grid::rand_player() { // randomly place player
     int rand_cham = rand() % 5;
     Position p = cham_arr[rand_cham].getRand();
+    cham_arr[rand_cham].setPc();
     int x = p.getX();
     int y = p.getY();
     delete theGrid[y][x];
+    PC->setX(x);
+    PC->setY(y);
     theGrid[y][x] = PC;
 }
 
 
 
 void Grid::rand_stair() { // randomly place stair
-    int rand_cham = rand() % 5;
+    int rand_cham;
+    while(true){
+        rand_cham = rand() % 5;
+        if(!cham_arr[rand_cham].isPcPres()){
+            break;
+        }
+    }
     Position p = cham_arr[rand_cham].getRand();
     int x = p.getX();
     int y = p.getY();
     GameSubject* newSub = new Stair();
-    GameSubject* temp = theGrid[y][x];
+    delete theGrid[y][x];
     theGrid[y][x] = newSub;
-    delete temp;
 }
 
 
@@ -198,54 +212,48 @@ void Grid::rand_potion() { // randomly place potion
             Position p = cham_arr[chamber_val].getRand();
             int x = p.getX();
             int y = p.getY();
-            GameSubject* temp = theGrid[y][x];
+            delete theGrid[y][x];
             theGrid[y][x] = newSub;
-            delete temp;
         }
         else if (pot_val == 2) { // 1/6 prob
             GameSubject* newSub = new BoostAtk();
             Position p = cham_arr[chamber_val].getRand();
             int x = p.getX();
             int y = p.getY();
-            GameSubject* temp = theGrid[y][x];
+            delete theGrid[y][x];
             theGrid[y][x] = newSub;
-            delete temp;
         }
         else if (pot_val == 3) { // 1/6 prob
             GameSubject* newSub = new BoostDef();
             Position p = cham_arr[chamber_val].getRand();
             int x = p.getX();
             int y = p.getY();
-            GameSubject* temp = theGrid[y][x];
+            delete theGrid[y][x];
             theGrid[y][x] = newSub;
-            delete temp;
         }
         else if (pot_val == 4) { // 1/6 prob
             GameSubject* newSub = new PoisonHealth();
             Position p = cham_arr[chamber_val].getRand();
             int x = p.getX();
             int y = p.getY();
-            GameSubject* temp = theGrid[y][x];
+            delete theGrid[y][x];
             theGrid[y][x] = newSub;
-            delete temp;
         }
         else if (pot_val == 5) { // 1/6 prob
             GameSubject* newSub = new WoundAtk();
             Position p = cham_arr[chamber_val].getRand();
             int x = p.getX();
             int y = p.getY();
-            GameSubject* temp = theGrid[y][x];
+            delete theGrid[y][x];
             theGrid[y][x] = newSub;
-            delete temp;
         }
         else if (pot_val == 6) { // 1/6 prob
             GameSubject* newSub = new WoundDef();
             Position p = cham_arr[chamber_val].getRand();
             int x = p.getX();
             int y = p.getY();
-            GameSubject* temp = theGrid[y][x];
+            delete theGrid[y][x];
             theGrid[y][x] = newSub;
-            delete temp;
         }
         potCount += 1;
     }
@@ -277,7 +285,7 @@ void Grid::rand_treasure() { // randomly place treasure
                 Position p = cham_arr[chamber_val].getRand();
                 int x = p.getX();
                 int y = p.getY();
-                if (stuckNpc(p.getX(), p.getY())) {
+                if (!stuckNpc(x, y)) {
                     delete theGrid[y][x];
                     theGrid[y][x] = newSub;
                     int rand_int = (rand() % 8) + 1;
@@ -346,18 +354,13 @@ void Grid::rand_treasure() { // randomly place treasure
     }
 }
 
-
-
-
-
-
 // randomly moves Npcs in either of the 8 directions
 void Grid::moveNpcs(){
     for(int i = 0; i < height; i++){
         for(int k = 0; k < width; k++){
             //If the current grid is an npc and has not been moved before and a player is not in sight
-            if(isNpc(theGrid[i][k]->getSymb()) && static_cast<Npc *>(theGrid[i][k])->getHasMoved() == false
-               && playerInSight(k, i) == false && stuckNpc(k, i) == false){
+            if(isNpc(theGrid[i][k]->getSymb()) && theGrid[i][k]->getSymb() != 'D' && static_cast<Npc *>(theGrid[i][k])->getHasMoved() == false
+               && playerInSight(k, i) == false && stuckNpc(k, i) == false && static_cast<Npc *>(theGrid[i][k])->getHostile()){
                 //Randomly moving the npc by one floortile
                 bool toMove = true;
                 while(toMove){
@@ -437,24 +440,24 @@ void Grid::usePotion(Direction d){
     
     //Update x and y depending on which direction the potion is in
     if(d == Direction::NO){
-        y++;
-    }else if(d == Direction::SO){
         y--;
+    }else if(d == Direction::SO){
+        y++;
     }else if(d == Direction::EA){
         x++;
     }else if(d == Direction::WE){
         x--;
     }else if(d == Direction::NW){
-        y++;
+        y--;
         x--;
     }else if(d == Direction::NE){
-        y++;
+        y--;
         x++;
     }else if(d == Direction::SW){
-        y--;
+        y++;
         x--;
     }else{
-        y--;
+        y++;
         x++;
     }
     
@@ -481,32 +484,31 @@ void Grid::atkEnemy(Direction d){
     int x = PC->getX();
     int y = PC->getY();
     
-    //Update x and y depending on which direction the potion is in
+    //Update x and y depending on which direction the enemy is in
     if(d == Direction::NO){
-        y++;
-    }else if(d == Direction::SO){
         y--;
+    }else if(d == Direction::SO){
+        y++;
     }else if(d == Direction::EA){
         x++;
     }else if(d == Direction::WE){
         x--;
     }else if(d == Direction::NW){
-        y++;
+        y--;
         x--;
     }else if(d == Direction::NE){
-        y++;
+        y--;
         x++;
     }else if(d == Direction::SW){
-        y--;
+        y++;
         x--;
     }else{
-        y--;
+        y++;
         x++;
     }
     
     char npcType = theGrid[y][x]->getSymb();
-    if(npcType == 'H' || npcType == 'W' || npcType == 'E' || npcType == 'O'
-       || npcType == 'M' || npcType == 'D' || npcType == 'L'){
+    if(isNpc(npcType)){
         //Attack the npc
         PC->attack(static_cast<Npc *>(theGrid[y][x]));
         
@@ -563,18 +565,6 @@ void Grid::atkByEnemy(){
     int x = PC->getX();
     int y = PC->getY();
     //Check north
-    if((isNpc(theGrid[y + 1][x]->getSymb()) && static_cast<Npc *>(theGrid[y + 1][x])->getHostile()) || theGrid[y + 1][x]->getSymb() == 'G'){
-        if(theGrid[y + 1][x]->getSymb() == 'G' && static_cast<Treasure *>(theGrid[y + 1][x])->getValue() == 6){
-            static_cast<DragonHoard *>(theGrid[y + 1][x])->getDragon()->attack(PC);
-        }else{
-            static_cast<Npc *>(theGrid[y + 1][x])->attack(PC);
-        }
-    }
-    if(PC->isAlive() == false){
-        //call game over method
-    }
-    
-    //Check south
     if((isNpc(theGrid[y - 1][x]->getSymb()) && static_cast<Npc *>(theGrid[y - 1][x])->getHostile()) || theGrid[y - 1][x]->getSymb() == 'G'){
         if(theGrid[y - 1][x]->getSymb() == 'G' && static_cast<Treasure *>(theGrid[y - 1][x])->getValue() == 6){
             static_cast<DragonHoard *>(theGrid[y - 1][x])->getDragon()->attack(PC);
@@ -586,12 +576,24 @@ void Grid::atkByEnemy(){
         //call game over method
     }
     
+    //Check south
+    if((isNpc(theGrid[y + 1][x]->getSymb()) && static_cast<Npc *>(theGrid[y + 1][x])->getHostile()) || theGrid[y + 1][x]->getSymb() == 'G'){
+        if(theGrid[y + 1][x]->getSymb() == 'G' && static_cast<Treasure *>(theGrid[y + 1][x])->getValue() == 6){
+            static_cast<DragonHoard *>(theGrid[y + 1][x])->getDragon()->attack(PC);
+        }else{
+            static_cast<Npc *>(theGrid[y + 1][x])->attack(PC);
+        }
+    }
+    if(PC->isAlive() == false){
+        //call game over method
+    }
+    
     //Check east
     if((isNpc(theGrid[y][x + 1]->getSymb()) && static_cast<Npc *>(theGrid[y][x + 1])->getHostile()) || theGrid[y][x + 1]->getSymb() == 'G'){
         if(theGrid[y][x + 1]->getSymb() == 'G' && static_cast<Treasure *>(theGrid[y][x + 1])->getValue() == 6){
             static_cast<DragonHoard *>(theGrid[y][x + 1])->getDragon()->attack(PC);
         }else{
-            static_cast<Npc *>(theGrid[y + 1][x])->attack(PC);
+            static_cast<Npc *>(theGrid[y][x + 1])->attack(PC);
         }
     }
     if(PC->isAlive() == false){
@@ -603,7 +605,7 @@ void Grid::atkByEnemy(){
         if(theGrid[y][x - 1]->getSymb() == 'G' && static_cast<Treasure *>(theGrid[y][x - 1])->getValue() == 6){
             static_cast<DragonHoard *>(theGrid[y][x - 1])->getDragon()->attack(PC);
         }else{
-            static_cast<Npc *>(theGrid[y + 1][x])->attack(PC);
+            static_cast<Npc *>(theGrid[y][x - 1])->attack(PC);
         }
     }
     if(PC->isAlive() == false){
@@ -611,30 +613,6 @@ void Grid::atkByEnemy(){
     }
     
     //Check north west
-    if((isNpc(theGrid[y + 1][x - 1]->getSymb()) && static_cast<Npc *>(theGrid[y + 1][x - 1])->getHostile()) || theGrid[y + 1][x - 1]->getSymb() == 'G'){
-        if(theGrid[y + 1][x - 1]->getSymb() == 'G' && static_cast<Treasure *>(theGrid[y + 1][x - 1])->getValue() == 6){
-            static_cast<DragonHoard *>(theGrid[y + 1][x - 1])->getDragon()->attack(PC);
-        }else{
-            static_cast<Npc *>(theGrid[y + 1][x - 1])->attack(PC);
-        }
-    }
-    if(PC->isAlive() == false){
-        //call game over method
-    }
-    
-    //Check north east
-    if((isNpc(theGrid[y + 1][x + 1]->getSymb()) && static_cast<Npc *>(theGrid[y + 1][x + 1])->getHostile()) || theGrid[y + 1][x + 1]->getSymb() == 'G'){
-        if(theGrid[y + 1][x + 1]->getSymb() == 'G' && static_cast<Treasure *>(theGrid[y + 1][x + 1])->getValue() == 6){
-            static_cast<DragonHoard *>(theGrid[y + 1][x + 1])->getDragon()->attack(PC);
-        }else{
-            static_cast<Npc *>(theGrid[y + 1][x + 1])->attack(PC);
-        }
-    }
-    if(PC->isAlive() == false){
-        //call game over method
-    }
-    
-    //Check south west
     if((isNpc(theGrid[y - 1][x - 1]->getSymb()) && static_cast<Npc *>(theGrid[y - 1][x - 1])->getHostile()) || theGrid[y - 1][x - 1]->getSymb() == 'G'){
         if(theGrid[y - 1][x - 1]->getSymb() == 'G' && static_cast<Treasure *>(theGrid[y - 1][x - 1])->getValue() == 6){
             static_cast<DragonHoard *>(theGrid[y - 1][x - 1])->getDragon()->attack(PC);
@@ -646,12 +624,36 @@ void Grid::atkByEnemy(){
         //call game over method
     }
     
-    //Check south east
+    //Check north east
     if((isNpc(theGrid[y - 1][x + 1]->getSymb()) && static_cast<Npc *>(theGrid[y - 1][x + 1])->getHostile()) || theGrid[y - 1][x + 1]->getSymb() == 'G'){
         if(theGrid[y - 1][x + 1]->getSymb() == 'G' && static_cast<Treasure *>(theGrid[y - 1][x + 1])->getValue() == 6){
             static_cast<DragonHoard *>(theGrid[y - 1][x + 1])->getDragon()->attack(PC);
         }else{
             static_cast<Npc *>(theGrid[y - 1][x + 1])->attack(PC);
+        }
+    }
+    if(PC->isAlive() == false){
+        //call game over method
+    }
+    
+    //Check south west
+    if((isNpc(theGrid[y + 1][x - 1]->getSymb()) && static_cast<Npc *>(theGrid[y + 1][x - 1])->getHostile()) || theGrid[y + 1][x - 1]->getSymb() == 'G'){
+        if(theGrid[y + 1][x - 1]->getSymb() == 'G' && static_cast<Treasure *>(theGrid[y + 1][x - 1])->getValue() == 6){
+            static_cast<DragonHoard *>(theGrid[y + 1][x - 1])->getDragon()->attack(PC);
+        }else{
+            static_cast<Npc *>(theGrid[y + 1][x - 1])->attack(PC);
+        }
+    }
+    if(PC->isAlive() == false){
+        //call game over method
+    }
+    
+    //Check south east
+    if((isNpc(theGrid[y + 1][x + 1]->getSymb()) && static_cast<Npc *>(theGrid[y + 1][x + 1])->getHostile()) || theGrid[y + 1][x + 1]->getSymb() == 'G'){
+        if(theGrid[y + 1][x + 1]->getSymb() == 'G' && static_cast<Treasure *>(theGrid[y + 1][x + 1])->getValue() == 6){
+            static_cast<DragonHoard *>(theGrid[y + 1][x + 1])->getDragon()->attack(PC);
+        }else{
+            static_cast<Npc *>(theGrid[y + 1][x + 1])->attack(PC);
         }
     }
     if(PC->isAlive() == false){
@@ -666,28 +668,29 @@ void Grid::move(Direction d){
     
     //Update x and y depending on which direction the potion is in
     if(d == Direction::NO){
-        y++;
-    }else if(d == Direction::SO){
         y--;
+    }else if(d == Direction::SO){
+        y++;
     }else if(d == Direction::EA){
         x++;
     }else if(d == Direction::WE){
         x--;
     }else if(d == Direction::NW){
-        y++;
+        y--;
         x--;
     }else if(d == Direction::NE){
-        y++;
+        y--;
         x++;
     }else if(d == Direction::SW){
-        y--;
+        y++;
         x--;
     }else{
-        y--;
+        y++;
         x++;
     }
     
     char floorType = theGrid[y][x]->getSymb();
+    cout << floorType << endl;
     if(floorType == '.' || floorType == '+' || floorType == '#'){
         //Removing floorType and replacing it with PC
         delete theGrid[y][x];
@@ -724,7 +727,7 @@ void Grid::move(Direction d){
             PC->setX(x);
             PC->setY(y);
         }
-    }else if(floorType == '/'){
+    }else if(floorType == '\\'){
         //Clears grid, and starts on the next floor
         clearGrid();
     }else{
@@ -744,7 +747,7 @@ bool Grid::isNpc(char gameType){
 
 //playerInSight returns true if the player is within a block of an enemy and false otherwise
 bool Grid::playerInSight(int x, int y){
-    if(abs(PC->getX() - x) <= 1 && abs(PC->getY() - y)){
+    if(abs(PC->getX() - x) <= 1 && abs(PC->getY() - y) <= 1){
         return true;
     }else{
         return false;

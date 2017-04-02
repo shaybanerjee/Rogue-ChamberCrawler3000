@@ -1,7 +1,8 @@
 #include "chamber.h"
 #include <cstdlib>
 
-Chamber::Chamber(const int i){
+Chamber::Chamber(const int i)
+:isPC{false}{
     switch(i){
         case 0:
             for (int i = 3; i < 7; ++i){
@@ -59,21 +60,35 @@ Chamber::Chamber(const int i){
 }
 
 Position Chamber::getRand() {
-    int sizeOfVec = cham_pos.size(); 
-    int randVal = rand() % sizeOfVec;
-    while(!cham_pos[randVal].isEmpty()) {
-        randVal = rand() % sizeOfVec;
+    int sizeOfVec = cham_pos.size();
+    while(1) {
+        int randVal = rand() % sizeOfVec;
+        if (cham_pos[randVal].isEmpty()) {
+            cham_pos[randVal].set_false();
+            return cham_pos[randVal];
+        }
     }
-    cham_pos[randVal].set_false();
-    return cham_pos[randVal];
 } 
 
 void Chamber::update(Position &p) {
-    p.set_true(); 
+    for(int i = 0; i < cham_pos.size(); ++i){
+        if(cham_pos[i].getX() == p.getX() && cham_pos[i].getY() == p.getY()){
+            cham_pos[i].set_true();
+            break;
+        }
+    }
 }
 
 void Chamber::clear() {
     for (auto pos : cham_pos) {
         pos.set_true(); 
     }
+}
+
+bool Chamber::isPcPres(){
+    return isPC;
+}
+
+void Chamber::setPc(){
+    isPC = true;
 }

@@ -1,5 +1,5 @@
 #include "normalGold.h"
 
-const int value = 2;
-NormalGold::NormalGold():Treasure{value}{
+
+NormalGold::NormalGold():Treasure{2}{
 }

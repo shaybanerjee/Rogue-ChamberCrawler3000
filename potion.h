@@ -9,8 +9,8 @@ class Potion : public GameSubject{
 		int value;
 	public:
         Potion(std::string type,int value);
-		int getValue();
-		std::string getType();
+		virtual int getValue();
+		virtual std::string getType();
 		char getSymb() override; 
 };
 

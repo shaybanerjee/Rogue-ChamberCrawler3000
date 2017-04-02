@@ -5,7 +5,7 @@ class Treasure: public GameSubject {
 	protected:
 		int value;
 	public:
-        int getValue();
+        virtual int getValue();
         Treasure(int value);
 		char getSymb() override;
 };
