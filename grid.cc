@@ -177,13 +177,14 @@ void Grid::rand_player() { // randomly place player
 
 
 void Grid::rand_stair() { // randomly place stair
-    int rand_cham = rand() % 5;
+    int rand_cham = rand() % 5; 
     Position p = cham_arr[rand_cham].getRand();
     int x = p.getX();
     int y = p.getY();
     GameSubject* newSub = new Stair();
-    delete theGrid[y][x];
-    theGrid[y][x] = newSub;
+    GameSubject* temp = theGrid[x][y];
+    theGrid[x][y] = newSub;
+    delete temp; 
 }
 
 
@@ -197,7 +198,7 @@ void Grid::rand_potion() { // randomly place potion
             Position p = cham_arr[chamber_val].getRand();
             int x = p.getX();
             int y = p.getY();
-            delete theGrid[y][x];
+            GameSubject* temp = theGrid[x][y]; 
             theGrid[y][x] = newSub;
         }
         else if (pot_val == 2) { // 1/6 prob
