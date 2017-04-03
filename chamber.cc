@@ -65,7 +65,6 @@ Chamber::Chamber(const int i)
 Position Chamber::getRand() {
     int sizeOfVec = cham_pos.size();
     while(1) {
-        cout << "banana" << endl;
         int randVal = rand() % sizeOfVec;
         if (cham_pos[randVal].isEmpty()) {
             cham_pos[randVal].set_false();
@@ -85,8 +84,8 @@ void Chamber::update(Position &p) {
 }
 
 void Chamber::clear() {
-    for (auto pos : cham_pos) {
-        pos.set_true(); 
+    for (int i = 0; i < cham_pos.size(); ++i) {
+        cham_pos[i].set_true();
     }
 }
 
