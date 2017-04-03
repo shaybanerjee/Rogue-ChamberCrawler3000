@@ -12,6 +12,7 @@ public:
     Dragon* getDragon();
     bool getDeadDrago();
     void setDeadDrago(bool newDeadDrago);
+    ~DragonHoard();
     
 };
 

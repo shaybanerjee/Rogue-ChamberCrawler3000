@@ -19,3 +19,7 @@ bool DragonHoard::getDeadDrago(){
 void DragonHoard::setDeadDrago(bool newDeadDrago){
     deadDrago = newDeadDrago;
 }
+
+DragonHoard::~DragonHoard() {
+    Drago = nullptr;
+}
