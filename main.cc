@@ -71,12 +71,13 @@ int main(int argc, const char * argv[]) {
     
     Grid grid{file,pc}; // The map/floorplan of the game
     
-    grid.rand_player();
-    grid.rand_potion();
-    grid.rand_stair();
-    grid.rand_enemy();
+    //grid.rand_player();
+    //grid.rand_potion();
+    //grid.rand_stair();
+    //grid.rand_enemy();
     grid.rand_treasure();
     cout << grid;
+    grid.clearGrid();
     
     cin >> command;
     while(!cin.eof()){

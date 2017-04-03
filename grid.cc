@@ -59,19 +59,17 @@ Grid::~Grid(){ // UPDATED
 void Grid::clearGrid() { // method for clear grid after level UPDATED
     for (int row = 0; row < height; ++row) {
         for (int col = 0; col < width; ++col) {
-            if(theGrid[row][col] != nullptr){
-                char symb = theGrid[row][col]->getSymb();
-                if (symb != '+' && symb != '.' && // if not a tile obj
-                    symb != ' ' && symb != '-' &&
-                    symb != '|' && symb != '#') {
-                    if (symb == '@') { // if player dont delete
-                        theGrid[row][col] = new Floor(); // place floor tile
-                    }
-                    else {
-                        delete theGrid[row][col]; // return heap mem
-                        theGrid[row][col] = new Floor(); // place floor tile
-                    }
+            char symb = theGrid[row][col]->getSymb();
+            if (symb != '+' && symb != '.' && // if not a tile obj
+                symb != ' ' && symb != '-' &&
+                symb != '|' && symb != '#') {
+                if (symb == '@') { // if player dont delete
+                    theGrid[row][col] = new Floor(); // place floor tile
                 }
+                else {
+                    delete theGrid[row][col]; // return heap mem
+                    theGrid[row][col] = new Floor(); // place floor tile
+               }
             }
         }
     }
@@ -308,7 +306,6 @@ void Grid::rand_treasure() { // randomly place treasure
         if (rand_int == 1) { // 1/8 probability
             GameSubject* newSub = new DragonHoard();
             GameSubject* newSub2 = new Dragon();
-            static_cast<DragonHoard *>(newSub)->setDragon(static_cast<Dragon *>(newSub2));
             while(true) { // place dragon appropriately
                 Position p = cham_arr[chamber_val].getRand();
                 int x = p.getX();
@@ -319,66 +316,100 @@ void Grid::rand_treasure() { // randomly place treasure
                     int rand_int = (rand() % 8) + 1;
                     if (rand_int == 1 && (theGrid[y+1][x-1]->getSymb() == '.')) { // place top right
                         delete theGrid[y+1][x-1];
+                        static_cast<DragonHoard*>(newSub)->setDragoX(x-1);
+                        static_cast<DragonHoard*>(newSub)->setDragoY(y+1);
+                        static_cast<Dragon*>(newSub2)->setDhX(x);
+                        static_cast<Dragon*>(newSub2)->setDhY(y);
                         theGrid[y+1][x-1] = newSub2;
                         break;
                     }
                     else if (rand_int == 2 && (theGrid[y][x-1]->getSymb() == '.')) { // place above
                         delete theGrid[y][x-1];
+                        static_cast<DragonHoard*>(newSub)->setDragoX(x-1);
+                        static_cast<DragonHoard*>(newSub)->setDragoY(y);
+                        static_cast<Dragon*>(newSub2)->setDhX(x);
+                        static_cast<Dragon*>(newSub2)->setDhY(y);
                         theGrid[y][x-1] = newSub2;
                         break;
                     }
                     else if (rand_int == 3 && (theGrid[y-1][x-1]->getSymb() == '.')) { // place top left
                         delete theGrid[y-1][x-1];
+                        static_cast<DragonHoard*>(newSub)->setDragoX(x-1);
+                        static_cast<DragonHoard*>(newSub)->setDragoY(y-1);
+                        static_cast<Dragon*>(newSub2)->setDhX(x);
+                        static_cast<Dragon*>(newSub2)->setDhY(y);
                         theGrid[y-1][x-1] = newSub2;
                         break;
                     }
                     else if (rand_int == 4 && (theGrid[y-1][x]->getSymb() == '.')) { // place left
                         delete theGrid[y-1][x];
-                        theGrid[y-1][x] = newSub2; 
+                        static_cast<DragonHoard*>(newSub)->setDragoX(x);
+                        static_cast<DragonHoard*>(newSub)->setDragoY(y-1);
+                        static_cast<Dragon*>(newSub2)->setDhX(x);
+                        static_cast<Dragon*>(newSub2)->setDhY(y);
+                        theGrid[y-1][x] = newSub2;
                         break;
-                    }	
+                    }
                     else if (rand_int == 5 && (theGrid[y+1][x]->getSymb() == '.')) { // place right
-                        delete theGrid[y+1][x]; 
-                        theGrid[y+1][x] = newSub2;				 
-                        break; 
+                        delete theGrid[y+1][x];
+                        static_cast<DragonHoard*>(newSub)->setDragoX(x);
+                        static_cast<DragonHoard*>(newSub)->setDragoY(y+1);
+                        static_cast<Dragon*>(newSub2)->setDhX(x);
+                        static_cast<Dragon*>(newSub2)->setDhY(y);
+                        theGrid[y+1][x] = newSub2;
+                        break;
                     }
                     else if (rand_int == 6 && (theGrid[y-1][x+1]->getSymb() == '.')) { //place left below
-                        delete theGrid[y-1][x+1]; 
+                        delete theGrid[y-1][x+1];
+                        static_cast<DragonHoard*>(newSub)->setDragoX(x+1);
+                        static_cast<DragonHoard*>(newSub)->setDragoY(y-1);
+                        static_cast<Dragon*>(newSub2)->setDhX(x);
+                        static_cast<Dragon*>(newSub2)->setDhY(y);
                         theGrid[y-1][x+1] = newSub2;
-                        break;  
+                        break;
                     }
                     else if (rand_int == 7 && (theGrid[y][x+1]->getSymb() == '.')) { // place below
-                        delete theGrid[y][x+1]; 
+                        delete theGrid[y][x+1];
+                        static_cast<DragonHoard*>(newSub)->setDragoX(x+1);
+                        static_cast<DragonHoard*>(newSub)->setDragoY(y);
+                        static_cast<Dragon*>(newSub2)->setDhX(x);
+                        static_cast<Dragon*>(newSub2)->setDhY(y);
                         theGrid[y][x+1] = newSub2;
-                        break; 
+                        break;
                     }
                     else if (rand_int == 8 && (theGrid[y+1][x+1]->getSymb() == '.')) { // place right below
-                        delete theGrid[y+1][x+1]; 
+                        delete theGrid[y+1][x+1];
+                        static_cast<DragonHoard*>(newSub)->setDragoX(x+1);
+                        static_cast<DragonHoard*>(newSub)->setDragoY(y+1);
+                        static_cast<Dragon*>(newSub2)->setDhX(x);
+                        static_cast<Dragon*>(newSub2)->setDhY(y);
                         theGrid[y+1][x+1] = newSub2;
                         break;
                     }
                 }
                 else {
-                    cham_arr[chamber_val].update(p); 
+                    cham_arr[chamber_val].update(p);
                 }
             }
         }
-        else if ((rand_int > 1) && (rand_int <= 3)) { // 2/8 probability
-            GameSubject* newSub = new SmallGold(); 
-            Position p = cham_arr[chamber_val].getRand(); 
+        if ((rand_int > 1) && (rand_int <= 3)) { // 2/8 probability
+            GameSubject* newSub = new SmallGold();
+            Position p = cham_arr[chamber_val].getRand();
             int x = p.getX();
-            int y = p.getY(); 
-            theGrid[y][x] = newSub;  
+            int y = p.getY();
+            delete theGrid[y][x];
+            theGrid[y][x] = newSub;
         }
         else { // 5/8 probability 1/8 + 2/8 + 5/8 == 1
-            GameSubject* newSub = new NormalGold(); 
-            Position p = cham_arr[chamber_val].getRand(); 
+            GameSubject* newSub = new NormalGold();
+            Position p = cham_arr[chamber_val].getRand();
             int x = p.getX();
-            int y = p.getY(); 
-            theGrid[y][x] = newSub;  
+            int y = p.getY();
+            delete theGrid[y][x];
+            theGrid[y][x] = newSub;
             
         }
-        gCount += 1; 
+        gCount += 1;
     }
 }
 
@@ -555,10 +586,10 @@ void Grid::atkEnemy(Direction d){
         
         //Removing the npc and replacing it with a floor if npc is dead after attack
         if(static_cast<Npc *>(theGrid[y][x])->isAlive() == false){
-            delete theGrid[y][x];
             GameSubject* gameSub;
             
             if(npcType == 'H'){
+                delete theGrid[y][x];
                 gameSub = new NormalGold();
                 //Update action to output drop normal gold
                 newAction = "Normal Gold was dropped.";
@@ -568,6 +599,7 @@ void Grid::atkEnemy(Direction d){
                     PC->setAction(newAction);
                 }
             }else if(npcType == 'M'){
+                delete theGrid[y][x];
                 gameSub = new MerchantHoard();
                 //Update action to output drop MerchantHoard
                 newAction = "MerchantHoard was dropped.";
@@ -577,33 +609,11 @@ void Grid::atkEnemy(Direction d){
                     PC->setAction(newAction);
                 }
             }else if(npcType == 'D'){
-                
                 //Setting the dragon hoard to be able to be picked up when the dragon dies
-                if(theGrid[y + 1][x]->getSymb() == 'G' && static_cast<Treasure *>(theGrid[y + 1][x])->getValue() == 6){
-                    static_cast<DragonHoard *>(theGrid[y + 1][x])->setDeadDrago(true);
-                }
-                if(theGrid[y - 1][x]->getSymb() == 'G' && static_cast<Treasure *>(theGrid[y - 1][x])->getValue() == 6){
-                    static_cast<DragonHoard *>(theGrid[y - 1][x])->setDeadDrago(true);
-                }
-                if(theGrid[y][x + 1]->getSymb() == 'G' && static_cast<Treasure *>(theGrid[y][x + 1])->getValue() == 6){
-                    static_cast<DragonHoard *>(theGrid[y][x + 1])->setDeadDrago(true);
-                }
-                if(theGrid[y][x - 1]->getSymb() == 'G' && static_cast<Treasure *>(theGrid[y][x - 1])->getValue() == 6){
-                    static_cast<DragonHoard *>(theGrid[y][x - 1])->setDeadDrago(true);
-                }
-                if(theGrid[y + 1][x + 1]->getSymb() == 'G' && static_cast<Treasure *>(theGrid[y + 1][x + 1])->getValue() == 6){
-                    static_cast<DragonHoard *>(theGrid[y + 1][x + 1])->setDeadDrago(true);
-                }
-                if(theGrid[y + 1][x - 1]->getSymb() == 'G' && static_cast<Treasure *>(theGrid[y + 1][x - 1])->getValue() == 6){
-                    static_cast<DragonHoard *>(theGrid[y + 1][x - 1])->setDeadDrago(true);
-                }
-                if(theGrid[y - 1][x + 1]->getSymb() == 'G' && static_cast<Treasure *>(theGrid[y - 1][x + 1])->getValue() == 6){
-                    static_cast<DragonHoard *>(theGrid[y - 1][x + 1])->setDeadDrago(true);
-                }
-                if(theGrid[y - 1][x - 1]->getSymb() == 'G' && static_cast<Treasure *>(theGrid[y - 1][x + 1])->getValue() == 6){
-                    static_cast<DragonHoard *>(theGrid[y - 1][x - 1])->setDeadDrago(true);
-                }
-                
+                int dragonHx = static_cast<Dragon*>(theGrid[y][x])->getDhX();
+                int dragonHy = static_cast<Dragon*>(theGrid[y][x])->getDhY();
+                static_cast<DragonHoard*>(theGrid[dragonHy][dragonHx])->setDeadDrago(true);
+                delete theGrid[y][x];
                 gameSub = new Floor();
                 
                 //Update action to output dragonHoard is now available
@@ -631,7 +641,9 @@ void Grid::atkByEnemy(){
     //Check north
     if(isNpc(theGrid[y - 1][x]->getSymb()) || theGrid[y - 1][x]->getSymb() == 'G'){
         if(theGrid[y - 1][x]->getSymb() == 'G' && static_cast<Treasure *>(theGrid[y - 1][x])->getValue() == 6){
-            static_cast<DragonHoard *>(theGrid[y - 1][x])->getDragon()->attack(PC);
+            int dx = static_cast<DragonHoard *>(theGrid[y - 1][x])->getDragoX();
+            int dy = static_cast<DragonHoard *>(theGrid[y - 1][x])->getDragoY();
+            static_cast<Dragon *>(theGrid[dx][dy])->attack(PC);
         }else{
             if(theGrid[y - 1][x]->getSymb() == 'M' && hostile == false) return;
             static_cast<Npc *>(theGrid[y - 1][x])->attack(PC);
@@ -644,7 +656,9 @@ void Grid::atkByEnemy(){
     //Check south
     if(isNpc(theGrid[y + 1][x]->getSymb()) || theGrid[y + 1][x]->getSymb() == 'G'){
         if(theGrid[y + 1][x]->getSymb() == 'G' && static_cast<Treasure *>(theGrid[y + 1][x])->getValue() == 6){
-            static_cast<DragonHoard *>(theGrid[y + 1][x])->getDragon()->attack(PC);
+            int dx = static_cast<DragonHoard *>(theGrid[y + 1][x])->getDragoX();
+            int dy = static_cast<DragonHoard *>(theGrid[y + 1][x])->getDragoY();
+            static_cast<Dragon *>(theGrid[dx][dy])->attack(PC);
         }else{
             if(theGrid[y + 1][x]->getSymb() == 'M' && hostile == false) return;
             static_cast<Npc *>(theGrid[y + 1][x])->attack(PC);
@@ -657,7 +671,9 @@ void Grid::atkByEnemy(){
     //Check east
     if(isNpc(theGrid[y][x + 1]->getSymb()) || theGrid[y][x + 1]->getSymb() == 'G'){
         if(theGrid[y][x + 1]->getSymb() == 'G' && static_cast<Treasure *>(theGrid[y][x + 1])->getValue() == 6){
-            static_cast<DragonHoard *>(theGrid[y][x + 1])->getDragon()->attack(PC);
+            int dx = static_cast<DragonHoard *>(theGrid[y][x + 1])->getDragoX();
+            int dy = static_cast<DragonHoard *>(theGrid[y][x + 1])->getDragoY();
+            static_cast<Dragon *>(theGrid[dx][dy])->attack(PC);
         }else{
             if(theGrid[y][x + 1]->getSymb() == 'M' && hostile == false) return;
             static_cast<Npc *>(theGrid[y][x + 1])->attack(PC);
@@ -670,7 +686,9 @@ void Grid::atkByEnemy(){
     //Check west
     if(isNpc(theGrid[y][x - 1]->getSymb()) || theGrid[y][x - 1]->getSymb() == 'G'){
         if(theGrid[y][x - 1]->getSymb() == 'G' && static_cast<Treasure *>(theGrid[y][x - 1])->getValue() == 6){
-            static_cast<DragonHoard *>(theGrid[y][x - 1])->getDragon()->attack(PC);
+            int dx = static_cast<DragonHoard *>(theGrid[y][x - 1])->getDragoX();
+            int dy = static_cast<DragonHoard *>(theGrid[y][x - 1])->getDragoY();
+            static_cast<Dragon *>(theGrid[dx][dy])->attack(PC);
         }else{
             if(theGrid[y][x - 1]->getSymb() == 'M' && hostile == false) return;
             static_cast<Npc *>(theGrid[y][x - 1])->attack(PC);
@@ -683,7 +701,9 @@ void Grid::atkByEnemy(){
     //Check north west
     if(isNpc(theGrid[y - 1][x - 1]->getSymb()) || theGrid[y - 1][x - 1]->getSymb() == 'G'){
         if(theGrid[y - 1][x - 1]->getSymb() == 'G' && static_cast<Treasure *>(theGrid[y - 1][x - 1])->getValue() == 6){
-            static_cast<DragonHoard *>(theGrid[y - 1][x - 1])->getDragon()->attack(PC);
+            int dx = static_cast<DragonHoard *>(theGrid[y - 1][x - 1])->getDragoX();
+            int dy = static_cast<DragonHoard *>(theGrid[y - 1][x - 1])->getDragoY();
+            static_cast<Dragon *>(theGrid[dx][dy])->attack(PC);
         }else{
             if(theGrid[y - 1][x - 1]->getSymb() == 'M' && hostile == false) return;
             static_cast<Npc *>(theGrid[y - 1][x - 1])->attack(PC);
@@ -696,7 +716,9 @@ void Grid::atkByEnemy(){
     //Check north east
     if(isNpc(theGrid[y - 1][x + 1]->getSymb()) || theGrid[y - 1][x + 1]->getSymb() == 'G'){
         if(theGrid[y - 1][x + 1]->getSymb() == 'G' && static_cast<Treasure *>(theGrid[y - 1][x + 1])->getValue() == 6){
-            static_cast<DragonHoard *>(theGrid[y - 1][x + 1])->getDragon()->attack(PC);
+            int dx = static_cast<DragonHoard *>(theGrid[y - 1][x + 1])->getDragoX();
+            int dy = static_cast<DragonHoard *>(theGrid[y - 1][x + 1])->getDragoY();
+            static_cast<Dragon *>(theGrid[dx][dy])->attack(PC);
         }else{
             if(theGrid[y - 1][x + 1]->getSymb() == 'M' && hostile == false) return;
             static_cast<Npc *>(theGrid[y - 1][x + 1])->attack(PC);
@@ -709,7 +731,9 @@ void Grid::atkByEnemy(){
     //Check south west
     if(isNpc(theGrid[y + 1][x - 1]->getSymb()) || theGrid[y + 1][x - 1]->getSymb() == 'G'){
         if(theGrid[y + 1][x - 1]->getSymb() == 'G' && static_cast<Treasure *>(theGrid[y + 1][x - 1])->getValue() == 6){
-            static_cast<DragonHoard *>(theGrid[y + 1][x - 1])->getDragon()->attack(PC);
+            int dx = static_cast<DragonHoard *>(theGrid[y + 1][x - 1])->getDragoX();
+            int dy = static_cast<DragonHoard *>(theGrid[y + 1][x - 1])->getDragoY();
+            static_cast<Dragon *>(theGrid[dx][dy])->attack(PC);
         }else{
             if(theGrid[y + 1][x - 1]->getSymb() == 'M' && hostile == false) return;
             static_cast<Npc *>(theGrid[y + 1][x - 1])->attack(PC);
@@ -722,7 +746,9 @@ void Grid::atkByEnemy(){
     //Check south east
     if(isNpc(theGrid[y + 1][x + 1]->getSymb()) || theGrid[y + 1][x + 1]->getSymb() == 'G'){
         if(theGrid[y + 1][x + 1]->getSymb() == 'G' && static_cast<Treasure *>(theGrid[y + 1][x + 1])->getValue() == 6){
-            static_cast<DragonHoard *>(theGrid[y + 1][x + 1])->getDragon()->attack(PC);
+            int dx = static_cast<DragonHoard *>(theGrid[y + 1][x + 1])->getDragoX();
+            int dy = static_cast<DragonHoard *>(theGrid[y + 1][x + 1])->getDragoY();
+            static_cast<Dragon *>(theGrid[dx][dy])->attack(PC);
         }else{
             if(theGrid[y + 1][x + 1]->getSymb() == 'M' && hostile == false) return;
             static_cast<Npc *>(theGrid[y + 1][x + 1])->attack(PC);
@@ -1044,6 +1070,3 @@ bool Grid::playerInSight(int x, int y){
 bool Grid::isWon() {
     return level == 6;
 }
-               
-                
-    
