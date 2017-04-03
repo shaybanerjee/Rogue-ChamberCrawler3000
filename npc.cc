@@ -36,6 +36,12 @@ void Npc::attack(PlayerCharacter *pc){
         }
         
         newAction = npcType.str() + " deals " + damage.str() + " damage to PC.";
+        if(pc->getAction().size() > 0){
+            pc->setAction(pc->getAction() + " " + newAction);
+        }else{
+            pc->setAction(newAction);
+        }
+        return;
     }
     newAction = npcType.str() + " attacked PC and missed.";
     if(pc->getAction().size() > 0){

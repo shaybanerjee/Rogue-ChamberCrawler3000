@@ -17,6 +17,7 @@ void Orc::attack(PlayerCharacter *pc){
     //then this indicates the player hit the character pc
     if((rand() % 2) == 1){
         int hpAfter;
+        damage << damageAgainst(pc);
         if(pc->getName() == "Goblin"){
             hpAfter = pc->getHp() - (int) (1.5 * damageAgainst(pc));
             damage << (int)(damageAgainst(pc) * 1.5);
@@ -32,6 +33,12 @@ void Orc::attack(PlayerCharacter *pc){
             pc->setHp(hpAfter);
         }
         newAction = npcType.str() + " deals " + damage.str() + " damage to PC.";
+        if(pc->getAction().size() > 0){
+            pc->setAction(pc->getAction() + " " + newAction);
+        }else{
+            pc->setAction(newAction);
+        }
+        return;
     }
     newAction = npcType.str() + " attacked PC and missed.";
     if(pc->getAction().size() > 0){

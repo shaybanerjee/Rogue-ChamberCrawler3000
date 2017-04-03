@@ -33,8 +33,6 @@ char playerSelect(){ // Player selects race to play as
         cin >> character;
     }
     return character;
-    
-    
 }
 
 int main(int argc, const char * argv[]) {
