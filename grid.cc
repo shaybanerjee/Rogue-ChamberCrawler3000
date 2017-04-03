@@ -312,7 +312,6 @@ void Grid::rand_treasure() { // randomly place treasure
                 int x = p.getX();
                 int y = p.getY();
                 if (!stuckNpc(x, y)) {
-                    cout << y << " " <<  x << endl;
                     delete theGrid[y][x];
                     theGrid[y][x] = newSub;
                     while(true){
