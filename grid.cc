@@ -660,9 +660,6 @@ void Grid::atkByEnemy(){
             static_cast<Npc *>(theGrid[y - 1][x])->attack(PC);
         }
     }
-    if(PC->isAlive() == false){
-        //call game over method
-    }
     
     //Check south
     if(isNpc(theGrid[y + 1][x]->getSymb()) || theGrid[y + 1][x]->getSymb() == 'G'){
@@ -674,9 +671,6 @@ void Grid::atkByEnemy(){
             if(theGrid[y + 1][x]->getSymb() == 'M' && hostile == false) return;
             static_cast<Npc *>(theGrid[y + 1][x])->attack(PC);
         }
-    }
-    if(PC->isAlive() == false){
-        //call game over method
     }
     
     //Check east
@@ -690,9 +684,6 @@ void Grid::atkByEnemy(){
             static_cast<Npc *>(theGrid[y][x + 1])->attack(PC);
         }
     }
-    if(PC->isAlive() == false){
-        //call game over method
-    }
     
     //Check west
     if(isNpc(theGrid[y][x - 1]->getSymb()) || theGrid[y][x - 1]->getSymb() == 'G'){
@@ -704,9 +695,6 @@ void Grid::atkByEnemy(){
             if(theGrid[y][x - 1]->getSymb() == 'M' && hostile == false) return;
             static_cast<Npc *>(theGrid[y][x - 1])->attack(PC);
         }
-    }
-    if(PC->isAlive() == false){
-        //call game over method
     }
     
     //Check north west
@@ -720,9 +708,6 @@ void Grid::atkByEnemy(){
             static_cast<Npc *>(theGrid[y - 1][x - 1])->attack(PC);
         }
     }
-    if(PC->isAlive() == false){
-        //call game over method
-    }
     
     //Check north east
     if(isNpc(theGrid[y - 1][x + 1]->getSymb()) || theGrid[y - 1][x + 1]->getSymb() == 'G'){
@@ -734,9 +719,6 @@ void Grid::atkByEnemy(){
             if(theGrid[y - 1][x + 1]->getSymb() == 'M' && hostile == false) return;
             static_cast<Npc *>(theGrid[y - 1][x + 1])->attack(PC);
         }
-    }
-    if(PC->isAlive() == false){
-        //call game over method
     }
     
     //Check south west
@@ -750,9 +732,6 @@ void Grid::atkByEnemy(){
             static_cast<Npc *>(theGrid[y + 1][x - 1])->attack(PC);
         }
     }
-    if(PC->isAlive() == false){
-        //call game over method
-    }
     
     //Check south east
     if(isNpc(theGrid[y + 1][x + 1]->getSymb()) || theGrid[y + 1][x + 1]->getSymb() == 'G'){
@@ -764,9 +743,6 @@ void Grid::atkByEnemy(){
             if(theGrid[y + 1][x + 1]->getSymb() == 'M' && hostile == false) return;
             static_cast<Npc *>(theGrid[y + 1][x + 1])->attack(PC);
         }
-    }
-    if(PC->isAlive() == false){
-        //call game over method
     }
 }
 
