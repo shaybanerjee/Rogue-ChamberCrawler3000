@@ -4,6 +4,8 @@
 #include "stair.h"
 #include "npc.h"
 #include <sstream>
+#include "dragon.h"
+#include "dragonHoard.h"
 
 using namespace std;
 
@@ -110,7 +112,6 @@ void Grid::restartGrid(PlayerCharacter *p) { // restarts game UPDATED
 }
 
 ostream &operator<<(ostream &out,const Grid &gGrid) {
-    system("clear");
     for (int i = 0; i < gGrid.height; ++i) {
         for (int j = 0; j < gGrid.width; ++j) {
             out << gGrid.theGrid[i][j]->getSymb();
@@ -297,7 +298,6 @@ bool Grid::stuckNpc(int x, int y){
     }
 }
 
-
 void Grid::rand_treasure() { // randomly place treasure
     int gCount = 0;
     while (gCount < 10) {
@@ -306,85 +306,97 @@ void Grid::rand_treasure() { // randomly place treasure
         if (rand_int == 1) { // 1/8 probability
             GameSubject* newSub = new DragonHoard();
             GameSubject* newSub2 = new Dragon();
-            while(true) { // place dragon appropriately
+            bool exit = true;
+            while(exit) { // place dragon appropriately
                 Position p = cham_arr[chamber_val].getRand();
                 int x = p.getX();
                 int y = p.getY();
                 if (!stuckNpc(x, y)) {
+                    cout << y << " " <<  x << endl;
                     delete theGrid[y][x];
                     theGrid[y][x] = newSub;
-                    int rand_int = (rand() % 8) + 1;
-                    if (rand_int == 1 && (theGrid[y+1][x-1]->getSymb() == '.')) { // place top right
-                        delete theGrid[y+1][x-1];
-                        static_cast<DragonHoard*>(newSub)->setDragoX(x-1);
-                        static_cast<DragonHoard*>(newSub)->setDragoY(y+1);
-                        static_cast<Dragon*>(newSub2)->setDhX(x);
-                        static_cast<Dragon*>(newSub2)->setDhY(y);
-                        theGrid[y+1][x-1] = newSub2;
-                        break;
-                    }
-                    else if (rand_int == 2 && (theGrid[y][x-1]->getSymb() == '.')) { // place above
-                        delete theGrid[y][x-1];
-                        static_cast<DragonHoard*>(newSub)->setDragoX(x-1);
-                        static_cast<DragonHoard*>(newSub)->setDragoY(y);
-                        static_cast<Dragon*>(newSub2)->setDhX(x);
-                        static_cast<Dragon*>(newSub2)->setDhY(y);
-                        theGrid[y][x-1] = newSub2;
-                        break;
-                    }
-                    else if (rand_int == 3 && (theGrid[y-1][x-1]->getSymb() == '.')) { // place top left
-                        delete theGrid[y-1][x-1];
-                        static_cast<DragonHoard*>(newSub)->setDragoX(x-1);
-                        static_cast<DragonHoard*>(newSub)->setDragoY(y-1);
-                        static_cast<Dragon*>(newSub2)->setDhX(x);
-                        static_cast<Dragon*>(newSub2)->setDhY(y);
-                        theGrid[y-1][x-1] = newSub2;
-                        break;
-                    }
-                    else if (rand_int == 4 && (theGrid[y-1][x]->getSymb() == '.')) { // place left
-                        delete theGrid[y-1][x];
-                        static_cast<DragonHoard*>(newSub)->setDragoX(x);
-                        static_cast<DragonHoard*>(newSub)->setDragoY(y-1);
-                        static_cast<Dragon*>(newSub2)->setDhX(x);
-                        static_cast<Dragon*>(newSub2)->setDhY(y);
-                        theGrid[y-1][x] = newSub2;
-                        break;
-                    }
-                    else if (rand_int == 5 && (theGrid[y+1][x]->getSymb() == '.')) { // place right
-                        delete theGrid[y+1][x];
-                        static_cast<DragonHoard*>(newSub)->setDragoX(x);
-                        static_cast<DragonHoard*>(newSub)->setDragoY(y+1);
-                        static_cast<Dragon*>(newSub2)->setDhX(x);
-                        static_cast<Dragon*>(newSub2)->setDhY(y);
-                        theGrid[y+1][x] = newSub2;
-                        break;
-                    }
-                    else if (rand_int == 6 && (theGrid[y-1][x+1]->getSymb() == '.')) { //place left below
-                        delete theGrid[y-1][x+1];
-                        static_cast<DragonHoard*>(newSub)->setDragoX(x+1);
-                        static_cast<DragonHoard*>(newSub)->setDragoY(y-1);
-                        static_cast<Dragon*>(newSub2)->setDhX(x);
-                        static_cast<Dragon*>(newSub2)->setDhY(y);
-                        theGrid[y-1][x+1] = newSub2;
-                        break;
-                    }
-                    else if (rand_int == 7 && (theGrid[y][x+1]->getSymb() == '.')) { // place below
-                        delete theGrid[y][x+1];
-                        static_cast<DragonHoard*>(newSub)->setDragoX(x+1);
-                        static_cast<DragonHoard*>(newSub)->setDragoY(y);
-                        static_cast<Dragon*>(newSub2)->setDhX(x);
-                        static_cast<Dragon*>(newSub2)->setDhY(y);
-                        theGrid[y][x+1] = newSub2;
-                        break;
-                    }
-                    else if (rand_int == 8 && (theGrid[y+1][x+1]->getSymb() == '.')) { // place right below
-                        delete theGrid[y+1][x+1];
-                        static_cast<DragonHoard*>(newSub)->setDragoX(x+1);
-                        static_cast<DragonHoard*>(newSub)->setDragoY(y+1);
-                        static_cast<Dragon*>(newSub2)->setDhX(x);
-                        static_cast<Dragon*>(newSub2)->setDhY(y);
-                        theGrid[y+1][x+1] = newSub2;
-                        break;
+                    while(true){
+                        int rand_int = (rand() % 8) + 1;
+                        if (rand_int == 1 && (theGrid[y+1][x-1]->getSymb() == '.')) { // place top right
+                            delete theGrid[y+1][x-1];
+                            static_cast<DragonHoard*>(newSub)->setDragoX(x-1);
+                            static_cast<DragonHoard*>(newSub)->setDragoY(y+1);
+                            static_cast<Dragon*>(newSub2)->setDhX(x);
+                            static_cast<Dragon*>(newSub2)->setDhY(y);
+                            theGrid[y+1][x-1] = newSub2;
+                            exit = false;
+                            break;
+                        }
+                        else if (rand_int == 2 && (theGrid[y][x-1]->getSymb() == '.')) { // place above
+                            delete theGrid[y][x-1];
+                            static_cast<DragonHoard*>(newSub)->setDragoX(x-1);
+                            static_cast<DragonHoard*>(newSub)->setDragoY(y);
+                            static_cast<Dragon*>(newSub2)->setDhX(x);
+                            static_cast<Dragon*>(newSub2)->setDhY(y);
+                            theGrid[y][x-1] = newSub2;
+                            exit = false;
+                            break;
+                        }
+                        else if (rand_int == 3 && (theGrid[y-1][x-1]->getSymb() == '.')) { // place top left
+                            delete theGrid[y-1][x-1];
+                            static_cast<DragonHoard*>(newSub)->setDragoX(x-1);
+                            static_cast<DragonHoard*>(newSub)->setDragoY(y-1);
+                            static_cast<Dragon*>(newSub2)->setDhX(x);
+                            static_cast<Dragon*>(newSub2)->setDhY(y);
+                            theGrid[y-1][x-1] = newSub2;
+                            exit = false;
+                            break;
+                        }
+                        else if (rand_int == 4 && (theGrid[y-1][x]->getSymb() == '.')) { // place left
+                            delete theGrid[y-1][x];
+                            static_cast<DragonHoard*>(newSub)->setDragoX(x);
+                            static_cast<DragonHoard*>(newSub)->setDragoY(y-1);
+                            static_cast<Dragon*>(newSub2)->setDhX(x);
+                            static_cast<Dragon*>(newSub2)->setDhY(y);
+                            theGrid[y-1][x] = newSub2;
+                            exit = false;
+                            break;
+                        }
+                        else if (rand_int == 5 && (theGrid[y+1][x]->getSymb() == '.')) { // place right
+                            delete theGrid[y+1][x];
+                            static_cast<DragonHoard*>(newSub)->setDragoX(x);
+                            static_cast<DragonHoard*>(newSub)->setDragoY(y+1);
+                            static_cast<Dragon*>(newSub2)->setDhX(x);
+                            static_cast<Dragon*>(newSub2)->setDhY(y);
+                            theGrid[y+1][x] = newSub2;
+                            exit = false;
+                            break;
+                        }
+                        else if (rand_int == 6 && (theGrid[y-1][x+1]->getSymb() == '.')) { //place left below
+                            delete theGrid[y-1][x+1];
+                            static_cast<DragonHoard*>(newSub)->setDragoX(x+1);
+                            static_cast<DragonHoard*>(newSub)->setDragoY(y-1);
+                            static_cast<Dragon*>(newSub2)->setDhX(x);
+                            static_cast<Dragon*>(newSub2)->setDhY(y);
+                            theGrid[y-1][x+1] = newSub2;
+                            exit = false;
+                            break;
+                        }
+                        else if (rand_int == 7 && (theGrid[y][x+1]->getSymb() == '.')) { // place below
+                            delete theGrid[y][x+1];
+                            static_cast<DragonHoard*>(newSub)->setDragoX(x+1);
+                            static_cast<DragonHoard*>(newSub)->setDragoY(y);
+                            static_cast<Dragon*>(newSub2)->setDhX(x);
+                            static_cast<Dragon*>(newSub2)->setDhY(y);
+                            theGrid[y][x+1] = newSub2;
+                            exit = false;
+                            break;
+                        }
+                        else if (rand_int == 8 && (theGrid[y+1][x+1]->getSymb() == '.')) { // place right below
+                            delete theGrid[y+1][x+1];
+                            static_cast<DragonHoard*>(newSub)->setDragoX(x+1);
+                            static_cast<DragonHoard*>(newSub)->setDragoY(y+1);
+                            static_cast<Dragon*>(newSub2)->setDhX(x);
+                            static_cast<Dragon*>(newSub2)->setDhY(y);
+                            theGrid[y+1][x+1] = newSub2;
+                            exit = false;
+                            break;
+                        }
                     }
                 }
                 else {

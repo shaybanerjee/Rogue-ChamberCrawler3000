@@ -7,7 +7,6 @@ class Treasure: public GameSubject {
 	public:
         virtual int getValue();
         Treasure(int value);
-		char getSymb() override;
 };
 
 #endif

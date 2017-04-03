@@ -16,8 +16,6 @@ public:
     void setDhY(int newDhY);
     int getDhX();
     int getDhY();
-    
-    ~Dragon();
 };
 
 #endif

@@ -22,6 +22,3 @@ int Dragon::getDhX(){
 int Dragon::getDhY(){
     return dhY;
 }
-
-
-Dragon::~Dragon(){}

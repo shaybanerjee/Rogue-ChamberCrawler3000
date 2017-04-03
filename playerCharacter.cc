@@ -64,7 +64,7 @@ void PlayerCharacter::usePotion(Potion *p){
     }
     //wound attack
     if(potionType == "WA"){
-        setAtk(getAtk() - p->getValue());
+        setAtk(getAtk() + p->getValue());
         if(getAtk() < 0) setAtk(0);
         if(isUsed(p) == false) usedPotions.emplace_back("WA");
     }
@@ -75,7 +75,7 @@ void PlayerCharacter::usePotion(Potion *p){
     }
     //wound defence
     if(potionType == "WD"){
-        setDef(getDef() - p->getValue());
+        setDef(getDef() + p->getValue());
         if(getDef() < 0) setDef(0);
         if(isUsed(p) == false) usedPotions.emplace_back("WD");
     }
@@ -89,7 +89,7 @@ void PlayerCharacter::usePotion(Potion *p){
     }
     //Potion health
     if(potionType == "PH"){
-        setHp(getHp() - p->getValue());
+        setHp(getHp() + p->getValue());
         if(isUsed(p) == false) usedPotions.emplace_back("PH");
     }
 }

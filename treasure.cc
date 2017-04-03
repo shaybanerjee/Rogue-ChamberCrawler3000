@@ -7,7 +7,3 @@ int Treasure::getValue(){
 
 Treasure::Treasure(const int value): value{value}{
 }
-
-char Treasure::getSymb() {
-	return 'G'; 
-}

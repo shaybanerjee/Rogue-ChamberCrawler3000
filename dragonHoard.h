@@ -14,7 +14,7 @@ public:
     void setDragoY(int newDragoY);
     int getDragoX();
     int getDragoY();
-    ~DragonHoard();
+    char getSymb() override;
 };
 
 

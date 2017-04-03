@@ -5,6 +5,7 @@
 class MerchantHoard: public Treasure{
 public:
 	MerchantHoard();
+    char getSymb() override;
 };
 
 #endif

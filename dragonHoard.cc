@@ -24,5 +24,6 @@ int DragonHoard::getDragoX(){
 int DragonHoard::getDragoY(){
     return dragoY;
 }
-
-DragonHoard::~DragonHoard(){}
+char DragonHoard::getSymb(){
+    return 'G';
+}

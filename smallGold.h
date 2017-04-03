@@ -4,6 +4,7 @@
 class SmallGold:public Treasure{
 public:
 	SmallGold();
+    char getSymb() override;
 };
 
 #endif

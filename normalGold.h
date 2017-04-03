@@ -4,6 +4,7 @@
 class NormalGold:public Treasure{
 public:
 	NormalGold();
+    char getSymb() override;
 };
 
 #endif
