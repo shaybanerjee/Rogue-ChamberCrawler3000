@@ -140,8 +140,10 @@ int main(int argc, const char * argv[]) {
                 catch (const char* error) {
                     pc->setAction(error + pc->getAction());
                 }
-                grid.moveNpcs();
-                grid.atkByEnemy();
+                if (!isF) {
+                    grid.moveNpcs();
+                    grid.atkByEnemy();
+                }
             }
             else if (command == "so"){
                 try {

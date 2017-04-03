@@ -1,5 +1,8 @@
 #include "chamber.h"
 #include <cstdlib>
+#include <iostream>
+
+using namespace std;
 
 Chamber::Chamber(const int i)
 :isPC{false}{
@@ -62,6 +65,7 @@ Chamber::Chamber(const int i)
 Position Chamber::getRand() {
     int sizeOfVec = cham_pos.size();
     while(1) {
+        cout << "banana" << endl;
         int randVal = rand() % sizeOfVec;
         if (cham_pos[randVal].isEmpty()) {
             cham_pos[randVal].set_false();
@@ -73,6 +77,7 @@ Position Chamber::getRand() {
 void Chamber::update(Position &p) {
     for(int i = 0; i < cham_pos.size(); ++i){
         if(cham_pos[i].getX() == p.getX() && cham_pos[i].getY() == p.getY()){
+            
             cham_pos[i].set_true();
             break;
         }
@@ -91,4 +96,8 @@ bool Chamber::isPcPres(){
 
 void Chamber::setPc(){
     isPC = true;
+}
+
+void Chamber::setPcFalse() {
+    isPC = false;
 }

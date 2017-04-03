@@ -14,6 +14,7 @@ public:
     Position getRand();
     void update(Position &p);
     void clear();
+    void setPcFalse();
 };
 
 #endif

@@ -203,6 +203,9 @@ void Grid::rand_enemy() { // generate random enemy
 void Grid::rand_player() { // randomly place player
     int rand_cham = rand() % 5;
     Position p = cham_arr[rand_cham].getRand();
+    for (int i = 0; i < 5; ++i) {
+        cham_arr[i].setPcFalse();
+    }
     cham_arr[rand_cham].setPc();
     int x = p.getX();
     int y = p.getY();
@@ -217,6 +220,7 @@ void Grid::rand_stair() { // randomly place stair
     int rand_cham;
     while(true){
         rand_cham = rand() % 5;
+        cout << "grape" << endl;
         if(!cham_arr[rand_cham].isPcPres()){
             break;
         }
@@ -315,6 +319,7 @@ void Grid::rand_treasure() { // randomly place treasure
                     delete theGrid[y][x];
                     theGrid[y][x] = newSub;
                     while(true){
+                        cout << "apple" << endl;
                         int rand_int = (rand() % 8) + 1;
                         if (rand_int == 1 && (theGrid[y+1][x-1]->getSymb() == '.')) { // place top right
                             delete theGrid[y+1][x-1];
@@ -847,7 +852,11 @@ void Grid::move(Direction d){
     }else if(floorType == '\\'){
         //Clears grid, and starts on the next floor
         newAction += " and advances to the next floor";
-        clearGrid();
+        if (level == 5){
+            cout << "Congratz you have one the game!" << endl;
+            return ;
+        }
+      clearGrid();
     }else{
         throw("Invalid direction to move");
     }
