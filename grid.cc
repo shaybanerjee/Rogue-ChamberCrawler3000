@@ -59,17 +59,18 @@ Grid::~Grid(){ // UPDATED
 void Grid::clearGrid() { // method for clear grid after level UPDATED
     for (int row = 0; row < height; ++row) {
         for (int col = 0; col < width; ++col) {
-            GameSubject* currSub = theGrid[row][col];
-            char symb = currSub->getSymb();
-            if (symb != '+' && symb != '.' && // if not a tile obj
-                symb != ' ' && symb != '-' &&
-                symb != '|' && symb != '#') {
-                if (symb == '@') { // if player dont delete
-                    theGrid[row][col] = new Floor(); // place floor tile
-                }
-                else {
-                    delete theGrid[row][col]; // return heap mem
-                    theGrid[row][col] = new Floor(); // place floor tile
+            if(theGrid[row][col] != nullptr){
+                char symb = theGrid[row][col]->getSymb();
+                if (symb != '+' && symb != '.' && // if not a tile obj
+                    symb != ' ' && symb != '-' &&
+                    symb != '|' && symb != '#') {
+                    if (symb == '@') { // if player dont delete
+                        theGrid[row][col] = new Floor(); // place floor tile
+                    }
+                    else {
+                        delete theGrid[row][col]; // return heap mem
+                        theGrid[row][col] = new Floor(); // place floor tile
+                    }
                 }
             }
         }
