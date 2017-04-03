@@ -33,6 +33,8 @@ char playerSelect(){ // Player selects race to play as
         cin >> character;
     }
     return character;
+    
+    
 }
 
 int main(int argc, const char * argv[]) {
@@ -41,10 +43,6 @@ int main(int argc, const char * argv[]) {
     string command; // commands to move/attack/use items
     char race = playerSelect(); // selects players race
     string file = "cc3kfloor.txt";
-    //    if (argc == 1){
-    //        file = argv[1];
-    //    }
-    
     PlayerCharacter *pc; // main character
     
     switch(race){
@@ -68,14 +66,7 @@ int main(int argc, const char * argv[]) {
     }
     
     Grid grid{file,pc}; // The map/floorplan of the game
-    
-    grid.rand_player();
-    grid.rand_potion();
-    grid.rand_stair();
-    grid.rand_enemy();
-    grid.rand_treasure();
     cout << grid;
-    
     cin >> command;
     while(!cin.eof()){
         pc->setAction("");
