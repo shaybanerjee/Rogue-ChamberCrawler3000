@@ -57,6 +57,7 @@ class Grid {
     bool hostile;
     std::vector <Chamber> cham_arr;
     int level;
+    std::string floors[5];
 public:
     Grid(std::string filename, PlayerCharacter* PC, bool hostile = false); // grid constructor
     ~Grid(); // grid destructor
@@ -66,6 +67,7 @@ public:
     void rand_stair();
     void rand_player();
     bool isWon();
+    void clear();
     bool stuckNpc(int x, int y);
     bool isNpc(char gameType);
     bool playerInSight(int x, int y);

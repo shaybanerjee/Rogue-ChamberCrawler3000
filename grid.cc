@@ -13,37 +13,192 @@ Grid::Grid(string filename, PlayerCharacter* PC, bool hostile) // constructor fo
 : width{79}, height{25}, filename{filename}, PC{PC}, hostile{hostile}, level{1} { // MIL
     string read_line;
     ifstream f {filename};
-    for (int i = 0; i < height; ++i) {
-        getline(f,read_line);
-        vector<GameSubject *> row;
-        for (int j = 0; j < width; ++j) {
-            GameSubject* gameSub;
-            if (read_line[j] == '-') {
-                gameSub = new Hwall();
-                row.emplace_back(gameSub);
+    if (filename == "default.txt") {
+        for (int i = 0; i < height; ++i) {
+            getline(f,read_line);
+            vector<GameSubject *> row;
+            for (int j = 0; j < width; ++j) {
+                GameSubject* gameSub;
+                if (read_line[j] == '-') {
+                    gameSub = new Hwall();
+                    row.emplace_back(gameSub);
+                }
+                else if (read_line[j] == '|') {
+                    gameSub = new Vwall();
+                    row.emplace_back(gameSub);
+                }
+                else if (read_line[j] == '.') {
+                    gameSub = new Floor();
+                    row.emplace_back(gameSub);
+                }
+                else if (read_line[j] == '#') {
+                    gameSub = new PassageWay();
+                    row.emplace_back(gameSub);
+                }
+                else if (read_line[j] == '+') {
+                    gameSub = new Door();
+                    row.emplace_back(gameSub);
+                }
+                else if (read_line[j] == ' ') {
+                    gameSub = new Empty();
+                    row.emplace_back(gameSub);
+                }
             }
-            else if (read_line[j] == '|') {
-                gameSub = new Vwall();
-                row.emplace_back(gameSub);
-            }
-            else if (read_line[j] == '.') {
-                gameSub = new Floor();
-                row.emplace_back(gameSub);
-            }
-            else if (read_line[j] == '#') {
-                gameSub = new PassageWay();
-                row.emplace_back(gameSub);
-            }
-            else if (read_line[j] == '+') {
-                gameSub = new Door();
-                row.emplace_back(gameSub);
-            }
-            else if (read_line[j] == ' ') {
-                gameSub = new Empty();
-                row.emplace_back(gameSub);
+            theGrid.emplace_back(row);
+        }
+    }
+    else {
+        for (int i = 0; i < 5; ++i) {
+            for (int row = 0; row < height; ++row) {
+                getline(f, read_line);
+                floors[i].append(read_line);
             }
         }
-        theGrid.emplace_back(row);
+        string currStr = floors[0];
+        for (int i = 0; i < height; ++i) {
+            int w = 0;
+            vector<GameSubject *> row;
+            while (w < 79) {
+                GameSubject* gameSub;
+                if (currStr[w + (i * 79)] == '-') {
+                    gameSub = new Hwall();
+                    row.emplace_back(gameSub);
+                    ++w;
+                }
+                else if (currStr[w + (i * 79)] == '|') {
+                    gameSub = new Vwall();
+                    row.emplace_back(gameSub);
+                    ++w;
+                }
+                else if (currStr[w + (i * 79)] == '.') {
+                    gameSub = new Floor();
+                    row.emplace_back(gameSub);
+                    ++w;
+                }
+                else if (currStr[w + (i * 79)] == '#') {
+                    gameSub = new PassageWay();
+                    row.emplace_back(gameSub);
+                    ++w;
+                }
+                else if (currStr[w + (i * 79)] == '+') {
+                    gameSub = new Door();
+                    row.emplace_back(gameSub);
+                    ++w;
+                }
+                else if (currStr[w + (i * 79)] == ' ') {
+                    gameSub = new Empty();
+                    row.emplace_back(gameSub);
+                    ++w;
+                }
+                else if (currStr[w + (i * 79)] == '0') {
+                    gameSub = new RestoreHealth();
+                    row.emplace_back(gameSub);
+                    ++w;
+                    
+                }
+                else if (currStr[w + (i * 79)] == '1') {
+                    gameSub = new BoostAtk();
+                    row.emplace_back(gameSub);
+                    ++w;
+                    
+                }
+                else if (currStr[w + (i * 79)] == '2') {
+                    gameSub = new BoostDef();
+                    row.emplace_back(gameSub);
+                    ++w;
+                    
+                }
+                else if (currStr[w + (i * 79)] == '3') {
+                    gameSub = new PoisonHealth();
+                    row.emplace_back(gameSub);
+                    ++w;
+                }
+                else if (currStr[w + (i * 79)] == '4') {
+                    gameSub = new WoundAtk();
+                    row.emplace_back(gameSub);
+                    ++w;
+                    
+                }
+                else if (currStr[w + (i * 79)] == '5') {
+                    gameSub = new WoundDef();
+                    row.emplace_back(gameSub);
+                    ++w;
+                    
+                }
+                else if (currStr[w + (i * 79)] == '6') {
+                    gameSub = new NormalGold();
+                    row.emplace_back(gameSub);
+                    ++w;
+                    
+                    
+                }
+                else if (currStr[w + (i * 79)] == '7') {
+                    gameSub = new SmallGold();
+                    row.emplace_back(gameSub);
+                    ++w;
+                    
+                }
+                else if (currStr[w + (i * 79)] == '8') {
+                    gameSub = new MerchantHoard();
+                    row.emplace_back(gameSub);
+                    ++w;
+                    
+                }
+                else if (currStr[w + (i * 79)] == '9') {
+                    gameSub = new DragonHoard();
+                    row.emplace_back(gameSub);
+                    ++w;
+                }
+                else if (currStr[w + (i * 79)] == '@') {
+                    row.emplace_back(PC);
+                    PC->setX(w);
+                    PC->setY(i);
+                    ++w;
+                }
+                else if (currStr[w + (i * 79)] == 'M') {
+                    gameSub = new Merchant();
+                    row.emplace_back(gameSub);
+                    ++w;
+                    
+                }
+                else if (currStr[w + (i * 79)] == 'L') {
+                    gameSub = new Halfling();
+                    row.emplace_back(gameSub);
+                    ++w;
+                }
+                else if (currStr[w + (i * 79)] == 'D') {
+                    gameSub = new Dragon();
+                    row.emplace_back(gameSub);
+                    ++w;
+                }
+                else if (currStr[w + (i * 79)] == 'W') {
+                    gameSub = new Dwarf();
+                    row.emplace_back(gameSub);
+                    ++w;
+                }
+                else if (currStr[w + (i * 79)] == 'H') {
+                    gameSub = new Human();
+                    row.emplace_back(gameSub);
+                    ++w;
+                }
+                else if (currStr[w + (i * 79)] == 'E') {
+                    gameSub = new Elf();
+                    row.emplace_back(gameSub);
+                    ++w;
+                }
+                else if (currStr[w + (i * 79)] == 'O'){
+                    gameSub = new Orc();
+                    row.emplace_back(gameSub);
+                    ++w;
+                }
+                else {
+                    gameSub = new Stair();
+                    row.emplace_back(gameSub);
+                    ++w;
+                }
+            }
+            theGrid.emplace_back(row);
+        }
     }
     for (int i = 0; i < 5; ++i) {
         cham_arr.emplace_back(Chamber{i});
@@ -58,6 +213,171 @@ Grid::~Grid(){ // UPDATED
     }
 }
 
+void Grid::clear() {
+    for (int row = 0; row < height; ++row) {
+        for (int col = 0; col < width; ++col) {
+            if (theGrid[row][col]->getSymb() != '@') {
+                delete theGrid[row][col];
+            }
+        }
+    }
+    for (int i = 0; i < height; ++i) {
+        theGrid[i].clear();
+    }
+    theGrid.clear();
+    string currStr = floors[level];
+    for (int i = 0; i < height; ++i) {
+        int w = 0;
+        vector<GameSubject *> row;
+        while (w < 79) {
+            GameSubject* gameSub;
+            if (currStr[w + (i * 79)] == '-') {
+                gameSub = new Hwall();
+                row.emplace_back(gameSub);
+                ++w;
+            }
+            else if (currStr[w + (i * 79)] == '|') {
+                gameSub = new Vwall();
+                row.emplace_back(gameSub);
+                ++w;
+            }
+            else if (currStr[w + (i * 79)] == '.') {
+                gameSub = new Floor();
+                row.emplace_back(gameSub);
+                ++w;
+            }
+            else if (currStr[w + (i * 79)] == '#') {
+                gameSub = new PassageWay();
+                row.emplace_back(gameSub);
+                ++w;
+            }
+            else if (currStr[w + (i * 79)] == '+') {
+                gameSub = new Door();
+                row.emplace_back(gameSub);
+                ++w;
+            }
+            else if (currStr[w + (i * 79)] == ' ') {
+                gameSub = new Empty();
+                row.emplace_back(gameSub);
+                ++w;
+            }
+            else if (currStr[w + (i * 79)] == '0') {
+                gameSub = new RestoreHealth();
+                row.emplace_back(gameSub);
+                ++w;
+                
+            }
+            else if (currStr[w + (i * 79)] == '1') {
+                gameSub = new BoostAtk();
+                row.emplace_back(gameSub);
+                ++w;
+                
+            }
+            else if (currStr[w + (i * 79)] == '2') {
+                gameSub = new BoostDef();
+                row.emplace_back(gameSub);
+                ++w;
+                
+            }
+            else if (currStr[w + (i * 79)] == '3') {
+                gameSub = new PoisonHealth();
+                row.emplace_back(gameSub);
+                ++w;
+            }
+            else if (currStr[w + (i * 79)] == '4') {
+                gameSub = new WoundAtk();
+                row.emplace_back(gameSub);
+                ++w;
+                
+            }
+            else if (currStr[w + (i * 79)] == '5') {
+                gameSub = new WoundDef();
+                row.emplace_back(gameSub);
+                ++w;
+                
+            }
+            else if (currStr[w + (i * 79)] == '6') {
+                gameSub = new NormalGold();
+                row.emplace_back(gameSub);
+                ++w;
+                
+                
+            }
+            else if (currStr[w + (i * 79)] == '7') {
+                gameSub = new SmallGold();
+                row.emplace_back(gameSub);
+                ++w;
+                
+            }
+            else if (currStr[w + (i * 79)] == '8') {
+                gameSub = new MerchantHoard();
+                row.emplace_back(gameSub);
+                ++w;
+                
+            }
+            else if (currStr[w + (i * 79)] == '9') {
+                gameSub = new DragonHoard();
+                gameSub->setX(w);
+                gameSub->setY(i);
+                row.emplace_back(gameSub);
+                ++w;
+            }
+            else if (currStr[w + (i * 79)] == '@') {
+                row.emplace_back(PC);
+                PC->setX(w);
+                PC->setY(i);
+                ++w;
+            }
+            else if (currStr[w + (i * 79)] == 'M') {
+                gameSub = new Merchant();
+                row.emplace_back(gameSub);
+                ++w;
+                
+            }
+            else if (currStr[w + (i * 79)] == 'L') {
+                gameSub = new Halfling();
+                row.emplace_back(gameSub);
+                ++w;
+            }
+            else if (currStr[w + (i * 79)] == 'D') {
+                gameSub = new Dragon();
+                gameSub->setX(w);
+                gameSub->setY(i);
+                row.emplace_back(gameSub);
+                ++w;
+            }
+            else if (currStr[w + (i * 79)] == 'W') {
+                gameSub = new Dwarf();
+                row.emplace_back(gameSub);
+                ++w;
+            }
+            else if (currStr[w + (i * 79)] == 'H') {
+                gameSub = new Human();
+                row.emplace_back(gameSub);
+                ++w;
+            }
+            else if (currStr[w + (i * 79)] == 'E') {
+                gameSub = new Elf();
+                row.emplace_back(gameSub);
+                ++w;
+            }
+            else if (currStr[w * (i * 79)] == 'O') { // 'O'
+                gameSub = new Orc();
+                row.emplace_back(gameSub);
+                ++w;
+            }
+            else {
+                gameSub = new Stair();
+                row.emplace_back(gameSub);
+                ++w;
+            }
+        }
+        theGrid.emplace_back(row);
+    }
+    ++level;
+}
+
+
 void Grid::clearGrid() { // method for clear grid after level UPDATED
     for (int row = 0; row < height; ++row) {
         for (int col = 0; col < width; ++col) {
@@ -71,7 +391,7 @@ void Grid::clearGrid() { // method for clear grid after level UPDATED
                 else {
                     delete theGrid[row][col]; // return heap mem
                     theGrid[row][col] = new Floor(); // place floor tile
-               }
+                }
             }
         }
     }
@@ -850,7 +1170,12 @@ void Grid::move(Direction d){
     }else if(floorType == '\\'){
         //Clears grid, and starts on the next floor
         newAction += " and advances to the next floor";
-      clearGrid();
+        if (filename == "default.txt") {
+            clearGrid();
+        }
+        else {
+            clear();
+        }
     }else{
         throw("Invalid direction to move");
     }
@@ -943,7 +1268,7 @@ void Grid::move(Direction d){
             }
             seen = true;
         }else{
-            if(PC->isUsed(static_cast<Potion *>(theGrid[y - 1][x]))){
+            if(PC->isUsed(static_cast<Potion *>(theGrid[y - 1][x + 1]))){
                 newAction += ", " + static_cast<Potion *>(theGrid[y - 1][x + 1])->getType() + " to the north east";
             }else{
                 newAction += ", an unknown potion to the north east";
@@ -994,7 +1319,7 @@ void Grid::move(Direction d){
     if(theGrid[y + 1][x - 1]->getSymb() == 'P'){
         if(!seen){
             if(PC->isUsed(static_cast<Potion *>(theGrid[y + 1][x - 1]))){
-                newAction += " and sees " + static_cast<Potion *>(theGrid[y - 1][x])->getType() + " to the south west";
+                newAction += " and sees " + static_cast<Potion *>(theGrid[y + 1][x - 1])->getType() + " to the south west";
             }else{
                 newAction += " and sees an unknown potion to the south west";
             }
