@@ -5,17 +5,24 @@
 DragonHoard::DragonHoard():Treasure{6}, deadDrago{false}{
 }
 
-void DragonHoard::setDragon(Dragon* d) {
-    Drago = d;
-}
-
-Dragon* DragonHoard::getDragon() {
-    return Drago;
-}
-
 bool DragonHoard::getDeadDrago(){
     return deadDrago;
 }
 void DragonHoard::setDeadDrago(bool newDeadDrago){
     deadDrago = newDeadDrago;
 }
+
+void DragonHoard::setDragoX(int newDragoX){
+    dragoX = newDragoX;
+}
+void DragonHoard::setDragoY(int newDragoY){
+    dragoY = newDragoY;
+}
+int DragonHoard::getDragoX(){
+    return dragoX;
+}
+int DragonHoard::getDragoY(){
+    return dragoY;
+}
+
+DragonHoard::~DragonHoard(){}

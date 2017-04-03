@@ -1,17 +1,20 @@
 #ifndef _DRAGON_HOARD_H_
 #define _DRAGON_HOARD_H_
-#include "dragon.h"
 #include "treasure.h"
+
 class DragonHoard: public Treasure{
-    Dragon* Drago;
     bool deadDrago;
+    int dragoX;
+    int dragoY;
 public:
     DragonHoard();
-    //Accessors and mutators for the fields
-    void setDragon(Dragon* d);
-    Dragon* getDragon();
     bool getDeadDrago();
     void setDeadDrago(bool newDeadDrago);
+    void setDragoX(int newDragoX);
+    void setDragoY(int newDragoY);
+    int getDragoX();
+    int getDragoY();
+    ~DragonHoard();
 };
 
 

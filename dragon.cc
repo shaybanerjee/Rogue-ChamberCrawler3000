@@ -9,3 +9,19 @@ Npc{hp, atk, def, hasMoved}{}
 char Dragon::getSymb(){
     return 'D';
 }
+
+void Dragon::setDhX(int newDhX){
+    dhX = newDhX;
+}
+void Dragon::setDhY(int newDhY){
+    dhY = newDhY;
+}
+int Dragon::getDhX(){
+    return dhX;
+}
+int Dragon::getDhY(){
+    return dhY;
+}
+
+
+Dragon::~Dragon(){}
