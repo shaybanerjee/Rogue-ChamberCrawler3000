@@ -23,8 +23,10 @@ public:
     //Constructor
     PlayerCharacter(int hp = 125, int atk = 25, int def = 25, std::string name = "Shade");
     
-    //accessor for name and Gold;
+    //accessor for name, gold, baseAtk and baseDef;
     std::string getName();
+    int getBaseAtk();
+    int getBaseDef();
     int getNumGold();
     
     //accessor and mutators for curTile and action

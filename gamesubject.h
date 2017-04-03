@@ -9,6 +9,7 @@ public:
     void setX(int newX);
     void setY(int newY);
 	virtual char getSymb() = 0; // pv get_symb method
+    virtual ~GameSubject();
 };
 
 #endif

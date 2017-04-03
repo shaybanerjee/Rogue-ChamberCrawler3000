@@ -463,7 +463,5 @@ int main(int argc, const char * argv[]) {
         cin >> command; //reads next command
         
     }
-    delete pc;
     return 0;
-    
 }

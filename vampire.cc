@@ -40,7 +40,7 @@ void Vampire::attack(Npc *enemy){
     if(enemy->isAlive()){
         newAction = "PC deals " + damage.str() + " damage to " + npcType.str() + " (" + enemyHealth.str() + ").";
     }else{
-        newAction = "PC deals " + damage.str() + " damage to " + npcType.str() + "and slains " + npcType.str() + ".";
+        newAction = "PC deals " + damage.str() + " damage to " + npcType.str() + " and slains " + npcType.str() + ".";
     }
     
     //if a dwarf, this causes vampires to subtract it's hp by 5, otherwise,
@@ -51,10 +51,10 @@ void Vampire::attack(Npc *enemy){
         }else{
             setHp(0);
         }
-        newAction += " PC also loses 5 Hp after attacking W";
+        newAction += " PC also loses 5 Hp after attacking W.";
     }else{
         setHp(getHp() + 5);
-        newAction += " PC also gains 5 Hp after attacking W.";
+        newAction += " PC also gains 5 Hp after attacking " + npcType.str() + ".";
     }
     
     //Updating Action

@@ -37,7 +37,7 @@ void Goblin::attack(Npc *enemy){
     if(enemy->isAlive()){
         newAction = "PC deals " + damage.str() + " damage to " + npcType.str() + " (" + enemyHealth.str() + ").";
     }else{
-        newAction = "PC deals " + damage.str() + " damage to " + npcType.str() + "and slains " + npcType.str() + ".";
+        newAction = "PC deals " + damage.str() + " damage to " + npcType.str() + " and slains " + npcType.str() + ".";
     }
     
     //Updating Action

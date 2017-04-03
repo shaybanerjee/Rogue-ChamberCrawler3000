@@ -17,3 +17,5 @@ void GameSubject::setX(int newX){
 void GameSubject::setY(int newY){
     y = newY;
 }
+
+GameSubject~GameSubject(){}

@@ -14,13 +14,21 @@ Character{hp, atk, def}, name{name}{
     action = "";
 }
 
-//Creating accessor for name and gold
+//Creating accessor for name, gold, baseAtk and baseDef.
 std::string PlayerCharacter::getName(){
     return name;
 }
 
 int PlayerCharacter::getNumGold(){
     return numGold;
+}
+
+int PlayerCharacter::getBaseAtk(){
+    return baseAtk;
+}
+
+int PlayerCharacter::getBaseDef(){
+    return baseDef;
 }
 
 //accessor and mutator for currPlace and Action;
@@ -123,7 +131,7 @@ void PlayerCharacter::attack(Npc *enemy){
     if(enemy->isAlive()){
         newAction = "PC deals " + damage.str() + " damage to " + npcType.str() + " (" + enemyHealth.str() + ").";
     }else{
-        newAction = "PC deals " + damage.str() + " damage to " + npcType.str() + "and slains " + npcType.str() + ".";
+        newAction = "PC deals " + damage.str() + " damage to " + npcType.str() + " and slains " + npcType.str() + ".";
     }
     
     //Updating Action

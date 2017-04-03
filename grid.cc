@@ -54,7 +54,6 @@ Grid::~Grid(){ // UPDATED
             delete theGrid[row][col];
         }
     }
-    delete PC;
 }
 
 void Grid::clearGrid() { // method for clear grid after level UPDATED
@@ -78,12 +77,14 @@ void Grid::clearGrid() { // method for clear grid after level UPDATED
     for (int i = 0; i < 5; ++i) {
         cham_arr[i].clear(); // reinit chambers
     }
+    level++;
     rand_enemy();
     rand_player();
     rand_stair();
     rand_potion();
     rand_treasure();
-    
+    PC->setAtk(PC->getBaseAtk());
+    PC->setDef(PC->getBaseDef());
 }
 
 void Grid::restartGrid(PlayerCharacter *p) { // restarts game UPDATED
@@ -124,7 +125,7 @@ ostream &operator<<(ostream &out,const Grid &gGrid) {
     //Printing out race and gold
     out << "Race: " << gGrid.PC->getName() << " Gold: " << gGrid.PC->getNumGold();
     //Printing out spaces before outputting stairs
-    for(int i = index; i < gGrid.width - 3; i++){
+    for(int i = index; i < gGrid.width - 8; i++){
         out << " ";
     }
     out << "Floor: " << gGrid.level << endl;
@@ -735,28 +736,37 @@ void Grid::atkByEnemy(){
 void Grid::move(Direction d){
     int x = PC->getX();
     int y = PC->getY();
+    std::string newAction = "PC moves ";
     
     //Update x and y depending on which direction the potion is in
     if(d == Direction::NO){
         y--;
+        newAction += "North";
     }else if(d == Direction::SO){
         y++;
+        newAction += "South";
     }else if(d == Direction::EA){
         x++;
+        newAction += "East";
     }else if(d == Direction::WE){
         x--;
+        newAction += "West";
     }else if(d == Direction::NW){
         y--;
         x--;
+        newAction += "North West";
     }else if(d == Direction::NE){
         y--;
         x++;
+        newAction += "North East";
     }else if(d == Direction::SW){
         y++;
         x--;
+        newAction += "South West";
     }else{
         y++;
         x++;
+        newAction += "South East";
     }
     
     char floorType = theGrid[y][x]->getSymb();
@@ -797,7 +807,8 @@ void Grid::move(Direction d){
             throw("Invalid direction to move, dragon is not dead yet");
         }else{
             //Adding gold to PC
-            PC->addGold(static_cast<Treasure *>(theGrid[y][x])->getValue());
+            int gold = static_cast<Treasure *>(theGrid[y][x])->getValue();
+            PC->addGold(gold);
             //Removing Gold object and replacing it with the PC
             delete theGrid[y][x];
             theGrid[y][x] = PC;
@@ -806,12 +817,207 @@ void Grid::move(Direction d){
             theGrid[PC->getY()][PC->getX()] = gameSub;
             PC->setX(x);
             PC->setY(y);
+            newAction += " and picks up a ";
+            
+            //update action to output which gold it picks up
+            if(gold == 1){
+                newAction += "small gold";
+            }else if(gold == 2){
+                newAction += "normal gold";
+            }else if(gold == 4){
+                newAction += "merchant hoard";
+            }else{
+                newAction += "dragon hoard";
+            }
         }
     }else if(floorType == '\\'){
         //Clears grid, and starts on the next floor
+        newAction += " and advances to the next floor";
         clearGrid();
     }else{
         throw("Invalid direction to move");
+    }
+    
+    //Check all 8 directions to update action
+    int numEnemies = 0;
+    bool seen = false;
+    if(theGrid[y - 1][x]->getSymb() == 'P'){
+        if(!seen){
+            if(PC->isUsed(static_cast<Potion *>(theGrid[y - 1][x]))){
+                newAction += " and sees " + static_cast<Potion *>(theGrid[y - 1][x])->getType() + " to the north";
+            }else{
+                newAction += " and sees an unknown potion to the north";
+            }
+            seen = true;
+        }else{
+            if(PC->isUsed(static_cast<Potion *>(theGrid[y - 1][x]))){
+                newAction += ", " + static_cast<Potion *>(theGrid[y - 1][x])->getType() + " to the north";
+            }else{
+                newAction += ", an unknown potion to the north";
+            }
+        }
+    }
+    if(isNpc(theGrid[y - 1][x]->getSymb())){
+        numEnemies++;
+    }
+    if(theGrid[y + 1][x]->getSymb() == 'P'){
+        if(!seen){
+            if(PC->isUsed(static_cast<Potion *>(theGrid[y + 1][x]))){
+                newAction += " and sees " + static_cast<Potion *>(theGrid[y + 1][x])->getType() + " to the south";
+            }else{
+                newAction += " and sees an unknown potion to the south";
+            }
+            seen = true;
+        }else{
+            if(PC->isUsed(static_cast<Potion *>(theGrid[y + 1][x]))){
+                newAction += ", " + static_cast<Potion *>(theGrid[y + 1][x])->getType() + " to the south";
+            }else{
+                newAction += ", an unknown potion to the south";
+            }
+        }
+    }
+    if(isNpc(theGrid[y + 1][x]->getSymb())){
+        numEnemies++;
+    }
+    if(theGrid[y][x + 1]->getSymb() == 'P'){
+        if(!seen){
+            if(PC->isUsed(static_cast<Potion *>(theGrid[y][x + 1]))){
+                newAction += " and sees " + static_cast<Potion *>(theGrid[y][x + 1])->getType() + " to the east";
+            }else{
+                newAction += " and sees an unknown potion to the east";
+            }
+            seen = true;
+        }else{
+            if(PC->isUsed(static_cast<Potion *>(theGrid[y][x + 1]))){
+                newAction += ", " + static_cast<Potion *>(theGrid[y][x + 1])->getType() + " to the east";
+            }else{
+                newAction += ", an unknown potion to the east";
+            }
+        }
+    }
+    if(isNpc(theGrid[y][x + 1]->getSymb())){
+        numEnemies++;
+    }
+    if(theGrid[y][x - 1]->getSymb() == 'P'){
+        if(!seen){
+            if(PC->isUsed(static_cast<Potion *>(theGrid[y][x - 1]))){
+                newAction += " and sees " + static_cast<Potion *>(theGrid[y][x - 1])->getType() + " to the west";
+            }else{
+                newAction += " and sees an unknown potion to the west";
+            }
+            seen = true;
+        }else{
+            if(PC->isUsed(static_cast<Potion *>(theGrid[y][x - 1]))){
+                newAction += ", " + static_cast<Potion *>(theGrid[y][x - 1])->getType() + " to the west";
+            }else{
+                newAction += ", an unknown potion to the west";
+            }
+        }
+    }
+    if(isNpc(theGrid[y][x - 1]->getSymb())){
+        numEnemies++;
+    }
+    if(theGrid[y - 1][x + 1]->getSymb() == 'P'){
+        if(!seen){
+            if(PC->isUsed(static_cast<Potion *>(theGrid[y - 1][x + 1]))){
+                newAction += " and sees " + static_cast<Potion *>(theGrid[y - 1][x + 1])->getType() + " to the north east";
+            }else{
+                newAction += " and sees an unknown potion to the north east";
+            }
+            seen = true;
+        }else{
+            if(PC->isUsed(static_cast<Potion *>(theGrid[y - 1][x]))){
+                newAction += ", " + static_cast<Potion *>(theGrid[y - 1][x + 1])->getType() + " to the north east";
+            }else{
+                newAction += ", an unknown potion to the north east";
+            }
+        }
+    }
+    if(isNpc(theGrid[y - 1][x + 1]->getSymb())){
+        numEnemies++;
+    }
+    if(theGrid[y - 1][x - 1]->getSymb() == 'P'){
+        if(!seen){
+            if(PC->isUsed(static_cast<Potion *>(theGrid[y - 1][x - 1]))){
+                newAction += " and sees " + static_cast<Potion *>(theGrid[y - 1][x - 1])->getType() + " to the north west";
+            }else{
+                newAction += " and sees an unknown potion to the north west";
+            }
+            seen = true;
+        }else{
+            if(PC->isUsed(static_cast<Potion *>(theGrid[y - 1][x - 1]))){
+                newAction += ", " + static_cast<Potion *>(theGrid[y - 1][x - 1])->getType() + " to the north west";
+            }else{
+                newAction += ", an unknown potion to the north west";
+            }
+        }
+    }
+    if(isNpc(theGrid[y - 1][x - 1]->getSymb())){
+        numEnemies++;
+    }
+    if(theGrid[y + 1][x + 1]->getSymb() == 'P'){
+        if(!seen){
+            if(PC->isUsed(static_cast<Potion *>(theGrid[y + 1][x + 1]))){
+                newAction += " and sees " + static_cast<Potion *>(theGrid[y + 1][x + 1])->getType() + " to the south east";
+            }else{
+                newAction += " and sees an unknown potion to the south east";
+            }
+            seen = true;
+        }else{
+            if(PC->isUsed(static_cast<Potion *>(theGrid[y + 1][x + 1]))){
+                newAction += ", " + static_cast<Potion *>(theGrid[y + 1][x + 1])->getType() + " to the south east";
+            }else{
+                newAction += ", an unknown potion to the south east";
+            }
+        }
+    }
+    if(isNpc(theGrid[y + 1][x + 1]->getSymb())){
+        numEnemies++;
+    }
+    if(theGrid[y + 1][x - 1]->getSymb() == 'P'){
+        if(!seen){
+            if(PC->isUsed(static_cast<Potion *>(theGrid[y + 1][x - 1]))){
+                newAction += " and sees " + static_cast<Potion *>(theGrid[y - 1][x])->getType() + " to the south west";
+            }else{
+                newAction += " and sees an unknown potion to the south west";
+            }
+            seen = true;
+        }else{
+            if(PC->isUsed(static_cast<Potion *>(theGrid[y + 1][x - 1]))){
+                newAction += ", " + static_cast<Potion *>(theGrid[y + 1][x - 1])->getType() + " to the south west";
+            }else{
+                newAction += ", an unknown potion to the south west";
+            }
+        }
+    }
+    if(isNpc(theGrid[y + 1][x - 1]->getSymb())){
+        numEnemies++;
+    }
+    
+    stringstream enemies;
+    enemies << numEnemies;
+    
+    if(numEnemies > 0){
+        if(seen){
+            if(numEnemies > 1){
+                newAction += ", " + enemies.str() + " enemies";
+            }else{
+                newAction += ", an enemy";
+            }
+        }else{
+            if(numEnemies > 1){
+                newAction += " and sees " + enemies.str() + " enemies";
+            }else{
+                newAction += " and sees an enemy";
+            }
+        }
+    }
+    
+    //Update action
+    if(PC->getAction().size() > 0){
+        PC->setAction(PC->getAction() + " " + newAction + ".");
+    }else{
+        PC->setAction(newAction + ".");
     }
 }
 
