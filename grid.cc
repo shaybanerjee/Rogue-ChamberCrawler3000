@@ -653,11 +653,11 @@ void Grid::atkByEnemy(){
     int y = PC->getY();
     
     //Check north
-    if(isNpc(theGrid[y - 1][x]->getSymb()) || theGrid[y - 1][x]->getSymb() == 'G'){
+    if((isNpc(theGrid[y - 1][x]->getSymb()) && theGrid[y - 1][x]->getSymb() != 'D') || theGrid[y - 1][x]->getSymb() == 'G'){
         if(theGrid[y - 1][x]->getSymb() == 'G' && static_cast<Treasure *>(theGrid[y - 1][x])->getValue() == 6){
             int dx = static_cast<DragonHoard *>(theGrid[y - 1][x])->getDragoX();
             int dy = static_cast<DragonHoard *>(theGrid[y - 1][x])->getDragoY();
-            static_cast<Dragon *>(theGrid[dx][dy])->attack(PC);
+            static_cast<Dragon *>(theGrid[dy][dx])->attack(PC);
         }else{
             if(theGrid[y - 1][x]->getSymb() == 'M' && hostile == false) return;
             static_cast<Npc *>(theGrid[y - 1][x])->attack(PC);
@@ -665,11 +665,11 @@ void Grid::atkByEnemy(){
     }
     
     //Check south
-    if(isNpc(theGrid[y + 1][x]->getSymb()) || theGrid[y + 1][x]->getSymb() == 'G'){
+    if((isNpc(theGrid[y + 1][x]->getSymb()) && theGrid[y + 1][x]->getSymb() != 'D') || theGrid[y + 1][x]->getSymb() == 'G'){
         if(theGrid[y + 1][x]->getSymb() == 'G' && static_cast<Treasure *>(theGrid[y + 1][x])->getValue() == 6){
             int dx = static_cast<DragonHoard *>(theGrid[y + 1][x])->getDragoX();
             int dy = static_cast<DragonHoard *>(theGrid[y + 1][x])->getDragoY();
-            static_cast<Dragon *>(theGrid[dx][dy])->attack(PC);
+            static_cast<Dragon *>(theGrid[dy][dx])->attack(PC);
         }else{
             if(theGrid[y + 1][x]->getSymb() == 'M' && hostile == false) return;
             static_cast<Npc *>(theGrid[y + 1][x])->attack(PC);
@@ -677,11 +677,11 @@ void Grid::atkByEnemy(){
     }
     
     //Check east
-    if(isNpc(theGrid[y][x + 1]->getSymb()) || theGrid[y][x + 1]->getSymb() == 'G'){
+    if((isNpc(theGrid[y][x + 1]->getSymb()) && theGrid[y][x + 1]->getSymb() != 'D') || theGrid[y][x + 1]->getSymb() == 'G'){
         if(theGrid[y][x + 1]->getSymb() == 'G' && static_cast<Treasure *>(theGrid[y][x + 1])->getValue() == 6){
             int dx = static_cast<DragonHoard *>(theGrid[y][x + 1])->getDragoX();
             int dy = static_cast<DragonHoard *>(theGrid[y][x + 1])->getDragoY();
-            static_cast<Dragon *>(theGrid[dx][dy])->attack(PC);
+            static_cast<Dragon *>(theGrid[dy][dx])->attack(PC);
         }else{
             if(theGrid[y][x + 1]->getSymb() == 'M' && hostile == false) return;
             static_cast<Npc *>(theGrid[y][x + 1])->attack(PC);
@@ -689,11 +689,11 @@ void Grid::atkByEnemy(){
     }
     
     //Check west
-    if(isNpc(theGrid[y][x - 1]->getSymb()) || theGrid[y][x - 1]->getSymb() == 'G'){
+    if((isNpc(theGrid[y][x - 1]->getSymb()) && theGrid[y][x - 1]->getSymb() != 'D') || theGrid[y][x - 1]->getSymb() == 'G'){
         if(theGrid[y][x - 1]->getSymb() == 'G' && static_cast<Treasure *>(theGrid[y][x - 1])->getValue() == 6){
             int dx = static_cast<DragonHoard *>(theGrid[y][x - 1])->getDragoX();
             int dy = static_cast<DragonHoard *>(theGrid[y][x - 1])->getDragoY();
-            static_cast<Dragon *>(theGrid[dx][dy])->attack(PC);
+            static_cast<Dragon *>(theGrid[dy][dx])->attack(PC);
         }else{
             if(theGrid[y][x - 1]->getSymb() == 'M' && hostile == false) return;
             static_cast<Npc *>(theGrid[y][x - 1])->attack(PC);
@@ -701,11 +701,11 @@ void Grid::atkByEnemy(){
     }
     
     //Check north west
-    if(isNpc(theGrid[y - 1][x - 1]->getSymb()) || theGrid[y - 1][x - 1]->getSymb() == 'G'){
+    if((isNpc(theGrid[y - 1][x - 1]->getSymb()) && theGrid[y - 1][x - 1]->getSymb() != 'D') || theGrid[y - 1][x - 1]->getSymb() == 'G'){
         if(theGrid[y - 1][x - 1]->getSymb() == 'G' && static_cast<Treasure *>(theGrid[y - 1][x - 1])->getValue() == 6){
             int dx = static_cast<DragonHoard *>(theGrid[y - 1][x - 1])->getDragoX();
             int dy = static_cast<DragonHoard *>(theGrid[y - 1][x - 1])->getDragoY();
-            static_cast<Dragon *>(theGrid[dx][dy])->attack(PC);
+            static_cast<Dragon *>(theGrid[dy][dx])->attack(PC);
         }else{
             if(theGrid[y - 1][x - 1]->getSymb() == 'M' && hostile == false) return;
             static_cast<Npc *>(theGrid[y - 1][x - 1])->attack(PC);
@@ -713,11 +713,11 @@ void Grid::atkByEnemy(){
     }
     
     //Check north east
-    if(isNpc(theGrid[y - 1][x + 1]->getSymb()) || theGrid[y - 1][x + 1]->getSymb() == 'G'){
+    if((isNpc(theGrid[y - 1][x + 1]->getSymb()) && theGrid[y - 1][x + 1]->getSymb() != 'D') || theGrid[y - 1][x + 1]->getSymb() == 'G'){
         if(theGrid[y - 1][x + 1]->getSymb() == 'G' && static_cast<Treasure *>(theGrid[y - 1][x + 1])->getValue() == 6){
             int dx = static_cast<DragonHoard *>(theGrid[y - 1][x + 1])->getDragoX();
             int dy = static_cast<DragonHoard *>(theGrid[y - 1][x + 1])->getDragoY();
-            static_cast<Dragon *>(theGrid[dx][dy])->attack(PC);
+            static_cast<Dragon *>(theGrid[dy][dx])->attack(PC);
         }else{
             if(theGrid[y - 1][x + 1]->getSymb() == 'M' && hostile == false) return;
             static_cast<Npc *>(theGrid[y - 1][x + 1])->attack(PC);
@@ -725,11 +725,11 @@ void Grid::atkByEnemy(){
     }
     
     //Check south west
-    if(isNpc(theGrid[y + 1][x - 1]->getSymb()) || theGrid[y + 1][x - 1]->getSymb() == 'G'){
+    if((isNpc(theGrid[y + 1][x - 1]->getSymb()) && theGrid[y + 1][x - 1]->getSymb() != 'D') || theGrid[y + 1][x - 1]->getSymb() == 'G'){
         if(theGrid[y + 1][x - 1]->getSymb() == 'G' && static_cast<Treasure *>(theGrid[y + 1][x - 1])->getValue() == 6){
             int dx = static_cast<DragonHoard *>(theGrid[y + 1][x - 1])->getDragoX();
             int dy = static_cast<DragonHoard *>(theGrid[y + 1][x - 1])->getDragoY();
-            static_cast<Dragon *>(theGrid[dx][dy])->attack(PC);
+            static_cast<Dragon *>(theGrid[dy][dx])->attack(PC);
         }else{
             if(theGrid[y + 1][x - 1]->getSymb() == 'M' && hostile == false) return;
             static_cast<Npc *>(theGrid[y + 1][x - 1])->attack(PC);
@@ -737,11 +737,11 @@ void Grid::atkByEnemy(){
     }
     
     //Check south east
-    if(isNpc(theGrid[y + 1][x + 1]->getSymb()) || theGrid[y + 1][x + 1]->getSymb() == 'G'){
+    if((isNpc(theGrid[y + 1][x + 1]->getSymb()) && theGrid[y + 1][x + 1]->getSymb() != 'D') || theGrid[y + 1][x + 1]->getSymb() == 'G'){
         if(theGrid[y + 1][x + 1]->getSymb() == 'G' && static_cast<Treasure *>(theGrid[y + 1][x + 1])->getValue() == 6){
             int dx = static_cast<DragonHoard *>(theGrid[y + 1][x + 1])->getDragoX();
             int dy = static_cast<DragonHoard *>(theGrid[y + 1][x + 1])->getDragoY();
-            static_cast<Dragon *>(theGrid[dx][dy])->attack(PC);
+            static_cast<Dragon *>(theGrid[dy][dx])->attack(PC);
         }else{
             if(theGrid[y + 1][x + 1]->getSymb() == 'M' && hostile == false) return;
             static_cast<Npc *>(theGrid[y + 1][x + 1])->attack(PC);
