@@ -138,106 +138,82 @@ int main(int argc, const char * argv[]) {
                     grid.atkEnemy(Direction::NO);
                 }
                 catch (const char* error) {
-                    cout << error << endl;
+                    pc->setAction(error + pc->getAction());
                 }
-                try {
-                    grid.moveNpcs();
-                }
-                catch (const char* error) {
-                    cout << error << endl;
-                }
+                grid.moveNpcs();
+                grid.atkByEnemy();
             }
             else if (command == "so"){
                 try {
                     grid.atkEnemy(Direction::SO);
                 }
                 catch (const char* error) {
-                    cout << error << endl;
+                    pc->setAction(error + pc->getAction());
                 }
-                try {
-                    grid.moveNpcs();
-                }
-                catch (const char* error) {
-                    cout << error << endl;
-                }
+                grid.moveNpcs();
+                grid.atkByEnemy();
             }
             else if (command == "ea"){
                 try {
                     grid.atkEnemy(Direction::EA);
                 }
                 catch (const char* error) {
-                    cout << error << endl;
+                    pc->setAction(error + pc->getAction());
                 }
                 grid.moveNpcs();
+                grid.atkByEnemy();
             }
             else if (command == "we"){
                 try {
                     grid.atkEnemy(Direction::WE);
                 }
                 catch (const char* error) {
-                    cout << error << endl;
+                    pc->setAction(error + pc->getAction());
                 }
-                try {
-                    grid.moveNpcs();
-                }
-                catch (const char* error) {
-                    cout << error << endl;
-                }
+                grid.moveNpcs();
+                grid.atkByEnemy();
+                
             }else if(command == "ne"){
                 try {
                     grid.atkEnemy(Direction::NE);
                 }
                 catch (const char* error) {
-                    cout << error << endl;
+                    pc->setAction(error + pc->getAction());
                 }
-                try {
-                    grid.moveNpcs();
-                }
-                catch (const char* error) {
-                    cout << error << endl;
-                }
+                grid.moveNpcs();
+                grid.atkByEnemy();
+                
             }
             else if (command == "nw"){
                 try {
                     grid.atkEnemy(Direction::NW);
                 }
                 catch (const char* error) {
-                    cout << error << endl;
+                    pc->setAction(error + pc->getAction());
                 }
-                try {
-                    grid.moveNpcs();
-                }
-                catch (const char* error) {
-                    cout << error << endl;
-                }
+                grid.moveNpcs();
+                grid.atkByEnemy();
+                
             }
             else if (command == "se"){
                 try {
                     grid.atkEnemy(Direction::SE);
                 }
                 catch (const char* error) {
-                    cout << error << endl;
+                    pc->setAction(error + pc->getAction());
                 }
-                try {
-                    grid.moveNpcs();
-                }
-                catch (const char* error) {
-                    cout << error << endl;
-                }
+                grid.moveNpcs();
+                grid.atkByEnemy();
             }
             else {
                 try {
                     grid.atkEnemy(Direction::SW);
                 }
                 catch (const char* error) {
-                    cout << error << endl;
+                    pc->setAction(error + pc->getAction());
                 }
-                try {
-                    grid.moveNpcs();
-                }
-                catch (const char* error) {
-                    cout << error << endl;
-                }
+                grid.moveNpcs();
+                grid.atkByEnemy();
             }
         }
         else if (command == "u"){ // use potion
@@ -255,27 +231,67 @@ int main(int argc, const char * argv[]) {
                 }
             }
             if (command == "no"){
-                grid.usePotion(Direction::NO);
+                try {
+                    grid.usePotion(Direction::NO);
+                }
+                catch (const char* error) {
+                    pc->setAction(error + pc->getAction());
+                }
             }
             else if (command == "so"){
-                grid.usePotion(Direction::SO);
+                try {
+                    grid.usePotion(Direction::SO);
+                }
+                catch (const char* error) {
+                    pc->setAction(error + pc->getAction());
+                }
             }
             else if (command == "ea"){
-                grid.usePotion(Direction::EA);
+                try {
+                    grid.usePotion(Direction::EA);
+                }
+                catch (const char* error) {
+                    pc->setAction(error + pc->getAction());
+                }
             }
             else if (command == "we"){
-                grid.usePotion(Direction::WE);
+                try {
+                    grid.usePotion(Direction::WE);
+                }
+                catch (const char* error) {
+                    pc->setAction(error + pc->getAction());
+                }
             }else if(command == "ne"){
-                grid.usePotion(Direction::NE);
+                try {
+                    grid.usePotion(Direction::NE);
+                }
+                catch (const char* error) {
+                    pc->setAction(error + pc->getAction());
+                }
             }
             else if (command == "nw"){
-                grid.usePotion(Direction::NW);
+                try {
+                    grid.usePotion(Direction::NW);
+                }
+                catch (const char* error) {
+                    pc->setAction(error + pc->getAction());
+                }
             }
             else if (command == "se"){
-                grid.usePotion(Direction::SE);
+                try {
+                    grid.usePotion(Direction::SE);
+                }
+                catch (const char* error) {
+                    pc->setAction(error + pc->getAction());
+                }
             }
             else {
-                grid.usePotion(Direction::SW);
+                try {
+                    grid.usePotion(Direction::SW);
+                }
+                catch (const char* error) {
+                    pc->setAction(error + pc->getAction());
+                }
             }
         }
         else{
@@ -295,8 +311,8 @@ int main(int argc, const char * argv[]) {
                 try {
                     grid.move(Direction::NO);
                 }
-                catch(const char* error) {
-                    cout << error << endl;
+                catch (const char* error) {
+                    pc->setAction(error + pc->getAction());
                 }
                 if (!isF) {
                     grid.moveNpcs();
@@ -307,8 +323,8 @@ int main(int argc, const char * argv[]) {
                 try {
                     grid.move(Direction::SO);
                 }
-                catch(const char* error) {
-                    cout << error << endl;
+                catch (const char* error) {
+                    pc->setAction(error + pc->getAction());
                 }
                 if (!isF) {
                     grid.moveNpcs();
@@ -320,7 +336,7 @@ int main(int argc, const char * argv[]) {
                     grid.move(Direction::EA);
                 }
                 catch (const char* error) {
-                    cout << error << endl;
+                    pc->setAction(error + pc->getAction());
                 }
                 if (!isF) {
                     grid.moveNpcs();
@@ -332,7 +348,7 @@ int main(int argc, const char * argv[]) {
                     grid.move(Direction::WE);
                 }
                 catch (const char* error) {
-                    cout << error << endl;
+                    pc->setAction(error + pc->getAction());
                 }
                 if (!isF) {
                     grid.moveNpcs();
@@ -344,7 +360,7 @@ int main(int argc, const char * argv[]) {
                     grid.move(Direction::NE);
                 }
                 catch (const char* error) {
-                    cout << error << endl;
+                    pc->setAction(error + pc->getAction());
                 }
                 if (!isF) {
                     grid.moveNpcs();
@@ -357,7 +373,7 @@ int main(int argc, const char * argv[]) {
                     grid.move(Direction::NW);
                 }
                 catch (const char* error) {
-                    cout << error << endl;
+                    pc->setAction(error + pc->getAction());
                 }
                 if (!isF) {
                     grid.moveNpcs();
@@ -369,7 +385,7 @@ int main(int argc, const char * argv[]) {
                     grid.move(Direction::SE);
                 }
                 catch (const char* error) {
-                    cout << error << endl;
+                    pc->setAction(error + pc->getAction());
                 }
                 if (!isF) {
                     grid.moveNpcs();
@@ -381,7 +397,7 @@ int main(int argc, const char * argv[]) {
                     grid.move(Direction::SW);
                 }
                 catch (const char* error) {
-                    cout << error << endl;
+                    pc->setAction(error + pc->getAction());
                 }
                 if (!isF) {
                     grid.moveNpcs();
@@ -464,4 +480,5 @@ int main(int argc, const char * argv[]) {
         
     }
     return 0;
+    
 }
