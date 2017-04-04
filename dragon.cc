@@ -2,7 +2,8 @@
 
 //Constructor
 Dragon::Dragon(int hp, int atk, int def, bool hasMoved):
-Npc{hp, atk, def, hasMoved}{}
+Npc{hp, atk, def, hasMoved}, dhX{-1}, dhY{-1}{
+}
 
 //Overriding getSymb method to return the character that represents
 //the object

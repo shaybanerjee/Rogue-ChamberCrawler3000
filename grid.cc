@@ -205,7 +205,7 @@ Grid::Grid(string filename, PlayerCharacter* PC, bool hostile) // constructor fo
                 bool stop = false;
                 if(currStr[k + (i * 79)] == 'D' && static_cast<Dragon * >(theGrid[i][k])->getDhX() == -1){
                     if(theGrid[i][k + 1]->getSymb() == 'G' && static_cast<Treasure * >(theGrid[i][k + 1])->getValue() == 6
-                       && static_cast<DragonHoard *>(theGrid[i][k + 1])->getDragoX() == -1 && !stop){
+                       && static_cast<DragonHoard *>(theGrid[i][k + 1])->getDragoX() == -1 && stop == false){
                         static_cast<Dragon * >(theGrid[i][k])->setDhX(k + 1);
                         static_cast<Dragon * >(theGrid[i][k])->setDhY(i);
                         static_cast<DragonHoard *>(theGrid[i][k + 1])->setDragoX(k);
@@ -213,7 +213,7 @@ Grid::Grid(string filename, PlayerCharacter* PC, bool hostile) // constructor fo
                         stop = true;
                     }
                     if(theGrid[i + 1][k - 1]->getSymb() == 'G' && static_cast<Treasure * >(theGrid[i + 1][k - 1])->getValue() == 6
-                       && static_cast<DragonHoard *>(theGrid[i + 1][k - 1])->getDragoX() == -1 && !stop){
+                       && static_cast<DragonHoard *>(theGrid[i + 1][k - 1])->getDragoX() == -1 &&  stop == false){
                         static_cast<Dragon * >(theGrid[i][k])->setDhX(k - 1);
                         static_cast<Dragon * >(theGrid[i][k])->setDhY(i + 1);
                         static_cast<DragonHoard *>(theGrid[i + 1][k - 1])->setDragoX(k);
@@ -221,7 +221,7 @@ Grid::Grid(string filename, PlayerCharacter* PC, bool hostile) // constructor fo
                         stop = true;
                     }
                     if(theGrid[i - 1][k]->getSymb() == 'G' && static_cast<Treasure * >(theGrid[i - 1][k])->getValue() == 6
-                       && static_cast<DragonHoard *>(theGrid[i - 1][k])->getDragoX() == -1 && !stop){
+                       && static_cast<DragonHoard *>(theGrid[i - 1][k])->getDragoX() == -1 && stop == false){
                         static_cast<Dragon * >(theGrid[i][k])->setDhX(k);
                         static_cast<Dragon * >(theGrid[i][k])->setDhY(i - 1);
                         static_cast<DragonHoard *>(theGrid[i - 1][k])->setDragoX(k);
@@ -229,7 +229,7 @@ Grid::Grid(string filename, PlayerCharacter* PC, bool hostile) // constructor fo
                         stop = true;
                     }
                     if(theGrid[i + 1][k + 1]->getSymb() == 'G' && static_cast<Treasure * >(theGrid[i + 1][k + 1])->getValue() == 6
-                       && static_cast<DragonHoard *>(theGrid[i + 1][k + 1])->getDragoX() == -1 && !stop){
+                       && static_cast<DragonHoard *>(theGrid[i + 1][k + 1])->getDragoX() == -1 && stop == false){
                         static_cast<Dragon * >(theGrid[i][k])->setDhX(k + 1);
                         static_cast<Dragon * >(theGrid[i][k])->setDhY(i + 1);
                         static_cast<DragonHoard *>(theGrid[i + 1][k + 1])->setDragoX(k);
@@ -237,30 +237,29 @@ Grid::Grid(string filename, PlayerCharacter* PC, bool hostile) // constructor fo
                         stop = true;
                     }
                 }
-                
                 if(currStr[k + (i * 79)] == '9' && static_cast<DragonHoard *>(theGrid[i][k])->getDragoX() == -1){
-                    if(theGrid[i][k + 1]->getSymb() == 'D' && static_cast<Dragon * >(theGrid[i][k + 1])->getDhX() == -1 && !stop){
+                    if(theGrid[i][k + 1]->getSymb() == 'D' && static_cast<Dragon * >(theGrid[i][k + 1])->getDhX() == -1 &&  stop == false){
                         static_cast<DragonHoard *>(theGrid[i][k])->setDragoX(k + 1);
                         static_cast<DragonHoard *>(theGrid[i][k])->setDragoY(i);
                         static_cast<Dragon * >(theGrid[i][k + 1])->setDhX(k);
                         static_cast<Dragon * >(theGrid[i][k + 1])->setDhY(i);
                         stop = true;
                     }
-                    if(theGrid[i + 1][k - 1]->getSymb() == 'D' && static_cast<Dragon * >(theGrid[i + 1][k - 1])->getDhX() == -1 && !stop){
+                    if(theGrid[i + 1][k - 1]->getSymb() == 'D' && static_cast<Dragon * >(theGrid[i + 1][k - 1])->getDhX() == -1 &&  stop == false){
                         static_cast<DragonHoard *>(theGrid[i][k])->setDragoX(k - 1);
                         static_cast<DragonHoard *>(theGrid[i][k])->setDragoY(i + 1);
                         static_cast<Dragon * >(theGrid[i + 1][k - 1])->setDhX(k);
                         static_cast<Dragon * >(theGrid[i + 1][k - 1])->setDhY(i);
                         stop = true;
                     }
-                    if(theGrid[i - 1][k]->getSymb() == 'D' && static_cast<Dragon * >(theGrid[i - 1][k])->getDhX() == -1 && !stop){
+                    if(theGrid[i - 1][k]->getSymb() == 'D' && static_cast<Dragon * >(theGrid[i - 1][k])->getDhX() == -1 &&  stop == false){
                         static_cast<DragonHoard *>(theGrid[i][k])->setDragoX(k);
                         static_cast<DragonHoard *>(theGrid[i][k])->setDragoY(i - 1);
                         static_cast<Dragon * >(theGrid[i - 1][k])->setDhX(k);
                         static_cast<Dragon * >(theGrid[i - 1][k])->setDhY(i);
                         stop = true;
                     }
-                    if(theGrid[i + 1][k + 1]->getSymb() == 'D' && static_cast<Dragon * >(theGrid[i + 1][k + 1])->getDhX() == -1 && !stop){
+                    if(theGrid[i + 1][k + 1]->getSymb() == 'D' && static_cast<Dragon * >(theGrid[i + 1][k + 1])->getDhX() == -1 && stop == false){
                         static_cast<DragonHoard *>(theGrid[i][k])->setDragoX(k + 1);
                         static_cast<DragonHoard *>(theGrid[i][k])->setDragoY(i + 1);
                         static_cast<Dragon * >(theGrid[i + 1][k + 1])->setDhX(k);
@@ -453,7 +452,7 @@ void Grid::clear() {
             bool stop = false;
             if(currStr[k + (i * 79)] == 'D' && static_cast<Dragon * >(theGrid[i][k])->getDhX() == -1){
                 if(theGrid[i][k + 1]->getSymb() == 'G' && static_cast<Treasure * >(theGrid[i][k + 1])->getValue() == 6
-                   && static_cast<DragonHoard *>(theGrid[i][k + 1])->getDragoX() == -1 && !stop){
+                   && static_cast<DragonHoard *>(theGrid[i][k + 1])->getDragoX() == -1 && stop == false){
                     static_cast<Dragon * >(theGrid[i][k])->setDhX(k + 1);
                     static_cast<Dragon * >(theGrid[i][k])->setDhY(i);
                     static_cast<DragonHoard *>(theGrid[i][k + 1])->setDragoX(k);
@@ -461,7 +460,7 @@ void Grid::clear() {
                     stop = true;
                 }
                 if(theGrid[i + 1][k - 1]->getSymb() == 'G' && static_cast<Treasure * >(theGrid[i + 1][k - 1])->getValue() == 6
-                   && static_cast<DragonHoard *>(theGrid[i + 1][k - 1])->getDragoX() == -1 && !stop){
+                   && static_cast<DragonHoard *>(theGrid[i + 1][k - 1])->getDragoX() == -1 && stop == false){
                     static_cast<Dragon * >(theGrid[i][k])->setDhX(k - 1);
                     static_cast<Dragon * >(theGrid[i][k])->setDhY(i + 1);
                     static_cast<DragonHoard *>(theGrid[i + 1][k - 1])->setDragoX(k);
@@ -469,7 +468,7 @@ void Grid::clear() {
                     stop = true;
                 }
                 if(theGrid[i - 1][k]->getSymb() == 'G' && static_cast<Treasure * >(theGrid[i - 1][k])->getValue() == 6
-                   && static_cast<DragonHoard *>(theGrid[i - 1][k])->getDragoX() == -1 && !stop){
+                   && static_cast<DragonHoard *>(theGrid[i - 1][k])->getDragoX() == -1 && stop == false){
                     static_cast<Dragon * >(theGrid[i][k])->setDhX(k);
                     static_cast<Dragon * >(theGrid[i][k])->setDhY(i - 1);
                     static_cast<DragonHoard *>(theGrid[i - 1][k])->setDragoX(k);
@@ -477,7 +476,7 @@ void Grid::clear() {
                     stop = true;
                 }
                 if(theGrid[i + 1][k + 1]->getSymb() == 'G' && static_cast<Treasure * >(theGrid[i + 1][k + 1])->getValue() == 6
-                   && static_cast<DragonHoard *>(theGrid[i + 1][k + 1])->getDragoX() == -1 && !stop){
+                   && static_cast<DragonHoard *>(theGrid[i + 1][k + 1])->getDragoX() == -1 && stop == false){
                     static_cast<Dragon * >(theGrid[i][k])->setDhX(k + 1);
                     static_cast<Dragon * >(theGrid[i][k])->setDhY(i + 1);
                     static_cast<DragonHoard *>(theGrid[i + 1][k + 1])->setDragoX(k);
@@ -487,28 +486,28 @@ void Grid::clear() {
             }
             
             if(currStr[k + (i * 79)] == '9' && static_cast<DragonHoard *>(theGrid[i][k])->getDragoX() == -1){
-                if(theGrid[i][k + 1]->getSymb() == 'D' && static_cast<Dragon * >(theGrid[i][k + 1])->getDhX() == -1 && !stop){
+                if(theGrid[i][k + 1]->getSymb() == 'D' && static_cast<Dragon * >(theGrid[i][k + 1])->getDhX() == -1 && stop == false){
                     static_cast<DragonHoard *>(theGrid[i][k])->setDragoX(k + 1);
                     static_cast<DragonHoard *>(theGrid[i][k])->setDragoY(i);
                     static_cast<Dragon * >(theGrid[i][k + 1])->setDhX(k);
                     static_cast<Dragon * >(theGrid[i][k + 1])->setDhY(i);
                     stop = true;
                 }
-                if(theGrid[i + 1][k - 1]->getSymb() == 'D' && static_cast<Dragon * >(theGrid[i + 1][k - 1])->getDhX() == -1 && !stop){
+                if(theGrid[i + 1][k - 1]->getSymb() == 'D' && static_cast<Dragon * >(theGrid[i + 1][k - 1])->getDhX() == -1 && stop == false){
                     static_cast<DragonHoard *>(theGrid[i][k])->setDragoX(k - 1);
                     static_cast<DragonHoard *>(theGrid[i][k])->setDragoY(i + 1);
                     static_cast<Dragon * >(theGrid[i + 1][k - 1])->setDhX(k);
                     static_cast<Dragon * >(theGrid[i + 1][k - 1])->setDhY(i);
                     stop = true;
                 }
-                if(theGrid[i - 1][k]->getSymb() == 'D' && static_cast<Dragon * >(theGrid[i - 1][k])->getDhX() == -1 && !stop){
+                if(theGrid[i - 1][k]->getSymb() == 'D' && static_cast<Dragon * >(theGrid[i - 1][k])->getDhX() == -1 && stop == false){
                     static_cast<DragonHoard *>(theGrid[i][k])->setDragoX(k);
                     static_cast<DragonHoard *>(theGrid[i][k])->setDragoY(i - 1);
                     static_cast<Dragon * >(theGrid[i - 1][k])->setDhX(k);
                     static_cast<Dragon * >(theGrid[i - 1][k])->setDhY(i);
                     stop = true;
                 }
-                if(theGrid[i + 1][k + 1]->getSymb() == 'D' && static_cast<Dragon * >(theGrid[i + 1][k + 1])->getDhX() == -1 && !stop){
+                if(theGrid[i + 1][k + 1]->getSymb() == 'D' && static_cast<Dragon * >(theGrid[i + 1][k + 1])->getDhX() == -1 && stop == false){
                     static_cast<DragonHoard *>(theGrid[i][k])->setDragoX(k + 1);
                     static_cast<DragonHoard *>(theGrid[i][k])->setDragoY(i + 1);
                     static_cast<Dragon * >(theGrid[i + 1][k + 1])->setDhX(k);
@@ -554,7 +553,7 @@ void Grid::clearGrid() { // method for clear grid after level UPDATED
     PC->setDef(PC->getBaseDef());
 }
 
-void Grid::restartGrid(PlayerCharacter *p) { // restarts game UPDATED
+/*void Grid::restartGrid(PlayerCharacter *p) { // restarts game UPDATED
     for (int row = 0; row < height; ++row) {
         for (int col = 0; col < width; ++col) {
             GameSubject* currSub = theGrid[row][col];
@@ -576,6 +575,266 @@ void Grid::restartGrid(PlayerCharacter *p) { // restarts game UPDATED
     PC = p;
     level = 1;
 }
+ */
+void Grid::restartGrid(PlayerCharacter *p) { // restarts game UPDATED
+    if (filename == "default.txt") {
+        for (int row = 0; row < height; ++row) {
+            for (int col = 0; col < width; ++col) {
+                GameSubject* currSub = theGrid[row][col];
+                char symb = currSub->getSymb();
+                if (symb != '+' && symb != '.' &&
+                    symb != ' ' && symb != '-' &&
+                    symb != '|' && symb != '#') {
+                    if (symb != '@') {
+                        delete theGrid[row][col];
+                    }
+                    theGrid[row][col] = new Floor();
+                }
+            }
+        }
+        for (int i = 0; i < 5; ++i) {
+            cham_arr[i].clear();
+        }
+        delete PC;
+        PC = p;
+    }
+    else {
+        for (int row = 0; row < height; ++row) {
+            for (int col = 0; col < width; ++col) {
+                if (theGrid[row][col]->getSymb() != '@') {
+                    delete theGrid[row][col];
+                }
+            }
+        }
+        for (int i = 0; i < height; ++i) {
+            theGrid[i].clear();
+        }
+        theGrid.clear();
+        string currStr = floors[0];
+        for (int i = 0; i < height; ++i) {
+            int w = 0;
+            vector<GameSubject *> row;
+            while (w < 79) {
+                GameSubject* gameSub;
+                if (currStr[w + (i * 79)] == '-') {
+                    gameSub = new Hwall();
+                    row.emplace_back(gameSub);
+                    ++w;
+                }
+                else if (currStr[w + (i * 79)] == '|') {
+                    gameSub = new Vwall();
+                    row.emplace_back(gameSub);
+                    ++w;
+                }
+                else if (currStr[w + (i * 79)] == '.') {
+                    gameSub = new Floor();
+                    row.emplace_back(gameSub);
+                    ++w;
+                }
+                else if (currStr[w + (i * 79)] == '#') {
+                    gameSub = new PassageWay();
+                    row.emplace_back(gameSub);
+                    ++w;
+                }
+                else if (currStr[w + (i * 79)] == '+') {
+                    gameSub = new Door();
+                    row.emplace_back(gameSub);
+                    ++w;
+                }
+                else if (currStr[w + (i * 79)] == ' ') {
+                    gameSub = new Empty();
+                    row.emplace_back(gameSub);
+                    ++w;
+                }
+                else if (currStr[w + (i * 79)] == '0') {
+                    gameSub = new RestoreHealth();
+                    row.emplace_back(gameSub);
+                    ++w;
+                    
+                }
+                else if (currStr[w + (i * 79)] == '1') {
+                    gameSub = new BoostAtk();
+                    row.emplace_back(gameSub);
+                    ++w;
+                    
+                }
+                else if (currStr[w + (i * 79)] == '2') {
+                    gameSub = new BoostDef();
+                    row.emplace_back(gameSub);
+                    ++w;
+                    
+                }
+                else if (currStr[w + (i * 79)] == '3') {
+                    gameSub = new PoisonHealth();
+                    row.emplace_back(gameSub);
+                    ++w;
+                }
+                else if (currStr[w + (i * 79)] == '4') {
+                    gameSub = new WoundAtk();
+                    row.emplace_back(gameSub);
+                    ++w;
+                    
+                }
+                else if (currStr[w + (i * 79)] == '5') {
+                    gameSub = new WoundDef();
+                    row.emplace_back(gameSub);
+                    ++w;
+                    
+                }
+                else if (currStr[w + (i * 79)] == '6') {
+                    gameSub = new NormalGold();
+                    row.emplace_back(gameSub);
+                    ++w;
+                    
+                    
+                }
+                else if (currStr[w + (i * 79)] == '7') {
+                    gameSub = new SmallGold();
+                    row.emplace_back(gameSub);
+                    ++w;
+                    
+                }
+                else if (currStr[w + (i * 79)] == '8') {
+                    gameSub = new MerchantHoard();
+                    row.emplace_back(gameSub);
+                    ++w;
+                    
+                }
+                else if (currStr[w + (i * 79)] == '9') {
+                    gameSub = new DragonHoard();
+                    gameSub->setX(w);
+                    gameSub->setY(i);
+                    row.emplace_back(gameSub);
+                    ++w;
+                }
+                else if (currStr[w + (i * 79)] == '@') {
+                    PC = p;
+                    row.emplace_back(PC);
+                    PC->setX(w);
+                    PC->setY(i);
+                    ++w;
+                }
+                else if (currStr[w + (i * 79)] == 'M') {
+                    gameSub = new Merchant();
+                    row.emplace_back(gameSub);
+                    ++w;
+                    
+                }
+                else if (currStr[w + (i * 79)] == 'L') {
+                    gameSub = new Halfling();
+                    row.emplace_back(gameSub);
+                    ++w;
+                }
+                else if (currStr[w + (i * 79)] == 'D') {
+                    gameSub = new Dragon();
+                    gameSub->setX(w);
+                    gameSub->setY(i);
+                    row.emplace_back(gameSub);
+                    ++w;
+                }
+                else if (currStr[w + (i * 79)] == 'W') {
+                    gameSub = new Dwarf();
+                    row.emplace_back(gameSub);
+                    ++w;
+                }
+                else if (currStr[w + (i * 79)] == 'H') {
+                    gameSub = new Human();
+                    row.emplace_back(gameSub);
+                    ++w;
+                }
+                else if (currStr[w + (i * 79)] == 'E') {
+                    gameSub = new Elf();
+                    row.emplace_back(gameSub);
+                    ++w;
+                }
+                else if (currStr[w + (i * 79)] == 'O') { // 'O'
+                    gameSub = new Orc();
+                    row.emplace_back(gameSub);
+                    ++w;
+                }
+                else {
+                    gameSub = new Stair();
+                    row.emplace_back(gameSub);
+                    ++w;
+                }
+            }
+            theGrid.emplace_back(row);
+        }
+        //Connect Dragons with DragonHoards
+        for(int i = 0; i < height; i++){
+            for(int k = 0; k < width; k++){
+                bool stop = false;
+                if(currStr[k + (i * 79)] == 'D' && static_cast<Dragon * >(theGrid[i][k])->getDhX() == -1){
+                    if(theGrid[i][k + 1]->getSymb() == 'G' && static_cast<Treasure * >(theGrid[i][k + 1])->getValue() == 6
+                       && static_cast<DragonHoard *>(theGrid[i][k + 1])->getDragoX() == -1 && !stop){
+                        static_cast<Dragon * >(theGrid[i][k])->setDhX(k + 1);
+                        static_cast<Dragon * >(theGrid[i][k])->setDhY(i);
+                        static_cast<DragonHoard *>(theGrid[i][k + 1])->setDragoX(k);
+                        static_cast<DragonHoard *>(theGrid[i][k + 1])->setDragoY(i);
+                        stop = true;
+                    }
+                    if(theGrid[i + 1][k - 1]->getSymb() == 'G' && static_cast<Treasure * >(theGrid[i + 1][k - 1])->getValue() == 6
+                       && static_cast<DragonHoard *>(theGrid[i + 1][k - 1])->getDragoX() == -1 && !stop){
+                        static_cast<Dragon * >(theGrid[i][k])->setDhX(k - 1);
+                        static_cast<Dragon * >(theGrid[i][k])->setDhY(i + 1);
+                        static_cast<DragonHoard *>(theGrid[i + 1][k - 1])->setDragoX(k);
+                        static_cast<DragonHoard *>(theGrid[i + 1][k - 1])->setDragoY(i);
+                        stop = true;
+                    }
+                    if(theGrid[i - 1][k]->getSymb() == 'G' && static_cast<Treasure * >(theGrid[i - 1][k])->getValue() == 6
+                       && static_cast<DragonHoard *>(theGrid[i - 1][k])->getDragoX() == -1 && !stop){
+                        static_cast<Dragon * >(theGrid[i][k])->setDhX(k);
+                        static_cast<Dragon * >(theGrid[i][k])->setDhY(i - 1);
+                        static_cast<DragonHoard *>(theGrid[i - 1][k])->setDragoX(k);
+                        static_cast<DragonHoard *>(theGrid[i - 1][k])->setDragoY(i);
+                        stop = true;
+                    }
+                    if(theGrid[i + 1][k + 1]->getSymb() == 'G' && static_cast<Treasure * >(theGrid[i + 1][k + 1])->getValue() == 6
+                       && static_cast<DragonHoard *>(theGrid[i + 1][k + 1])->getDragoX() == -1 && !stop){
+                        static_cast<Dragon * >(theGrid[i][k])->setDhX(k + 1);
+                        static_cast<Dragon * >(theGrid[i][k])->setDhY(i + 1);
+                        static_cast<DragonHoard *>(theGrid[i + 1][k + 1])->setDragoX(k);
+                        static_cast<DragonHoard *>(theGrid[i + 1][k + 1])->setDragoY(i);
+                        stop = true;
+                    }
+                }
+                
+                if(currStr[k + (i * 79)] == '9' && static_cast<DragonHoard *>(theGrid[i][k])->getDragoX() == -1){
+                    if(theGrid[i][k + 1]->getSymb() == 'D' && static_cast<Dragon * >(theGrid[i][k + 1])->getDhX() == -1 && !stop){
+                        static_cast<DragonHoard *>(theGrid[i][k])->setDragoX(k + 1);
+                        static_cast<DragonHoard *>(theGrid[i][k])->setDragoY(i);
+                        static_cast<Dragon * >(theGrid[i][k + 1])->setDhX(k);
+                        static_cast<Dragon * >(theGrid[i][k + 1])->setDhY(i);
+                        stop = true;
+                    }
+                    if(theGrid[i + 1][k - 1]->getSymb() == 'D' && static_cast<Dragon * >(theGrid[i + 1][k - 1])->getDhX() == -1 && !stop){
+                        static_cast<DragonHoard *>(theGrid[i][k])->setDragoX(k - 1);
+                        static_cast<DragonHoard *>(theGrid[i][k])->setDragoY(i + 1);
+                        static_cast<Dragon * >(theGrid[i + 1][k - 1])->setDhX(k);
+                        static_cast<Dragon * >(theGrid[i + 1][k - 1])->setDhY(i);
+                        stop = true;
+                    }
+                    if(theGrid[i - 1][k]->getSymb() == 'D' && static_cast<Dragon * >(theGrid[i - 1][k])->getDhX() == -1 && !stop){
+                        static_cast<DragonHoard *>(theGrid[i][k])->setDragoX(k);
+                        static_cast<DragonHoard *>(theGrid[i][k])->setDragoY(i - 1);
+                        static_cast<Dragon * >(theGrid[i - 1][k])->setDhX(k);
+                        static_cast<Dragon * >(theGrid[i - 1][k])->setDhY(i);
+                        stop = true;
+                    }
+                    if(theGrid[i + 1][k + 1]->getSymb() == 'D' && static_cast<Dragon * >(theGrid[i + 1][k + 1])->getDhX() == -1 && !stop){
+                        static_cast<DragonHoard *>(theGrid[i][k])->setDragoX(k + 1);
+                        static_cast<DragonHoard *>(theGrid[i][k])->setDragoY(i + 1);
+                        static_cast<Dragon * >(theGrid[i + 1][k + 1])->setDhX(k);
+                        static_cast<Dragon * >(theGrid[i + 1][k + 1])->setDhY(i);
+                        stop = true;
+                    }
+                }
+            }
+        }
+    }
+    level = 1;
+}
+
 
 ostream &operator<<(ostream &out,const Grid &gGrid) {
     for (int i = 0; i < gGrid.height; ++i) {
@@ -1208,6 +1467,7 @@ void Grid::atkByEnemy(){
             if(static_cast<DragonHoard *>(theGrid[y + 1][x - 1])->getDeadDrago() == false){
                 int dx = static_cast<DragonHoard *>(theGrid[y + 1][x - 1])->getDragoX();
                 int dy = static_cast<DragonHoard *>(theGrid[y + 1][x - 1])->getDragoY();
+                cout << dx << " " << dy << endl;
                 static_cast<Dragon *>(theGrid[dy][dx])->attack(PC);
             }
         }else{

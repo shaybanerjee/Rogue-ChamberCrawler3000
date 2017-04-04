@@ -17,7 +17,6 @@ void Orc::attack(PlayerCharacter *pc){
     //then this indicates the player hit the character pc
     if((rand() % 2) == 1){
         int hpAfter;
-        damage << damageAgainst(pc);
         if(pc->getName() == "Goblin"){
             hpAfter = pc->getHp() - (int) (1.5 * damageAgainst(pc));
             damage << (int)(damageAgainst(pc) * 1.5);

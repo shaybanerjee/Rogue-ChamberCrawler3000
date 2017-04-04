@@ -2,7 +2,7 @@
 
 
 //Constructor
-DragonHoard::DragonHoard():Treasure{6}, deadDrago{false}{
+DragonHoard::DragonHoard():Treasure{6}, deadDrago{false}, dragoX{-1}, dragoY{-1}{
 }
 
 bool DragonHoard::getDeadDrago(){

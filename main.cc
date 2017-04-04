@@ -42,8 +42,10 @@ int main(int argc, const char * argv[]) {
     srand(time(NULL));
     string command; // commands to move/attack/use items
     char race = playerSelect(); // selects players race
-    string file = "cc3kfloor.txt";
-    //string file = "default.txt";
+    string file = "default.txt";
+    if (argc >= 2) {
+        file = argv[1];
+    }
     PlayerCharacter *pc; // main character
     
     switch(race){
@@ -102,11 +104,13 @@ int main(int argc, const char * argv[]) {
                     break;
             }
             grid.restartGrid(pc);
-            grid.rand_player();
-            grid.rand_potion();
-            grid.rand_stair();
-            grid.rand_enemy();
-            grid.rand_treasure();
+            if (file == "default.txt") {
+                grid.rand_player();
+                grid.rand_potion();
+                grid.rand_stair();
+                grid.rand_enemy();
+                grid.rand_treasure();
+            }
         }
         else if (command == "f"){
             if (isF == false) {
@@ -440,11 +444,13 @@ int main(int argc, const char * argv[]) {
                         break;
                 }
                 grid.restartGrid(pc);
-                grid.rand_player();
-                grid.rand_potion();
-                grid.rand_stair();
-                grid.rand_enemy();
-                grid.rand_treasure();
+                if (file == "default.txt") {
+                    grid.rand_player();
+                    grid.rand_potion();
+                    grid.rand_stair();
+                    grid.rand_enemy();
+                    grid.rand_treasure();
+                }
             }
             else{
                 break;
@@ -475,11 +481,13 @@ int main(int argc, const char * argv[]) {
                         break;
                 }
                 grid.restartGrid(pc);
-                grid.rand_player();
-                grid.rand_potion();
-                grid.rand_stair();
-                grid.rand_enemy();
-                grid.rand_treasure();
+                if (file == "default.txt") {
+                    grid.rand_player();
+                    grid.rand_potion();
+                    grid.rand_stair();
+                    grid.rand_enemy();
+                    grid.rand_treasure();
+                }
             }
             else{
                 break;
