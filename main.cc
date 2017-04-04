@@ -43,6 +43,7 @@ int main(int argc, const char * argv[]) {
     string command; // commands to move/attack/use items
     char race = playerSelect(); // selects players race
     string file = "cc3kfloor.txt";
+    //string file = "default.txt";
     PlayerCharacter *pc; // main character
     
     switch(race){
@@ -66,6 +67,13 @@ int main(int argc, const char * argv[]) {
     }
     
     Grid grid{file,pc}; // The map/floorplan of the game
+    if(file == "default.txt"){
+        grid.rand_player();
+        grid.rand_potion();
+        grid.rand_stair();
+        grid.rand_enemy();
+        grid.rand_treasure();
+    }
     cout << grid;
     cin >> command;
     while(!cin.eof()){
